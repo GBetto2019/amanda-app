@@ -1,83 +1,91 @@
+import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest } from "next/server";
 
-export async function POST(req: NextRequest) {
-  const { messages } = await req.json();
-  const lastMessage = messages[messages.length - 1]?.content ?? "";
+const client = new Anthropic();
 
-  // Stub que retorna resposta na estrutura padrão do mentor
-  const response = buildStubResponse(lastMessage);
+const SYSTEM_PROMPT = `Você é o Mentor do Novo Líder — um assistente especializado em liderança para gestores que estão assumindo ou consolidando seu primeiro papel de liderança.
+
+## Identidade e tom
+- Direto, leve, prático e humano — como um amigo experiente, não um consultor formal
+- Sem jargão corporativo: nunca use "sinergia", "mindset disruptivo", "stakeholders", "paradigmas"
+- Palavras permitidas: feedback, combinado, clareza, alinhamento, conversa, resultado
+- Fale com o líder de igual para igual — ele está aprendendo, não errando
+
+## Estrutura obrigatória de resposta
+Toda resposta deve seguir exatamente este formato, com as seções nesta ordem:
+
+**Cenário**
+[2-3 frases descrevendo o que está acontecendo, do ponto de vista do líder]
+
+**Causa provável**
+[O que provavelmente está por trás da situação — padrão de comportamento, lacuna de comunicação, expectativa não alinhada]
+
+**O que fazer**
+[Lista numerada de 3-5 ações concretas e sequenciais]
+
+*["Script exato que o líder pode usar — começa e termina com aspas. Uma ou duas frases no máximo. Algo que soa natural, não robótico."]*
+
+**O que evitar**
+[2-3 comportamentos específicos para não fazer, com brevidade]
+
+**Próximo passo**
+[Uma ação imediata e concreta para hoje ou amanhã — com horário ou prazo quando possível]
+
+## Regras de formatação
+- A seção **Cenário**, **Causa provável**, **O que fazer**, **O que evitar** e **Próximo passo** são sempre em negrito com dois asteriscos: **Texto**
+- O script copiável é sempre em itálico com um asterisco em cada lado: *"texto do script"*
+- O script deve ser uma linha inteira, precedida e seguida por linha vazia
+- Não use outros marcadores markdown (###, >, ---) — apenas ** para labels e * para script
+
+## Guardrails
+- Se a pergunta envolver demissão, advertência formal, processo trabalhista ou questão jurídica: não dê conselho direto. Diga: "Esse ponto precisa da sua área de RH ou jurídico — eles têm o contexto legal. Posso te ajudar a preparar a conversa com eles."
+- Se a situação for vaga demais para dar um roteiro preciso: faça 2-3 perguntas objetivas antes de responder
+- Nunca invente diagnósticos psicológicos ou clínicos sobre liderados
+- Foque sempre em comportamento observável, não em julgamento de caráter
+
+## Contexto do produto
+Plataforma "Acordei, virei líder" — para novos líderes que precisam de orientação prática imediata, sem tempo para cursos longos. O mentor entrega o roteiro certo para o próximo 1:1, feedback ou conversa difícil.`;
+
+interface Message {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export async function POST(req: NextRequest) {
+  const { messages }: { messages: Message[] } = await req.json();
+
+  const anthropicMessages = messages.map((m) => ({
+    role: m.role,
+    content: m.content,
+  }));
+
+  const stream = client.messages.stream({
+    model: "claude-opus-4-8",
+    max_tokens: 1024,
+    system: SYSTEM_PROMPT,
+    messages: anthropicMessages,
+    thinking: { type: "adaptive" },
+  });
 
   const encoder = new TextEncoder();
-  const stream = new ReadableStream({
+  const readable = new ReadableStream({
     async start(controller) {
-      for (const char of response) {
-        controller.enqueue(encoder.encode(char));
-        await new Promise((r) => setTimeout(r, 8));
+      try {
+        for await (const event of stream) {
+          if (
+            event.type === "content_block_delta" &&
+            event.delta.type === "text_delta"
+          ) {
+            controller.enqueue(encoder.encode(event.delta.text));
+          }
+        }
+      } finally {
+        controller.close();
       }
-      controller.close();
     },
   });
 
-  return new Response(stream, {
+  return new Response(readable, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   });
-}
-
-function buildStubResponse(input: string): string {
-  const lower = input.toLowerCase();
-
-  if (lower.includes("feedback") || lower.includes("reclama")) {
-    return `**Cenário**
-Liderado que entrega bem mas reclama com frequência.
-
-**Causa provável**
-Pode ser um padrão de comportamento ou uma resposta ao ambiente. Antes de agir, vale checar se há algo específico acontecendo.
-
-**O que fazer**
-1. Escolhe um momento calmo — não no calor do episódio
-2. Reconhece a entrega antes de tocar no comportamento
-3. Apresenta o padrão que você observou (não o julgamento)
-4. Pergunta antes de afirmar — abre espaço pra ele falar
-
-*"Quero conversar sobre um ponto delicado com respeito e clareza. Tenho percebido que, quando trazemos uma nova demanda, costuma vir uma reclamação. Você percebe isso também? Como podemos ajustar juntos?"*
-
-**O que evitar**
-Não rotule a pessoa ("você é negativo") e não dê o feedback no calor da emoção.
-
-**Próximo passo**
-Marca a conversa pra amanhã, 9h. Título: "alinhar combinado". Depois me conta como foi.`;
-  }
-
-  if (lower.includes("1:1") || lower.includes("terapia") || lower.includes("desabafo")) {
-    return `**Cenário**
-Reunião 1:1 que virou sessão de desabafo.
-
-**Causa provável**
-Provavelmente falta de estrutura no início da reunião — sem pauta clara, o espaço vira catarse.
-
-**O que fazer**
-1. Abre sempre com a pauta: "Hoje quero cobrir X e Y — você tem algo pra adicionar?"
-2. Quando ele começar a reclamar fora do escopo: "Entendo, isso é importante. Posso anotar pra a gente tratar numa próxima vez?"
-3. Redireciona para o combinado da semana anterior
-
-*"Quero que esse espaço seja útil pra você e pra mim. O que foi mais importante essa semana? O que ficou em aberto?"*
-
-**O que evitar**
-Não corta bruto — redireciona. Não deixa a reunião sem próximo passo claro.
-
-**Próximo passo**
-Na próxima 1:1, começa com: "Tenho 3 pontos pra hoje. Você tem mais algum?" — isso seta o tom.`;
-  }
-
-  return `**Cenário**
-Situação recebida: "${input.slice(0, 80)}${input.length > 80 ? "..." : ""}"
-
-**Antes de continuar**
-Pra te dar o roteiro certo, me conta mais:
-
-1. Há quanto tempo você lidera essa pessoa?
-2. Isso aconteceu uma vez ou é um padrão?
-3. Como é a relação de vocês no geral?
-
-Com isso consigo montar o script exato pra você usar.`;
 }
