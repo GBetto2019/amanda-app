@@ -7,7 +7,6 @@ const navLinks = [
   { href: "#manifesto", label: "Manifesto" },
   { href: "#como-funciona", label: "Como funciona" },
   { href: "#programa", label: "Programa" },
-  { href: "/chat", label: "Fala com o mentor →" },
 ];
 
 export function Header() {
@@ -20,22 +19,30 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex gap-8 font-mono text-[11px] uppercase tracking-[0.16em] text-cafe-2">
-          {navLinks.slice(0, 3).map((link) => (
+          {navLinks.map((link) => (
             <a key={link.href} href={link.href} className="hover:text-sol transition-colors">
               {link.label}
             </a>
           ))}
         </nav>
 
-        <Link
-          href="/chat"
-          className="hidden md:inline-flex items-center gap-2 bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.16em] px-5 py-2.5 rounded-full hover:bg-sol-soft transition-colors"
-        >
-          Fala com o mentor →
-        </Link>
+        <div className="hidden md:flex items-center gap-3">
+          <Link
+            href="/entrar"
+            className="font-mono text-[11px] uppercase tracking-[0.16em] text-cafe-2 hover:text-sol transition-colors px-3 py-2"
+          >
+            Entrar
+          </Link>
+          <Link
+            href="/entrar"
+            className="inline-flex items-center gap-2 bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.16em] px-5 py-2.5 rounded-full hover:bg-sol-soft transition-colors"
+          >
+            Começar →
+          </Link>
+        </div>
 
         <Link
-          href="/chat"
+          href="/entrar"
           className="md:hidden inline-flex items-center bg-sol text-creme font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2 rounded-full"
         >
           Começar

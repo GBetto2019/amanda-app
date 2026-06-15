@@ -98,7 +98,20 @@ export default function ChatPage() {
           <SunIcon size={20} className="text-sol md:w-[22px] md:h-[22px]" />
           acordei, virei líder.
         </Link>
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-cafe-3">Mentor · Beta</span>
+        <div className="flex items-center gap-3">
+          <a
+            href="https://hotmart.com/club"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-cafe-2 hover:text-sol transition-colors"
+          >
+            Acessar as aulas
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7v10" />
+            </svg>
+          </a>
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-cafe-3">Mentor · Beta</span>
+        </div>
       </header>
 
       {/* Messages */}

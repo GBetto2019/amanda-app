@@ -4,10 +4,10 @@ import { SunIcon } from "@/components/ui/SunIcon";
 import { Card } from "@/components/ui/Card";
 
 const personalityCards = [
-  { num: "01", title: "Direta.", text: "Vai no ponto. Frase curta. Quem lê precisa entender de primeira — porque tem reunião em 10 minutos.", variant: "default" as const },
+  { num: "01", title: "Direto.", text: "Vai no ponto. Frase curta. Quem lê precisa entender de primeira — porque tem reunião em 10 minutos.", variant: "default" as const },
   { num: "02", title: "Leve.", text: "Liderança já pesa. A gente não pesa em cima. Conversa de café, não palestra de domingo.", variant: "default" as const },
-  { num: "03", title: "Prática.", text: 'Termina cada orientação com "faz assim". Roteiro, exemplo, frase pronta. Aplicável na próxima 1:1.', variant: "default" as const },
-  { num: "04", title: "Humana.", text: "A gente também travou na primeira 1:1. Ninguém aqui é coach perfeito. Erra junto e arruma junto.", variant: "cafe" as const },
+  { num: "03", title: "Prático.", text: 'Termina cada orientação com "faz assim". Roteiro, exemplo, frase pronta. Aplicável na próxima 1:1.', variant: "default" as const },
+  { num: "04", title: "Humano.", text: "A gente também travou na primeira 1:1. Ninguém aqui é coach perfeito. Erra junto e arruma junto.", variant: "cafe" as const },
   { num: "05", title: "Vida real corporativa.", text: "Open space barulhento. Slack travando. Chefe pedindo na sexta às 18h. Esse é o mundo. E aqui a gente fala dele.", variant: "sol" as const },
   { num: "06", title: "Sem papo de consultor.", text: "Sinergia, mindset, empoderar — fora. Combinado, feedback, clareza — dentro.", variant: "amber" as const },
 ];
@@ -47,31 +47,16 @@ export default function Home() {
             </h1>
 
             <p className="font-serif italic text-[clamp(18px,3.5vw,40px)] text-cafe-2 leading-[1.2] max-w-2xl mb-10 md:mb-20">
-              Liderança na prática<br />pra quem virou líder ontem.
+              Seu mentor de bolso que te ajuda a passar pelos primeiros 6 meses na cadeira de Líder.
             </p>
 
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-10">
-              <div className="grid sm:grid-cols-2 gap-6 md:gap-10 max-w-2xl">
-                <div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-cafe-3">01 — Promessa</span>
-                  <p className="text-sm text-cafe-2 leading-relaxed mt-2">
-                    Te ajudar a liderar com segurança nos primeiros meses, com roteiro pronto e prática real.
-                  </p>
-                </div>
-                <div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-cafe-3">02 — Arquétipo</span>
-                  <p className="text-sm text-cafe-2 leading-relaxed mt-2">
-                    Mentora &amp; amiga experiente. Autoridade, mas sem ser distante. Sabe do que tá falando — e fala como gente.
-                  </p>
-                </div>
-              </div>
-
               <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <Link
-                  href="/chat"
+                  href="/entrar"
                   className="inline-flex items-center justify-center bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.18em] px-6 py-4 rounded-full hover:bg-sol-soft transition-colors min-h-[48px]"
                 >
-                  Fala com o mentor →
+                  Fale com o mentor →
                 </Link>
                 <a
                   href="#programa"
@@ -180,7 +165,7 @@ export default function Home() {
               </div>
               <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-creme/10">
                 <Link
-                  href="/chat"
+                  href="/entrar"
                   className="inline-flex items-center bg-sol text-creme font-mono text-[10px] md:text-[11px] uppercase tracking-[0.18em] px-5 md:px-7 py-3.5 md:py-4 rounded-full hover:bg-sol-soft transition-colors min-h-[44px]"
                 >
                   Quero um roteiro pro meu problema →
@@ -216,17 +201,17 @@ export default function Home() {
                   <SunIcon size={320} className="text-sol hidden md:block" />
                 </div>
                 <div className="relative">
-                  <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.16em] text-amanhecer">Programa · 6 semanas</span>
+                  <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.16em] text-amanhecer">Programa</span>
                 </div>
                 <div className="relative">
                   <h3 className="font-serif italic text-[clamp(40px,5.5vw,80px)] leading-[0.95] mb-3 md:mb-4">
-                    Primeiros<br />90 dias<br />de líder.
+                    Primeiros<br />180 dias<br />de líder.
                   </h3>
                   <p className="text-[14px] md:text-[15px] text-creme/70 max-w-sm mb-6 md:mb-8">
-                    Roteiros prontos pras 12 conversas que você vai precisar fazer — e ninguém te ensinou.
+                    Roteiros prontos pras conversas que você vai precisar fazer — e ninguém te ensinou.
                   </p>
                   <Link
-                    href="/chat"
+                    href="/entrar"
                     className="inline-flex items-center bg-sol text-creme font-mono text-[10px] md:text-[11px] uppercase tracking-[0.16em] px-5 md:px-6 py-3.5 rounded-full hover:bg-sol-soft transition-colors min-h-[44px]"
                   >
                     Quero entrar →
@@ -266,7 +251,7 @@ export default function Home() {
               Descreve o seu problema. O mentor responde com o roteiro pronto — é agora, não semana que vem.
             </p>
             <Link
-              href="/chat"
+              href="/entrar"
               className="inline-flex items-center bg-sol text-creme font-mono text-[11px] md:text-[13px] uppercase tracking-[0.2em] px-7 py-4 md:px-10 md:py-5 rounded-full hover:bg-sol-soft transition-colors min-h-[48px]"
             >
               Começar agora →
