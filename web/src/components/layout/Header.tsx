@@ -31,7 +31,7 @@ export function Header() {
             href="/login"
             className="font-mono text-[11px] uppercase tracking-[0.16em] text-cafe-2 hover:text-sol transition-colors px-3 py-2"
           >
-            Entrar
+            Acessar o Mentor
           </Link>
           <Link
             href="/planos"
@@ -41,12 +41,20 @@ export function Header() {
           </Link>
         </div>
 
-        <Link
-          href="/planos"
-          className="md:hidden inline-flex items-center bg-sol text-creme font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2 rounded-full"
-        >
-          Começar
-        </Link>
+        <div className="md:hidden flex items-center gap-2">
+          <Link
+            href="/login"
+            className="font-mono text-[10px] uppercase tracking-[0.14em] text-cafe-2 hover:text-sol transition-colors px-2 py-2"
+          >
+            Entrar
+          </Link>
+          <Link
+            href="/planos"
+            className="inline-flex items-center bg-sol text-creme font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2 rounded-full"
+          >
+            Começar
+          </Link>
+        </div>
       </div>
     </header>
   );

@@ -187,6 +187,32 @@ export async function gerarLinkAcesso(
   return { link: linkData.properties.action_link };
 }
 
+// Salva o prompt do Mentor IA definido pelo admin.
+export async function salvarPrompt(formData: FormData) {
+  const admin = await getAdminUser();
+  if (!admin) throw new Error("Não autorizado.");
+
+  const prompt = str(formData.get("prompt"));
+  const sb = createAdminClient();
+  await sb.from("app_config").upsert(
+    { key: "system_prompt", value: prompt, updated_at: new Date().toISOString() },
+    { onConflict: "key" }
+  );
+  revalidatePath("/admin");
+}
+
+// Restaura o prompt padrão (remove a personalização). Recebe FormData por ser
+// usada como formAction, mas ignora o conteúdo.
+export async function restaurarPrompt(_formData: FormData) {
+  void _formData;
+  const admin = await getAdminUser();
+  if (!admin) throw new Error("Não autorizado.");
+
+  const sb = createAdminClient();
+  await sb.from("app_config").delete().eq("key", "system_prompt");
+  revalidatePath("/admin");
+}
+
 export async function sairAdmin() {
   const supabase = await createClient();
   await supabase.auth.signOut();

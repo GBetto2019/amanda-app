@@ -2,7 +2,9 @@ import { redirect } from "next/navigation";
 import { getAdminUser } from "@/lib/auth/admin-guard";
 import { createClient } from "@/lib/supabase/server";
 import { acessoAtivo } from "@/lib/acesso";
+import { DEFAULT_SYSTEM_PROMPT } from "@/lib/mentor-prompt";
 import { AssinanteForm, type Assinante } from "./AssinanteForm";
+import { PromptEditor } from "./PromptEditor";
 import { sairAdmin } from "./actions";
 
 export default async function AdminPage() {
@@ -23,6 +25,14 @@ export default async function AdminPage() {
   const aguardando = assinantes.filter(
     (a) => a.acesso_status === "pendente"
   ).length;
+
+  const { data: cfg } = await supabase
+    .from("app_config")
+    .select("value")
+    .eq("key", "system_prompt")
+    .maybeSingle();
+  const promptPersonalizado = !!cfg?.value?.trim();
+  const promptAtual = promptPersonalizado ? cfg!.value! : DEFAULT_SYSTEM_PROMPT;
 
   return (
     <div className="min-h-[100dvh] bg-creme">
@@ -49,6 +59,13 @@ export default async function AdminPage() {
             <Metric label="Com Mentor IA (ativos)" valor={ativos} destaque />
             <Metric label="Aguardando liberação" valor={aguardando} />
           </div>
+
+          {/* Treinar o Mentor IA */}
+          <PromptEditor
+            valorAtual={promptAtual}
+            padrao={DEFAULT_SYSTEM_PROMPT}
+            personalizado={promptPersonalizado}
+          />
 
           {/* Lista */}
           {assinantes.length === 0 ? (

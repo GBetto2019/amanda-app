@@ -261,24 +261,16 @@ export default function Home() {
       </main>
 
       <footer className="bg-cafe text-creme px-5 md:px-12 py-10 md:py-12 border-t border-creme/10">
-        <div className="max-w-[1320px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amanhecer mb-2 md:mb-3">Produto</p>
-            <p className="text-[12px] md:text-[13px] text-creme/60 leading-relaxed">Versão 1.0 — 2026</p>
-          </div>
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amanhecer mb-2 md:mb-3">Sobre</p>
-            <p className="text-[12px] md:text-[13px] text-creme/60 leading-relaxed">Consultoria Acordei,<br />virei Líder.</p>
-          </div>
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amanhecer mb-2 md:mb-3">Tipografia</p>
-            <p className="text-[12px] md:text-[13px] text-creme/60">Instrument Serif</p>
-            <p className="text-[12px] md:text-[13px] text-creme/60">Geist · JetBrains Mono</p>
-          </div>
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amanhecer mb-2 md:mb-3">Contato</p>
-            <p className="text-[12px] md:text-[13px] text-creme/60">@acordeivireilider</p>
-          </div>
+        <div className="max-w-[1320px] mx-auto">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amanhecer mb-2 md:mb-3">Suporte</p>
+          <a
+            href="https://wa.me/5511974668867"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[13px] md:text-[14px] text-creme/70 hover:text-sol transition-colors"
+          >
+            WhatsApp — (11) 97466-8867
+          </a>
         </div>
       </footer>
 
