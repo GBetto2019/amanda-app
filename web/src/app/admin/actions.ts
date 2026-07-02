@@ -213,6 +213,39 @@ export async function restaurarPrompt(_formData: FormData) {
   revalidatePath("/admin");
 }
 
+// Exclui o cadastro do assinante (e a conta de auth associada, exceto admins).
+export async function excluirAssinante(formData: FormData) {
+  const admin = await getAdminUser();
+  if (!admin) throw new Error("Não autorizado.");
+
+  const id = str(formData.get("id"));
+  if (!id) throw new Error("Assinante inválido.");
+
+  const sb = createAdminClient();
+  const { data: a } = await sb
+    .from("assinantes")
+    .select("user_id")
+    .eq("id", id)
+    .single();
+
+  await sb.from("assinantes").delete().eq("id", id);
+
+  if (a?.user_id) {
+    const { data: isAdmin } = await sb
+      .from("admins")
+      .select("user_id")
+      .eq("user_id", a.user_id)
+      .maybeSingle();
+    if (!isAdmin) {
+      // Remove referência legada que bloqueia a exclusão no Auth, depois a conta.
+      await sb.from("profiles").delete().eq("id", a.user_id);
+      await sb.auth.admin.deleteUser(a.user_id).catch(() => {});
+    }
+  }
+
+  revalidatePath("/admin");
+}
+
 export async function sairAdmin() {
   const supabase = await createClient();
   await supabase.auth.signOut();

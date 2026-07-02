@@ -13,7 +13,14 @@ export function Header() {
   return (
     <header className="sticky top-0 z-30 bg-creme/90 backdrop-blur-sm border-b border-[var(--linha-soft)]">
       <div className="max-w-[1320px] mx-auto px-6 md:px-12 flex items-center justify-between h-16">
-        <Link href="/" className="flex items-center gap-3 font-serif italic text-xl text-cafe leading-none">
+        <Link
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="flex items-center gap-3 font-serif italic text-xl text-cafe leading-none"
+        >
           <SunIcon size={28} className="text-sol" />
           <span>acordei,<br className="hidden" /> virei líder.</span>
         </Link>

@@ -5,6 +5,7 @@ import {
   liberarMentor,
   atualizarAssinante,
   inativarAssinante,
+  excluirAssinante,
   gerarLinkAcesso,
 } from "./actions";
 
@@ -32,14 +33,18 @@ const pagamentoCor: Record<string, string> = {
   recebido: "bg-green-100 text-green-800",
   aguardando: "bg-stone-200 text-stone-600",
 };
+const badgeBase =
+  "font-mono text-[9px] uppercase tracking-[0.12em] px-2 py-1 rounded-full whitespace-nowrap";
 
 export function AssinanteForm({ a }: { a: Assinante }) {
+  const [expandido, setExpandido] = useState(false);
   const [plano, setPlano] = useState(a.plano_escolhido ?? "");
   const ehBasico = plano === "basico";
   const [link, setLink] = useState<string | null>(null);
   const [gerando, setGerando] = useState(false);
   const [erroLink, setErroLink] = useState<string | null>(null);
   const [copiado, setCopiado] = useState(false);
+  const [confirmandoExcluir, setConfirmandoExcluir] = useState(false);
 
   async function handleGerarLink() {
     setGerando(true);
@@ -68,169 +73,212 @@ export function AssinanteForm({ a }: { a: Assinante }) {
     "block font-mono text-[9px] uppercase tracking-[0.14em] text-cafe-3 mb-1";
 
   return (
-    <div className="rounded-2xl border border-[var(--linha)] bg-white p-5 md:p-6">
-      <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
-        <div>
-          <p className="font-serif italic text-lg text-cafe leading-tight">
+    <div className="rounded-2xl border border-[var(--linha)] bg-white px-5 md:px-6 py-4">
+      {/* Cabeçalho compacto: nome + email lado a lado; tags lado a lado */}
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-baseline gap-x-3 gap-y-0.5 flex-wrap min-w-0">
+          <p className="font-serif italic text-base text-cafe leading-tight">
             {a.nome ?? "—"}
           </p>
-          <p className="text-[13px] text-cafe-2">{a.email}</p>
-          {a.telefone && (
-            <p className="text-[12px] text-cafe-3">{a.telefone}</p>
-          )}
+          <p className="text-[13px] text-cafe-2 truncate">{a.email}</p>
         </div>
-        <div className="flex flex-col items-end gap-1.5">
+        <div className="flex items-center gap-2 shrink-0">
           <span
-            className={`font-mono text-[9px] uppercase tracking-[0.12em] px-2 py-1 rounded-full ${
+            className={`${badgeBase} ${
               statusCor[a.acesso_status] ?? "bg-stone-200 text-stone-600"
             }`}
           >
             {a.acesso_status}
           </span>
           <span
-            className={`font-mono text-[9px] uppercase tracking-[0.12em] px-2 py-1 rounded-full ${
+            className={`${badgeBase} ${
               pagamentoCor[a.pagamento_status] ?? "bg-stone-200 text-stone-600"
             }`}
           >
             pgto: {a.pagamento_status}
           </span>
+          <button
+            type="button"
+            onClick={() => setExpandido((v) => !v)}
+            className="font-mono text-[10px] uppercase tracking-[0.12em] text-cafe-3 hover:text-sol transition-colors px-1"
+          >
+            {expandido ? "menos ▲" : "mais ▼"}
+          </button>
         </div>
       </div>
 
-      <form className="grid grid-cols-2 md:grid-cols-4 gap-3 items-end">
-        <input type="hidden" name="id" value={a.id} />
-
-        <div>
-          <label className={labelCls}>Plano</label>
-          <select
-            name="plano_escolhido"
-            value={plano}
-            onChange={(e) => setPlano(e.target.value)}
-            className={inputCls}
-          >
-            <option value="">—</option>
-            <option value="basico">Básico</option>
-            <option value="complementar">Complementar</option>
-            <option value="premium">Premium</option>
-          </select>
-        </div>
-
-        <div>
-          <label className={labelCls}>Valor (R$)</label>
-          <input
-            type="number"
-            step="0.01"
-            name="valor"
-            defaultValue={a.valor ?? ""}
-            className={inputCls}
-            placeholder="0,00"
-          />
-        </div>
-
-        <div>
-          <label className={labelCls}>Início</label>
-          <input
-            type="date"
-            name="data_inicio"
-            defaultValue={a.data_inicio ?? ""}
-            className={inputCls}
-          />
-        </div>
-
-        <div>
-          <label className={labelCls}>Fim</label>
-          <input
-            type="date"
-            name="data_fim"
-            defaultValue={a.data_fim ?? ""}
-            className={inputCls}
-          />
-        </div>
-
-        <div className="col-span-2 md:col-span-1">
-          <label className={labelCls}>Status do acesso</label>
-          <select
-            name="acesso_status"
-            defaultValue={a.acesso_status}
-            className={inputCls}
-          >
-            <option value="pendente">pendente</option>
-            <option value="ativo">ativo</option>
-            <option value="inativo">inativo</option>
-          </select>
-        </div>
-
-        <div className="col-span-2 md:col-span-3 flex flex-wrap gap-2 justify-end">
-          {a.acesso_status !== "ativo" &&
-            (ehBasico ? (
-              <span className="self-center font-mono text-[9px] uppercase tracking-[0.12em] text-cafe-3">
-                Básico não inclui Mentor IA
-              </span>
-            ) : (
-              <button
-                formAction={liberarMentor}
-                className="bg-sol text-creme font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-sol-soft transition-colors"
-              >
-                Liberar Mentor IA →
-              </button>
-            ))}
-          <button
-            formAction={atualizarAssinante}
-            className="border border-cafe/20 text-cafe font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-cafe/5 transition-colors"
-          >
-            Salvar
-          </button>
-          {!ehBasico && (a.user_id || a.acesso_status === "ativo") && (
-            <button
-              type="button"
-              onClick={handleGerarLink}
-              disabled={gerando}
-              className="border border-sol/40 text-brasa font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-sol/5 transition-colors disabled:opacity-50"
-            >
-              {gerando ? "Gerando…" : "Link de acesso"}
-            </button>
-          )}
-          {a.acesso_status === "ativo" && (
-            <button
-              formAction={inativarAssinante}
-              className="border border-red-200 text-red-600 font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-red-50 transition-colors"
-            >
-              Inativar
-            </button>
-          )}
-        </div>
-      </form>
-
-      {(link || erroLink) && (
+      {expandido && (
         <div className="mt-4 pt-4 border-t border-[var(--linha-soft)]">
-          {erroLink && (
-            <p className="text-[12px] text-red-600 leading-snug">{erroLink}</p>
+          {a.telefone && (
+            <p className="text-[12px] text-cafe-3 mb-3">📱 {a.telefone}</p>
           )}
-          {link && (
-            <>
-              <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-cafe-3 mb-2">
-                Link de acesso — envie ao aluno (ex.: WhatsApp)
-              </p>
-              <div className="flex gap-2">
-                <input
-                  readOnly
-                  value={link}
-                  onFocus={(e) => e.currentTarget.select()}
-                  className="flex-1 bg-linho border border-[var(--linha)] rounded-lg px-3 py-2 text-[12px] text-cafe outline-none"
-                />
+
+          <form className="grid grid-cols-2 md:grid-cols-4 gap-3 items-end">
+            <input type="hidden" name="id" value={a.id} />
+
+            <div>
+              <label className={labelCls}>Plano</label>
+              <select
+                name="plano_escolhido"
+                value={plano}
+                onChange={(e) => setPlano(e.target.value)}
+                className={inputCls}
+              >
+                <option value="">—</option>
+                <option value="basico">Básico</option>
+                <option value="complementar">Complementar</option>
+                <option value="premium">Premium</option>
+              </select>
+            </div>
+
+            <div>
+              <label className={labelCls}>Valor (R$)</label>
+              <input
+                type="number"
+                step="0.01"
+                name="valor"
+                defaultValue={a.valor ?? ""}
+                className={inputCls}
+                placeholder="0,00"
+              />
+            </div>
+
+            <div>
+              <label className={labelCls}>Início</label>
+              <input
+                type="date"
+                name="data_inicio"
+                defaultValue={a.data_inicio ?? ""}
+                className={inputCls}
+              />
+            </div>
+
+            <div>
+              <label className={labelCls}>Fim</label>
+              <input
+                type="date"
+                name="data_fim"
+                defaultValue={a.data_fim ?? ""}
+                className={inputCls}
+              />
+            </div>
+
+            <div className="col-span-2 md:col-span-1">
+              <label className={labelCls}>Status do acesso</label>
+              <select
+                name="acesso_status"
+                defaultValue={a.acesso_status}
+                className={inputCls}
+              >
+                <option value="pendente">pendente</option>
+                <option value="ativo">ativo</option>
+                <option value="inativo">inativo</option>
+              </select>
+            </div>
+
+            <div className="col-span-2 md:col-span-3 flex flex-wrap gap-2 justify-end">
+              {a.acesso_status !== "ativo" &&
+                (ehBasico ? (
+                  <span className="self-center font-mono text-[9px] uppercase tracking-[0.12em] text-cafe-3">
+                    Básico não inclui Mentor IA
+                  </span>
+                ) : (
+                  <button
+                    formAction={liberarMentor}
+                    className="bg-sol text-creme font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-sol-soft transition-colors"
+                  >
+                    Liberar Mentor IA →
+                  </button>
+                ))}
+              <button
+                formAction={atualizarAssinante}
+                className="border border-cafe/20 text-cafe font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-cafe/5 transition-colors"
+              >
+                Salvar
+              </button>
+              {!ehBasico && (a.user_id || a.acesso_status === "ativo") && (
                 <button
                   type="button"
-                  onClick={handleCopiar}
-                  className="shrink-0 bg-sol text-creme font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2 rounded-lg hover:bg-sol-soft transition-colors"
+                  onClick={handleGerarLink}
+                  disabled={gerando}
+                  className="border border-sol/40 text-brasa font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-sol/5 transition-colors disabled:opacity-50"
                 >
-                  {copiado ? "Copiado ✓" : "Copiar"}
+                  {gerando ? "Gerando…" : "Link de acesso"}
                 </button>
-              </div>
-              <p className="text-[11px] text-cafe-3 mt-2 leading-snug">
-                O aluno abre o link, define a senha e acessa o Mentor IA. O link
-                expira em algumas horas — gere um novo se necessário.
-              </p>
-            </>
+              )}
+              {a.acesso_status === "ativo" && (
+                <button
+                  formAction={inativarAssinante}
+                  className="border border-red-200 text-red-600 font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-red-50 transition-colors"
+                >
+                  Inativar
+                </button>
+              )}
+
+              {/* Excluir com confirmação inline */}
+              {confirmandoExcluir ? (
+                <span className="flex items-center gap-2">
+                  <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-cafe-3">
+                    Excluir?
+                  </span>
+                  <button
+                    formAction={excluirAssinante}
+                    className="bg-red-600 text-creme font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-red-700 transition-colors"
+                  >
+                    Confirmar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setConfirmandoExcluir(false)}
+                    className="border border-cafe/20 text-cafe font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-cafe/5 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                </span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setConfirmandoExcluir(true)}
+                  className="border border-red-200 text-red-600 font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-full hover:bg-red-50 transition-colors"
+                >
+                  Excluir
+                </button>
+              )}
+            </div>
+          </form>
+
+          {(link || erroLink) && (
+            <div className="mt-4 pt-4 border-t border-[var(--linha-soft)]">
+              {erroLink && (
+                <p className="text-[12px] text-red-600 leading-snug">{erroLink}</p>
+              )}
+              {link && (
+                <>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-cafe-3 mb-2">
+                    Link de acesso — envie ao aluno (ex.: WhatsApp)
+                  </p>
+                  <div className="flex gap-2">
+                    <input
+                      readOnly
+                      value={link}
+                      onFocus={(e) => e.currentTarget.select()}
+                      className="flex-1 bg-linho border border-[var(--linha)] rounded-lg px-3 py-2 text-[12px] text-cafe outline-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleCopiar}
+                      className="shrink-0 bg-sol text-creme font-mono text-[10px] uppercase tracking-[0.14em] px-4 py-2 rounded-lg hover:bg-sol-soft transition-colors"
+                    >
+                      {copiado ? "Copiado ✓" : "Copiar"}
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-cafe-3 mt-2 leading-snug">
+                    O aluno abre o link, define a senha e acessa o Mentor IA. O
+                    link expira em algumas horas — gere um novo se necessário.
+                  </p>
+                </>
+              )}
+            </div>
           )}
         </div>
       )}
