@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Acordei, virei líder · Kit de Logo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --sol:#E8552D; --amanhecer:#F4A03A; --pessego:#FFD8B5;
+  --creme:#FFF4E8; --linho:#F8E8D4; --brasa:#8E2E18;
+  --cafe:#2A1A14; --cafe-2:#5A4439; --cafe-3:#8A7468;
+  --linha:rgba(42,26,20,0.12); --linha-soft:rgba(42,26,20,0.06);
+  --serif:"Instrument Serif",serif; --sans:"Geist",system-ui,sans-serif; --mono:"JetBrains Mono",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--creme);color:var(--cafe);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 48px}
+.section{padding:100px 0}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brasa);font-weight:500;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+
+/* Topbar */
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,244,232,0.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--linha-soft)}
+.topbar__inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand-mark{display:inline-flex;align-items:center;gap:11px;font-family:var(--serif);font-style:italic;font-size:20px;text-decoration:none;color:var(--cafe)}
+.topbar-nav{display:flex;gap:28px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--cafe-2)}
+.topbar-nav a{text-decoration:none;color:inherit;transition:color 180ms}
+.topbar-nav a:hover{color:var(--sol)}
+.topbar-badge{font-family:var(--mono);font-size:11px;color:var(--cafe-3);text-transform:uppercase;letter-spacing:0.16em}
+
+/* Logo card */
+.lcard{background:#fff;border:1px solid var(--linha-soft);border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.lcard__preview{display:flex;align-items:center;justify-content:center;padding:40px;min-height:200px;flex:1}
+.lcard__preview--dark{background:var(--cafe)}
+.lcard__preview--linen{background:var(--linho)}
+.lcard__body{padding:22px 24px 24px;border-top:1px solid var(--linha-soft)}
+.lcard__name{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:var(--cafe);font-weight:500;margin:0 0 5px}
+.lcard__desc{font-size:12px;color:var(--cafe-2);margin:0 0 16px;line-height:1.5}
+.lcard__btns{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:8px;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border:1px solid var(--linha);background:transparent;color:var(--cafe);transition:all 160ms}
+.btn:hover{background:var(--cafe);color:var(--creme);border-color:var(--cafe)}
+.btn--solid{background:var(--cafe);color:var(--creme);border-color:var(--cafe)}
+.btn--solid:hover{background:var(--brasa);border-color:var(--brasa)}
+.btn--sol{background:var(--sol);color:var(--creme);border-color:var(--sol)}
+.btn--sol:hover{background:var(--brasa);border-color:var(--brasa)}
+
+/* Chapter */
+.chapter{display:flex;align-items:baseline;gap:20px;margin-bottom:48px}
+.chapter__no{font-family:var(--mono);font-size:11px;letter-spacing:0.22em;color:var(--brasa);text-transform:uppercase}
+.chapter__h{font-family:var(--serif);font-style:italic;font-size:clamp(38px,4vw,60px);line-height:1;letter-spacing:-0.02em;color:var(--cafe);margin:0}
+
+/* Font card */
+.fcard{background:var(--linho);border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:16px}
+.fcard__label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:var(--brasa);margin:0}
+.fcard__link{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--sol);text-decoration:none;display:inline-flex;align-items:center;gap:5px;margin-top:4px}
+.fcard__link:hover{color:var(--brasa)}
+
+/* Swatches */
+.swatch{border-radius:16px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;min-height:140px}
+.swatch__name{font-size:14px;font-weight:500;margin:0 0 auto}
+.swatch__vals{font-family:var(--mono);font-size:10px;line-height:1.7;letter-spacing:0.06em;margin-top:12px;opacity:0.85}
+
+/* Canvas */
+canvas{display:block;max-width:100%;height:auto}
+
+/* Note box */
+.note{background:var(--pessego);border-radius:14px;padding:18px 22px;font-size:13px;color:var(--brasa);line-height:1.55;display:flex;gap:12px;align-items:flex-start}
+.note strong{font-weight:600}
+
+/* Wide preview area */
+.horiz-wrap{background:#fff;border:1px solid var(--linha-soft);border-radius:24px;overflow:hidden}
+.horiz-preview{display:flex;align-items:center;justify-content:center;padding:48px;min-height:180px}
+.horiz-preview--dark{background:var(--cafe)}
+.horiz-body{padding:22px 24px 24px;border-top:1px solid var(--linha-soft);display:flex;align-items:center;justify-content:space-between;gap:20px}
+</style>
+
+<template id="__bundler_thumbnail" data-bg-color="#FFF4E8">
+  <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <line x1="280" y1="310" x2="520" y2="310" stroke="#E8552D" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="400" cy="310" r="88" fill="#E8552D"/>
+    <line x1="400" y1="158" x2="400" y2="202" stroke="#E8552D" stroke-width="12" stroke-linecap="round"/>
+    <line x1="264" y1="206" x2="292" y2="234" stroke="#E8552D" stroke-width="12" stroke-linecap="round"/>
+    <line x1="536" y1="206" x2="508" y2="234" stroke="#E8552D" stroke-width="12" stroke-linecap="round"/>
+    <line x1="230" y1="290" x2="270" y2="290" stroke="#E8552D" stroke-width="12" stroke-linecap="round"/>
+    <line x1="530" y1="290" x2="570" y2="290" stroke="#E8552D" stroke-width="12" stroke-linecap="round"/>
+    <rect x="220" y="440" width="360" height="10" rx="5" fill="#2A1A14" opacity="0.12"/>
+    <rect x="270" y="462" width="260" height="8" rx="4" fill="#2A1A14" opacity="0.08"/>
+  </svg>
+</template>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="brand-mark" href="guideline.html">
+      <svg width="24" height="24" viewBox="0 0 100 90" fill="none" style="color:var(--sol)">
+        <line x1="6" y1="65" x2="94" y2="65" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="65" r="22" fill="currentColor"/>
+        <line x1="50" y1="20" x2="50" y2="30" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="18" y1="33" x2="25" y2="40" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="82" y1="33" x2="75" y2="40" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="8"  y1="55" x2="18" y2="55" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="82" y1="55" x2="92" y2="55" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      acordei, virei líder.
+    </a>
+    <nav class="topbar-nav">
+      <a href="guideline.html">Guideline</a>
+      <a href="papelaria.html">Papelaria</a>
+    </nav>
+    <span class="topbar-badge">Kit de Logo · v1.0</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section style="padding:80px 0 72px;border-bottom:1px solid var(--linha)">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:flex-end;gap:48px">
+    <div>
+      <span class="eyebrow">Arquivos de Marca</span>
+      <h1 style="font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(64px,9vw,130px);line-height:0.88;letter-spacing:-0.035em;margin:16px 0 28px;color:var(--cafe)">Kit de<br/><span style="color:var(--sol)">Logo</span></h1>
+      <p style="font-size:18px;color:var(--cafe-2);max-width:52ch;line-height:1.6;margin:0;font-weight:300;text-wrap:pretty">
+        Símbolo e marca completa em <strong style="color:var(--cafe);font-weight:500">SVG vetorial</strong> e <strong style="color:var(--cafe);font-weight:500">PNG 1200×1200px</strong>, prontos para impressão e aplicação digital.
+      </p>
+    </div>
+    <div style="text-align:right;flex-shrink:0">
+      <button onclick="downloadAll(this)" class="btn btn--sol" style="padding:13px 22px;font-size:11px;gap:8px">
+        ↓&nbsp; Baixar todos os arquivos
+      </button>
+      <p style="font-family:var(--mono);font-size:10px;color:var(--cafe-3);margin:10px 0 0;letter-spacing:0.1em;text-transform:uppercase">SVG + PNG incluídos</p>
+    </div>
+  </div>
+</section>
+
+<!-- 01 SÍMBOLO -->
+<section class="section">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter__no">01</span>
+      <h2 class="chapter__h">Símbolo</h2>
+    </div>
+    <div class="note" style="margin-bottom:40px">
+      <span>☀</span>
+      <p style="margin:0"><strong>O símbolo isolado</strong> é usado em ícones, favicon, bordado, crachá e qualquer aplicação onde o espaço é pequeno. Mantenha sempre a área de proteção equivalente à metade do diâmetro do sol ao redor.</p>
+    </div>
+    <div class="grid g4">
+
+      <!-- Terra -->
+      <div class="lcard">
+        <div class="lcard__preview">
+          <canvas id="c-mark-terra" width="600" height="600" style="width:160px;height:160px"></canvas>
+        </div>
+        <div class="lcard__body">
+          <p class="lcard__name">Terra — Cor primária</p>
+          <p class="lcard__desc">Aplicação padrão. Use em fundos claros, creme e linho.</p>
+          <div class="lcard__btns">
+            <button class="btn" onclick="dlSVG('mark','#E8552D',null,'avl-simbolo-terra')">SVG</button>
+            <button class="btn btn--solid" onclick="dlPNG('c-mark-terra','avl-simbolo-terra')">PNG</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Escuro -->
+      <div class="lcard">
+        <div class="lcard__preview">
+          <canvas id="c-mark-escuro" width="600" height="600" style="width:160px;height:160px"></canvas>
+        </div>
+        <div class="lcard__body">
+          <p class="lcard__name">Café — Escuro</p>
+          <p class="lcard__desc">Impressão monocromática, papel timbrado, carimbo.</p>
+          <div class="lcard__btns">
+            <button class="btn" onclick="dlSVG('mark','#2A1A14',null,'avl-simbolo-escuro')">SVG</button>
+            <button class="btn btn--solid" onclick="dlPNG('c-mark-escuro','avl-simbolo-escuro')">PNG</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Negativa -->
+      <div class="lcard">
+        <div class="lcard__preview lcard__preview--dark">
+          <canvas id="c-mark-negativa" width="600" height="600" style="width:160px;height:160px"></canvas>
+        </div>
+        <div class="lcard__body">
+          <p class="lcard__name">Negativa — Fundo escuro</p>
+          <p class="lcard__desc">Sobre fundos escuros, foto, brindes e canecas.</p>
+          <div class="lcard__btns">
+            <button class="btn" onclick="dlSVG('mark','#FFF4E8','#2A1A14','avl-simbolo-negativa')">SVG</button>
+            <button class="btn btn--solid" onclick="dlPNG('c-mark-negativa','avl-simbolo-negativa')">PNG</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Âmbar -->
+      <div class="lcard">
+        <div class="lcard__preview lcard__preview--linen">
+          <canvas id="c-mark-ambar" width="600" height="600" style="width:160px;height:160px"></canvas>
+        </div>
+        <div class="lcard__body">
+          <p class="lcard__name">Âmbar — Acento</p>
+          <p class="lcard__desc">Certificados, destaques e comunicações celebrativas.</p>
+          <div class="lcard__btns">
+            <button class="btn" onclick="dlSVG('mark','#F4A03A',null,'avl-simbolo-ambar')">SVG</button>
+            <button class="btn btn--solid" onclick="dlPNG('c-mark-ambar','avl-simbolo-ambar')">PNG</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 02 MARCA COMPLETA -->
+<section class="section" style="background:var(--linho)">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter__no">02</span>
+      <h2 class="chapter__h">Marca Completa</h2>
+    </div>
+
+    <!-- Horizontal cor -->
+    <div class="horiz-wrap" style="margin-bottom:20px">
+      <div class="horiz-preview">
+        <canvas id="c-horiz-cor" width="2400" height="500" style="width:100%;max-width:780px;height:auto"></canvas>
+      </div>
+      <div class="horiz-body">
+        <div>
+          <p class="lcard__name" style="margin:0 0 4px">Horizontal — Cor principal</p>
+          <p class="lcard__desc" style="margin:0">Versão prioritária. E-mails, apresentações, cabeçalhos de documento.</p>
+        </div>
+        <div class="lcard__btns">
+          <button class="btn" onclick="dlSVGHoriz('#E8552D','#2A1A14',null,'avl-marca-horizontal-cor')">SVG</button>
+          <button class="btn btn--solid" onclick="dlPNG('c-horiz-cor','avl-marca-horizontal-cor')">PNG</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Horizontal escuro -->
+    <div class="horiz-wrap" style="margin-bottom:20px">
+      <div class="horiz-preview">
+        <canvas id="c-horiz-esc" width="2400" height="500" style="width:100%;max-width:780px;height:auto"></canvas>
+      </div>
+      <div class="horiz-body">
+        <div>
+          <p class="lcard__name" style="margin:0 0 4px">Horizontal — Escuro</p>
+          <p class="lcard__desc" style="margin:0">Impressão 1 cor, contratos, materiais neutros.</p>
+        </div>
+        <div class="lcard__btns">
+          <button class="btn" onclick="dlSVGHoriz('#2A1A14','#2A1A14',null,'avl-marca-horizontal-escuro')">SVG</button>
+          <button class="btn btn--solid" onclick="dlPNG('c-horiz-esc','avl-marca-horizontal-escuro')">PNG</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Horizontal negativa -->
+    <div class="horiz-wrap" style="margin-bottom:40px">
+      <div class="horiz-preview horiz-preview--dark">
+        <canvas id="c-horiz-neg" width="2400" height="500" style="width:100%;max-width:780px;height:auto"></canvas>
+      </div>
+      <div class="horiz-body">
+        <div>
+          <p class="lcard__name" style="margin:0 0 4px">Horizontal — Negativa</p>
+          <p class="lcard__desc" style="margin:0">Fundos escuros, fotografia, banners e merch.</p>
+        </div>
+        <div class="lcard__btns">
+          <button class="btn" onclick="dlSVGHoriz('#FFF4E8','#FFF4E8','#2A1A14','avl-marca-horizontal-negativa')">SVG</button>
+          <button class="btn btn--solid" onclick="dlPNG('c-horiz-neg','avl-marca-horizontal-negativa')">PNG</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vertical + guia de uso -->
+    <div style="display:grid;grid-template-columns:300px 1fr;gap:40px;align-items:start">
+      <div class="lcard">
+        <div class="lcard__preview" style="min-height:300px">
+          <canvas id="c-vert-cor" width="560" height="660" style="width:180px;height:auto"></canvas>
+        </div>
+        <div class="lcard__body">
+          <p class="lcard__name">Vertical — Cor</p>
+          <p class="lcard__desc">Posts quadrados, stories e perfil de redes sociais.</p>
+          <div class="lcard__btns">
+            <button class="btn" onclick="dlSVGVert('avl-marca-vertical-cor')">SVG</button>
+            <button class="btn btn--solid" onclick="dlPNG('c-vert-cor','avl-marca-vertical-cor')">PNG</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:8px 0 0 8px">
+        <p style="font-family:var(--serif);font-style:italic;font-size:26px;color:var(--cafe);margin:0 0 24px;line-height:1.2">Quando usar cada versão?</p>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;gap:16px;align-items:flex-start">
+            <span style="color:var(--sol);font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;flex-shrink:0;padding-top:2px">Horiz.</span>
+            <p style="margin:0;font-size:15px;color:var(--cafe-2);line-height:1.55">Apresentações, papel timbrado, assinatura de email, cabeçalho de site.</p>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start">
+            <span style="color:var(--sol);font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;flex-shrink:0;padding-top:2px">Vert.</span>
+            <p style="margin:0;font-size:15px;color:var(--cafe-2);line-height:1.55">Instagram, thumbnail, post quadrado, avatar de perfil.</p>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start">
+            <span style="color:var(--sol);font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;flex-shrink:0;padding-top:2px">Símbolo</span>
+            <p style="margin:0;font-size:15px;color:var(--cafe-2);line-height:1.55">Favicon, ícone de app, bordado em brinde, crachá.</p>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start">
+            <span style="color:var(--sol);font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;flex-shrink:0;padding-top:2px">Negativa</span>
+            <p style="margin:0;font-size:15px;color:var(--cafe-2);line-height:1.55">Fundo cor forte, foto, caneca, camiseta, fundo escuro em geral.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:40px;padding:24px;background:rgba(42,26,20,0.06);border-radius:16px">
+          <p style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:var(--brasa);margin:0 0 10px">Nota sobre SVG + fontes</p>
+          <p style="font-size:13px;color:var(--cafe-2);margin:0;line-height:1.6">Os arquivos SVG da marca completa requerem <strong style="color:var(--cafe)">Instrument Serif</strong> instalada para renderização correta no Illustrator, Inkscape e Word. Baixe grátis em Google Fonts. O PNG já está com o texto rasterizado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 TIPOGRAFIA -->
+<section class="section">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter__no">03</span>
+      <h2 class="chapter__h">Tipografia</h2>
+    </div>
+    <p style="font-size:16px;color:var(--cafe-2);max-width:62ch;line-height:1.6;margin:0 0 48px;font-weight:300">Todas as fontes são gratuitas e disponíveis no Google Fonts. Instale no computador antes de usar no Word, PowerPoint, Canva ou Illustrator.</p>
+    <div class="grid g2" style="margin-bottom:20px">
+      <div class="fcard">
+        <p class="fcard__label">01 — Display · Títulos · Marca</p>
+        <p style="font-family:var(--serif);font-style:italic;font-size:52px;color:var(--cafe);margin:0;line-height:1;letter-spacing:-0.02em">Acordei,<br/>virei líder.</p>
+        <div>
+          <p style="font-family:var(--mono);font-size:11px;color:var(--cafe-2);margin:0 0 4px">Instrument Serif · Italic · peso 400</p>
+          <a class="fcard__link" href="https://fonts.google.com/specimen/Instrument+Serif" target="_blank">↗ Baixar no Google Fonts</a>
+        </div>
+      </div>
+      <div class="fcard">
+        <p class="fcard__label">02 — Texto corrido · Interface · Corpo</p>
+        <p style="font-family:var(--sans);font-weight:300;font-size:28px;color:var(--cafe);margin:0;line-height:1.35;text-wrap:pretty">Liderança na prática pra quem virou líder ontem.</p>
+        <div>
+          <p style="font-family:var(--mono);font-size:11px;color:var(--cafe-2);margin:0 0 4px">Geist · Light 300 / Regular 400 / Medium 500</p>
+          <a class="fcard__link" href="https://fonts.google.com/specimen/Geist" target="_blank">↗ Baixar no Google Fonts</a>
+        </div>
+      </div>
+    </div>
+    <div class="fcard" style="flex-direction:row;align-items:center;gap:48px">
+      <div style="flex:1">
+        <p class="fcard__label">03 — Labels · Código · Legendas</p>
+        <p style="font-family:var(--mono);font-size:20px;color:var(--cafe);margin:0;letter-spacing:0.06em">01 — MÓDULO · V1.0 · JUNHO 2026</p>
+      </div>
+      <div style="flex-shrink:0">
+        <p style="font-family:var(--mono);font-size:11px;color:var(--cafe-2);margin:0 0 4px">JetBrains Mono · Regular 400 / Medium 500</p>
+        <a class="fcard__link" href="https://fonts.google.com/specimen/JetBrains+Mono" target="_blank">↗ Baixar no Google Fonts</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 PALETA -->
+<section class="section" style="background:var(--linho)">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter__no">04</span>
+      <h2 class="chapter__h">Paleta de Cores</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px">
+      <div class="swatch" style="background:#E8552D;color:#fff">
+        <span class="swatch__name">Terra</span>
+        <div class="swatch__vals">#E8552D<br/>R232 G85 B45<br/>C0 M66 Y81 K9</div>
+      </div>
+      <div class="swatch" style="background:#F4A03A;color:#2A1A14">
+        <span class="swatch__name">Âmbar</span>
+        <div class="swatch__vals">#F4A03A<br/>R244 G160 B58<br/>C0 M35 Y76 K4</div>
+      </div>
+      <div class="swatch" style="background:#FFD8B5;color:#2A1A14">
+        <span class="swatch__name">Pêssego</span>
+        <div class="swatch__vals">#FFD8B5<br/>R255 G216 B181<br/>C0 M15 Y29 K0</div>
+      </div>
+      <div class="swatch" style="background:#FFF4E8;color:#2A1A14;border:1px solid rgba(42,26,20,0.1)">
+        <span class="swatch__name">Creme</span>
+        <div class="swatch__vals">#FFF4E8<br/>R255 G244 B232<br/>C0 M4 Y9 K0</div>
+      </div>
+      <div class="swatch" style="background:#8E2E18;color:#fff">
+        <span class="swatch__name">Brasa</span>
+        <div class="swatch__vals">#8E2E18<br/>R142 G46 B24<br/>C0 M68 Y83 K44</div>
+      </div>
+      <div class="swatch" style="background:#2A1A14;color:#FFF4E8">
+        <span class="swatch__name">Café</span>
+        <div class="swatch__vals">#2A1A14<br/>R42 G26 B20<br/>C0 M38 Y52 K84</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:var(--cafe);color:var(--creme);padding:60px 0">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap">
+    <div>
+      <p style="font-family:var(--serif);font-style:italic;font-size:34px;margin:0 0 6px;letter-spacing:-0.02em">acordei, virei líder.</p>
+      <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,244,232,0.45);margin:0">Kit de Logo · v1.0 · 2026 · Todos os direitos reservados</p>
+    </div>
+    <nav style="display:flex;gap:28px;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,244,232,0.45)">
+      <a href="guideline.html" style="color:inherit;text-decoration:none">Guideline</a>
+      <a href="papelaria.html" style="color:inherit;text-decoration:none">Papelaria</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+// ── DRAW FUNCTIONS ─────────────────────────────────
+
+function drawMark(ctx, ox, oy, size, color) {
+  const s = size / 100;
+  ctx.save();
+  ctx.strokeStyle = color; ctx.fillStyle = color;
+  ctx.lineWidth = 3 * s; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.beginPath(); ctx.moveTo(ox+6*s,oy+65*s); ctx.lineTo(ox+94*s,oy+65*s); ctx.stroke();
+  ctx.beginPath(); ctx.arc(ox+50*s,oy+65*s,22*s,0,Math.PI*2); ctx.fill();
+  [[50,20,50,30],[18,33,25,40],[82,33,75,40],[8,55,18,55],[82,55,92,55]].forEach(([x1,y1,x2,y2])=>{
+    ctx.beginPath(); ctx.moveTo(ox+x1*s,oy+y1*s); ctx.lineTo(ox+x2*s,oy+y2*s); ctx.stroke();
+  });
+  ctx.restore();
+}
+
+function renderMark(id, color, bg) {
+  const c = document.getElementById(id);
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const sz = c.width;
+  if (bg) { ctx.fillStyle=bg; ctx.fillRect(0,0,sz,sz); }
+  const pad = sz * 0.13;
+  drawMark(ctx, pad, pad, sz - pad*2, color);
+}
+
+function renderHoriz(id, markColor, textColor, bg) {
+  const c = document.getElementById(id);
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  if (bg) { ctx.fillStyle=bg; ctx.fillRect(0,0,W,H); }
+  const markSize = H * 0.72;
+  const markX = H * 0.16;
+  const markY = (H - markSize) / 2;
+  drawMark(ctx, markX, markY, markSize, markColor);
+  const textX = markX + markSize + H * 0.14;
+  const fSize = H * 0.295;
+  ctx.font = `italic ${fSize}px "Instrument Serif", Georgia, serif`;
+  ctx.fillStyle = textColor;
+  ctx.textBaseline = 'middle';
+  ctx.fillText('Acordei, virei líder.', textX, H * 0.5);
+  ctx.textBaseline = 'alphabetic';
+}
+
+function renderVert(id) {
+  const c = document.getElementById(id);
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.width, H = c.height;
+  const markSize = W * 0.74;
+  const markX = (W - markSize) / 2;
+  drawMark(ctx, markX, H * 0.04, markSize, '#E8552D');
+  const fSize = W * 0.128;
+  ctx.font = `italic ${fSize}px "Instrument Serif", Georgia, serif`;
+  ctx.fillStyle = '#2A1A14';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('Acordei,', W/2, H * 0.73);
+  ctx.fillText('virei líder.', W/2, H * 0.73 + fSize * 1.15);
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+}
+
+let rendered = false;
+async function renderAll() {
+  if (rendered) return; rendered = true;
+  await Promise.all([
+    document.fonts.load('italic 1px "Instrument Serif"'),
+    document.fonts.load('1px "Geist"'),
+    document.fonts.load('1px "JetBrains Mono"')
+  ]);
+  renderMark('c-mark-terra',    '#E8552D', null);
+  renderMark('c-mark-escuro',   '#2A1A14', null);
+  renderMark('c-mark-negativa', '#FFF4E8', '#2A1A14');
+  renderMark('c-mark-ambar',    '#F4A03A', null);
+  renderHoriz('c-horiz-cor', '#E8552D', '#2A1A14', null);
+  renderHoriz('c-horiz-esc', '#2A1A14', '#2A1A14', null);
+  renderHoriz('c-horiz-neg', '#FFF4E8', '#FFF4E8', '#2A1A14');
+  renderVert('c-vert-cor');
+}
+document.fonts.ready.then(renderAll);
+setTimeout(renderAll, 1800);
+
+// ── DOWNLOAD FUNCTIONS ─────────────────────────────
+
+function dlPNG(canvasId, filename) {
+  const c = document.getElementById(canvasId);
+  const a = document.createElement('a');
+  a.download = filename + '.png';
+  a.href = c.toDataURL('image/png');
+  a.click();
+}
+
+function buildMarkSVG(color, bg) {
+  const hasBg = bg ? `<rect width="120" height="100" fill="${bg}"/>` : '';
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 10 120 80" width="480" height="320">
+  <title>Acordei, virei líder — Símbolo</title>${hasBg}
+  <line x1="6" y1="65" x2="94" y2="65" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="50" cy="65" r="22" fill="${color}"/>
+  <line x1="50" y1="20" x2="50" y2="30" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+  <line x1="18" y1="33" x2="25" y2="40" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+  <line x1="82" y1="33" x2="75" y2="40" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+  <line x1="8"  y1="55" x2="18" y2="55" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+  <line x1="82" y1="55" x2="92" y2="55" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+</svg>`;
+}
+
+function buildHorizSVG(markColor, textColor, bg) {
+  const hasBg = bg ? `<rect width="560" height="120" fill="${bg}"/>` : '';
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 120" width="1680" height="360">
+  <title>Acordei, virei líder — Marca Horizontal</title>
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&amp;display=swap');</style></defs>
+  ${hasBg}
+  <g transform="translate(10,2) scale(1.12)">
+    <line x1="6" y1="65" x2="94" y2="65" stroke="${markColor}" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="50" cy="65" r="22" fill="${markColor}"/>
+    <line x1="50" y1="20" x2="50" y2="30" stroke="${markColor}" stroke-width="3" stroke-linecap="round"/>
+    <line x1="18" y1="33" x2="25" y2="40" stroke="${markColor}" stroke-width="3" stroke-linecap="round"/>
+    <line x1="82" y1="33" x2="75" y2="40" stroke="${markColor}" stroke-width="3" stroke-linecap="round"/>
+    <line x1="8"  y1="55" x2="18" y2="55" stroke="${markColor}" stroke-width="3" stroke-linecap="round"/>
+    <line x1="82" y1="55" x2="92" y2="55" stroke="${markColor}" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <text x="135" y="78" font-family="'Instrument Serif',Georgia,serif" font-style="italic" font-size="48" fill="${textColor}" letter-spacing="-1">Acordei, virei líder.</text>
+</svg>`;
+}
+
+function buildVertSVG() {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="600" height="720">
+  <title>Acordei, virei líder — Marca Vertical</title>
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&amp;display=swap');</style></defs>
+  <g transform="translate(13,4) scale(1.74)">
+    <line x1="6" y1="65" x2="94" y2="65" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="50" cy="65" r="22" fill="#E8552D"/>
+    <line x1="50" y1="20" x2="50" y2="30" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="18" y1="33" x2="25" y2="40" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="82" y1="33" x2="75" y2="40" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="8"  y1="55" x2="18" y2="55" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="82" y1="55" x2="92" y2="55" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <text x="100" y="196" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-style="italic" font-size="26" fill="#2A1A14" letter-spacing="-0.5">Acordei,</text>
+  <text x="100" y="224" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-style="italic" font-size="26" fill="#2A1A14" letter-spacing="-0.5">virei líder.</text>
+</svg>`;
+}
+
+function dlSVG(type, color, bg, filename) {
+  const svg = buildMarkSVG(color, bg);
+  triggerDownload(svg, filename + '.svg', 'image/svg+xml');
+}
+function dlSVGHoriz(mc, tc, bg, filename) {
+  triggerDownload(buildHorizSVG(mc, tc, bg), filename + '.svg', 'image/svg+xml');
+}
+function dlSVGVert(filename) {
+  triggerDownload(buildVertSVG(), filename + '.svg', 'image/svg+xml');
+}
+
+function triggerDownload(content, filename, type) {
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.download = filename; a.href = url; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function downloadAll(btn) {
+  btn.textContent = '…aguarde';
+  btn.disabled = true;
+  const tasks = [
+    () => dlSVG('mark','#E8552D',null,'avl-simbolo-terra'),
+    () => dlPNG('c-mark-terra','avl-simbolo-terra'),
+    () => dlSVG('mark','#2A1A14',null,'avl-simbolo-escuro'),
+    () => dlPNG('c-mark-escuro','avl-simbolo-escuro'),
+    () => dlSVG('mark','#FFF4E8','#2A1A14','avl-simbolo-negativa'),
+    () => dlPNG('c-mark-negativa','avl-simbolo-negativa'),
+    () => dlSVG('mark','#F4A03A',null,'avl-simbolo-ambar'),
+    () => dlPNG('c-mark-ambar','avl-simbolo-ambar'),
+    () => dlSVGHoriz('#E8552D','#2A1A14',null,'avl-marca-horizontal-cor'),
+    () => dlPNG('c-horiz-cor','avl-marca-horizontal-cor'),
+    () => dlSVGHoriz('#2A1A14','#2A1A14',null,'avl-marca-horizontal-escuro'),
+    () => dlPNG('c-horiz-esc','avl-marca-horizontal-escuro'),
+    () => dlSVGHoriz('#FFF4E8','#FFF4E8','#2A1A14','avl-marca-horizontal-negativa'),
+    () => dlPNG('c-horiz-neg','avl-marca-horizontal-negativa'),
+    () => dlSVGVert('avl-marca-vertical-cor'),
+    () => dlPNG('c-vert-cor','avl-marca-vertical-cor'),
+  ];
+  for (const fn of tasks) { fn(); await new Promise(r=>setTimeout(r,350)); }
+  btn.textContent = '✓ Baixados!';
+  setTimeout(() => { btn.textContent = '↓  Baixar todos os arquivos'; btn.disabled=false; }, 3000);
+}
+</script>
+</body>
+</html>

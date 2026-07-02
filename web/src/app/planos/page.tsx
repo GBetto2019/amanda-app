@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { SunIcon } from "@/components/ui/SunIcon";
+import { checkoutUrl } from "@/lib/hotmart/checkout";
 
-// Substitua pelas URLs reais dos produtos na Hotmart após criação
-const HOTMART_BASICO = "#em-breve";
-const HOTMART_CLUBE = "#em-breve";
-const HOTMART_PREMIUM = "#em-breve";
+// Básico (Aprenda) vai direto ao checkout — não dá acesso ao Mentor IA.
+// Complementar e Premium passam pelo /cadastro (captura o lead) antes do Hotmart.
+const HOTMART_BASICO = checkoutUrl("basico");
 
 const WHATSAPP = "https://wa.me/5511974668867";
 
@@ -42,22 +42,28 @@ export default function PlanosPage() {
 
             {/* Plano Básico */}
             <div className="relative rounded-[1.75rem] border border-[var(--linha)] bg-white p-7 md:p-8 flex flex-col">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cafe-3 mb-4">
-                Plano Básico
-              </p>
-              <div className="mb-5">
-                <span className="font-serif italic text-[clamp(36px,5vw,52px)] leading-none text-cafe">
-                  R$197
-                </span>
-                <span className="block text-[13px] text-cafe-3 mt-1">
-                  ou 6× de R$39,90
+              <div className="absolute top-5 right-5">
+                <span className="font-mono text-[9px] uppercase tracking-[0.14em] bg-sol/15 text-brasa px-2.5 py-1 rounded-full">
+                  Comece por aqui
                 </span>
               </div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cafe-3 mb-4">
+                Aprenda
+              </p>
+              <div className="mb-4">
+                <span className="font-serif italic text-[clamp(36px,5vw,52px)] leading-none text-cafe">
+                  R$39,90
+                </span>
+              </div>
+              <p className="text-[13px] text-cafe-2 leading-snug mb-5">
+                4 videoaulas sobre os temas fundamentais da primeira liderança — prática, direta e sem enrolação.
+              </p>
               <ul className="space-y-3 flex-1 mb-7">
                 {[
-                  "Videoaulas completas para os 6 primeiros meses como Líder",
-                  "30 scripts prontos para conversas difíceis",
-                  "Mentor de Bolso IA 24h por 6 meses",
+                  "Virei líder e agora? — a transição sem sofrer",
+                  "Como fazer feedback",
+                  "Como construir um time de alta performance",
+                  "Como conduzir conversas difíceis",
                 ].map((item) => (
                   <li key={item} className="flex gap-2.5 text-[13px] md:text-[14px] text-cafe-2 leading-snug">
                     <span className="text-sol shrink-0 mt-0.5">✱</span>
@@ -71,7 +77,7 @@ export default function PlanosPage() {
                 rel="noopener noreferrer"
                 className="block text-center bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.18em] py-3.5 rounded-full hover:bg-sol-soft transition-colors"
               >
-                Escolher Básico →
+                Saiba Mais
               </a>
             </div>
 
@@ -83,22 +89,24 @@ export default function PlanosPage() {
                 </span>
               </div>
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cafe-3 mb-4">
-                Clube do Novo Líder
+                Mentor IA
               </p>
-              <div className="mb-5">
+              <div className="mb-4">
                 <span className="font-serif italic text-[clamp(36px,5vw,52px)] leading-none text-cafe">
-                  R$39,90
+                  R$29,90
                 </span>
                 <span className="block text-[13px] text-cafe-3 mt-1">
                   por mês · cancele quando quiser
                 </span>
               </div>
+              <p className="text-[13px] text-cafe-2 leading-snug mb-5">
+                Um mentor de bolso treinado pela nossa metodologia, pronto para suas perguntas a qualquer hora.
+              </p>
               <ul className="space-y-3 flex-1 mb-7">
                 {[
-                  "Tudo do Plano Básico",
-                  "Mentor IA após os 6 meses iniciais",
-                  "Novos materiais e atualizações mensais",
-                  "Sem fidelidade — cancela sem custo",
+                  "Perguntas 24h por dia, 7 dias por semana",
+                  "Treinado pela metodologia Acordei, virei líder",
+                  "Cancele sem custo, quando quiser",
                 ].map((item) => (
                   <li key={item} className="flex gap-2.5 text-[13px] md:text-[14px] text-cafe-2 leading-snug">
                     <span className="text-sol shrink-0 mt-0.5">✱</span>
@@ -106,14 +114,12 @@ export default function PlanosPage() {
                   </li>
                 ))}
               </ul>
-              <a
-                href={HOTMART_CLUBE}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/cadastro?plano=complementar"
                 className="block text-center border border-cafe/20 text-cafe font-mono text-[11px] uppercase tracking-[0.18em] py-3.5 rounded-full hover:bg-cafe/5 transition-colors"
               >
-                Escolher Clube →
-              </a>
+                Saiba Mais
+              </Link>
             </div>
 
             {/* Premium */}
@@ -127,22 +133,21 @@ export default function PlanosPage() {
                 </span>
               </div>
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amanhecer mb-4 relative">
-                Clube Premium
+                Evolua com acompanhamento
               </p>
-              <div className="mb-5 relative">
+              <div className="mb-4 relative">
                 <span className="font-serif italic text-[clamp(36px,5vw,52px)] leading-none text-creme">
-                  R$139,90
-                </span>
-                <span className="block text-[13px] text-creme/50 mt-1">
-                  por mês · cancele quando quiser
+                  3x de R$99,00
                 </span>
               </div>
+              <p className="text-[13px] text-creme/70 leading-snug mb-5 relative">
+                Para quem quer um acompanhamento guiado, de perto, com quem idealizou o projeto.
+              </p>
               <ul className="space-y-3 flex-1 mb-7 relative">
                 {[
-                  "Tudo do Clube do Novo Líder",
-                  "Mentoria ao vivo em grupo — 2h/mês",
-                  "1× por mês, com pauta real dos membros",
-                  "Sem fidelidade — cancela sem custo",
+                  "6 sessões de mentoria em grupo, quinzenais (1h cada)",
+                  "Troque vivências com quem vive o mesmo momento",
+                  "Tire dúvidas direto com a idealizadora do projeto",
                 ].map((item) => (
                   <li key={item} className="flex gap-2.5 text-[13px] md:text-[14px] text-creme/80 leading-snug">
                     <span className="text-sol shrink-0 mt-0.5">✱</span>
@@ -150,14 +155,12 @@ export default function PlanosPage() {
                   </li>
                 ))}
               </ul>
-              <a
-                href={HOTMART_PREMIUM}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/cadastro?plano=premium"
                 className="relative block text-center bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.18em] py-3.5 rounded-full hover:bg-sol-soft transition-colors"
               >
-                Escolher Premium →
-              </a>
+                Saiba Mais
+              </Link>
             </div>
           </div>
 

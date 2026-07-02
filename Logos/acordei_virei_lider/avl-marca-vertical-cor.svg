@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="600" height="720">
+  <title>Acordei, virei líder — Marca Vertical</title>
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&amp;display=swap');</style></defs>
+  <g transform="translate(13,4) scale(1.74)">
+    <line x1="6" y1="65" x2="94" y2="65" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="50" cy="65" r="22" fill="#E8552D"/>
+    <line x1="50" y1="20" x2="50" y2="30" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="18" y1="33" x2="25" y2="40" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="82" y1="33" x2="75" y2="40" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="8"  y1="55" x2="18" y2="55" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="82" y1="55" x2="92" y2="55" stroke="#E8552D" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <text x="100" y="196" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-style="italic" font-size="26" fill="#2A1A14" letter-spacing="-0.5">Acordei,</text>
+  <text x="100" y="224" text-anchor="middle" font-family="'Instrument Serif',Georgia,serif" font-style="italic" font-size="26" fill="#2A1A14" letter-spacing="-0.5">virei líder.</text>
+</svg>

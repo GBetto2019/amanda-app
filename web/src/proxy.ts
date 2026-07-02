@@ -1,23 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-
-async function getProfile(
-  supabase: ReturnType<typeof createServerClient>,
-  userId: string
-) {
-  const { data } = await supabase
-    .from("profiles")
-    .select("status, acesso_expira_em")
-    .eq("id", userId)
-    .single();
-  return data;
-}
-
-function isActive(profile: { status: string; acesso_expira_em?: string | null } | null) {
-  if (!profile || profile.status !== "active") return false;
-  if (profile.acesso_expira_em && new Date(profile.acesso_expira_em) <= new Date()) return false;
-  return true;
-}
+import { acessoAtivo, type AcessoInfo } from "@/lib/acesso";
 
 export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -49,41 +32,70 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // /chat → requer auth + status active
+  async function getAssinante(): Promise<AcessoInfo> {
+    if (!user) return null;
+    const { data } = await supabase
+      .from("assinantes")
+      .select("acesso_status, data_fim")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    return data;
+  }
+
+  async function isAdmin(): Promise<boolean> {
+    if (!user) return false;
+    const { data } = await supabase
+      .from("admins")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    return !!data;
+  }
+
+  // --- Painel admin ---
+  if (pathname === "/admin/login") {
+    if (user && (await isAdmin())) {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+    return supabaseResponse;
+  }
+
+  if (pathname.startsWith("/admin")) {
+    if (!user || !(await isAdmin())) {
+      return NextResponse.redirect(new URL("/admin/login", request.url));
+    }
+    return supabaseResponse;
+  }
+
+  // --- Mentor IA ---
   if (pathname.startsWith("/chat")) {
     if (!user) {
-      return NextResponse.redirect(new URL("/entrar", request.url));
+      return NextResponse.redirect(new URL("/login", request.url));
     }
-    const profile = await getProfile(supabase, user.id);
-    if (!isActive(profile)) {
+    if (!acessoAtivo(await getAssinante())) {
       return NextResponse.redirect(new URL("/aguardando", request.url));
     }
   }
 
-  // /planos → requer auth
-  if (pathname.startsWith("/planos") && !user) {
-    return NextResponse.redirect(new URL("/entrar", request.url));
-  }
-
-  // /aguardando → requer auth
+  // --- Aguardando/renovação (requer login) ---
   if (pathname.startsWith("/aguardando") && !user) {
-    return NextResponse.redirect(new URL("/entrar", request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // /entrar ou /cadastro → se já logado, redireciona conforme status
-  if (pathname === "/entrar" || pathname === "/cadastro") {
-    if (user) {
-      const profile = await getProfile(supabase, user.id);
-      if (isActive(profile)) {
-        return NextResponse.redirect(new URL("/chat", request.url));
-      }
-      return NextResponse.redirect(new URL("/planos", request.url));
+  // --- Login do assinante: se já logado, roteia conforme acesso ---
+  if (pathname === "/login" && user) {
+    if (await isAdmin()) {
+      return NextResponse.redirect(new URL("/admin", request.url));
     }
+    if (acessoAtivo(await getAssinante())) {
+      return NextResponse.redirect(new URL("/chat", request.url));
+    }
+    return NextResponse.redirect(new URL("/aguardando", request.url));
   }
 
   return supabaseResponse;
 }
 
 export const config = {
-  matcher: ["/chat/:path*", "/planos/:path*", "/aguardando/:path*", "/entrar", "/cadastro"],
+  matcher: ["/chat/:path*", "/admin/:path*", "/aguardando/:path*", "/login"],
 };

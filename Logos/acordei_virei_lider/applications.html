@@ -1,0 +1,675 @@
+<!doctype html>
+<!-- @dsCard group="Brand" name="Acordei, virei líder — Applications" subtitle="Instagram feed + stories + course cover + slide deck + email + ads + merch" viewport="1440x1200" -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Acordei, virei líder · Aplicações</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --sol:#E8552D; --amanhecer:#F4A03A; --pessego:#FFD8B5; --creme:#FFF4E8; --linho:#F8E8D4;
+  --brasa:#8E2E18; --cafe:#2A1A14; --cafe-2:#5A4439; --cafe-3:#8A7468;
+  --linha:rgba(42,26,20,0.12); --linha-soft:rgba(42,26,20,0.06);
+  --serif:"Instrument Serif", serif; --sans:"Geist", system-ui, sans-serif; --mono:"JetBrains Mono", monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--creme);color:var(--cafe);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1440px;margin:0 auto;padding:0 56px}
+.section{padding:120px 0;position:relative}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brasa);font-weight:500}
+.tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:var(--cafe-3)}
+.h1{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(64px,9vw,140px);line-height:0.9;letter-spacing:-0.035em;margin:14px 0 0;color:var(--cafe)}
+.h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(40px,5vw,72px);line-height:0.95;letter-spacing:-0.025em;color:var(--cafe)}
+.lede{font-weight:300;font-size:20px;line-height:1.55;color:var(--cafe-2);max-width:60ch;text-wrap:pretty}
+.banner{display:flex;justify-content:space-between;align-items:flex-end;padding:64px 0 80px;border-bottom:1px solid var(--linha-soft)}
+.chapter{display:flex;align-items:baseline;gap:24px;margin-bottom:32px}
+.chapter__no{font-family:var(--mono);font-size:11px;letter-spacing:0.22em;color:var(--brasa);text-transform:uppercase}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.serif-it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-0.02em;line-height:0.95}
+
+/* ── Phone frame ── */
+.phone{aspect-ratio:9/19.5;border-radius:42px;padding:14px;background:var(--cafe);box-shadow:0 30px 60px rgba(42,26,20,0.18)}
+.phone__screen{background:#fff;border-radius:30px;height:100%;display:flex;flex-direction:column;overflow:hidden;position:relative}
+
+/* ── Instagram chrome ── */
+.ig-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #efefef}
+.ig-top__title{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--cafe);line-height:1}
+.ig-stories{display:flex;gap:14px;padding:14px 16px;overflow:hidden;border-bottom:1px solid #efefef}
+.ig-story{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0}
+.ig-story__ring{width:56px;height:56px;border-radius:999px;padding:2.5px;background:linear-gradient(135deg,var(--sol),var(--amanhecer))}
+.ig-story__inner{width:100%;height:100%;border-radius:999px;background:#fff;padding:2px;display:flex;align-items:center;justify-content:center;color:var(--sol)}
+.ig-story__label{font-size:9px;color:var(--cafe-2);max-width:60px;text-align:center;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.ig-post{padding:12px 0}
+.ig-post__head{display:flex;align-items:center;gap:10px;padding:0 14px 10px}
+.ig-post__head .avatar{width:34px;height:34px;border-radius:999px;background:var(--sol);display:flex;align-items:center;justify-content:center;color:var(--creme)}
+.ig-post__name{font-size:13px;font-weight:600;color:var(--cafe)}
+.ig-post__actions{display:flex;gap:14px;padding:10px 14px 6px;color:var(--cafe)}
+.ig-bottomnav{display:flex;justify-content:space-around;padding:12px 0 18px;border-top:1px solid #efefef;background:#fff}
+.ig-bottomnav svg{color:var(--cafe)}
+
+/* ── Post primitives ── */
+.post-frame{aspect-ratio:1;display:flex;flex-direction:column;justify-content:space-between;padding:32px;position:relative;overflow:hidden;border-radius:0}
+.post-rounded{border-radius:18px}
+.post-cred{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;opacity:0.85}
+
+/* ── Story frame ── */
+.story{aspect-ratio:9/16;display:flex;flex-direction:column;justify-content:space-between;padding:32px;border-radius:24px;overflow:hidden;position:relative}
+
+/* ── Slide ── */
+.slide{aspect-ratio:16/9;border-radius:18px;padding:56px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+
+/* ── Card / Sticker ── */
+.tile{border-radius:20px;padding:32px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+
+/* ── Helpers ── */
+.bg-sol{background:var(--sol);color:var(--creme)}
+.bg-amber{background:var(--amanhecer);color:var(--cafe)}
+.bg-cafe{background:var(--cafe);color:var(--creme)}
+.bg-brasa{background:var(--brasa);color:var(--creme)}
+.bg-creme{background:var(--creme);color:var(--cafe)}
+.bg-linho{background:var(--linho);color:var(--cafe)}
+.bg-pessego{background:var(--pessego);color:var(--brasa)}
+
+.kbd{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,0.08);color:inherit;display:inline-block}
+.btn-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase}
+.divider{height:1px;background:var(--linha);margin:0}
+
+/* ── Specific compositions ── */
+.feed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#000}
+.feed-grid .post-frame{border-radius:0;aspect-ratio:1}
+
+.cover-stripes{position:absolute;inset:0;background:repeating-linear-gradient(45deg, transparent 0 22px, rgba(255,244,232,0.06) 22px 23px)}
+
+/* Sun icon */
+.sun-svg{display:block}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="sun" viewBox="0 0 100 100">
+      <line x1="6" y1="65" x2="94" y2="65" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="50" cy="65" r="22" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none">
+        <line x1="50" y1="20" x2="50" y2="30"/>
+        <line x1="18" y1="33" x2="25" y2="40"/>
+        <line x1="82" y1="33" x2="75" y2="40"/>
+        <line x1="8"  y1="55" x2="18" y2="55"/>
+        <line x1="82" y1="55" x2="92" y2="55"/>
+      </g>
+    </symbol>
+    <symbol id="star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20M5.5 5.5l13 13M18.5 5.5l-13 13"/></symbol>
+    <symbol id="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
+    <symbol id="comment" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
+    <symbol id="bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9.5L12 3l9 6.5V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+    <symbol id="search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+    <symbol id="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+    <symbol id="play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+  </defs>
+</svg>
+
+<!-- ── BANNER ─────────────────────────────────────────────── -->
+<header class="wrap">
+  <div class="banner">
+    <div>
+      <span class="eyebrow">Acordei, virei líder · sistema em uso</span>
+      <h1 class="h1">Aplicações.</h1>
+      <p class="lede" style="margin-top:28px">
+        A marca rodando no mundo real — Instagram, story, capa de curso, deck de aula, e-mail, anúncio, merch.<br/>
+        <em style="font-family:var(--serif)">Faz assim: copia, edita o texto, mantém a estrutura.</em>
+      </p>
+    </div>
+    <div style="text-align:right">
+      <span class="tag">v1.0 · Maio 2026</span>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:18px">
+        <span class="kbd" style="background:var(--sol);color:var(--creme)">INSTAGRAM</span>
+        <span class="kbd" style="background:var(--cafe);color:var(--creme)">DECK</span>
+        <span class="kbd" style="background:var(--amanhecer)">MERCH</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── INSTAGRAM FEED (3x3 grid + 2 phones) ──────────────── -->
+<section class="section">
+  <div class="wrap">
+    <div class="chapter"><span class="chapter__no">01 — Instagram · Feed</span></div>
+    <h2 class="h2" style="max-width:900px">Nove posts. Três tipos. <em style="color:var(--sol)">Um sistema.</em></h2>
+    <p class="lede" style="margin-top:18px;margin-bottom:56px">
+      Grade visualmente coesa que rotaciona três famílias: <strong>provocação</strong> (manchete sobre cor sólida), <strong>bordão</strong> (citação sobre creme com aspas grandes) e <strong>roteiro</strong> (capa de carrossel com "faz assim:").
+    </p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start">
+      <!-- 3x3 grid -->
+      <div class="feed-grid" style="border-radius:18px;overflow:hidden;border:1px solid var(--linha-soft)">
+        <!-- row 1 -->
+        <div class="post-frame bg-sol">
+          <div style="display:flex;justify-content:space-between"><span class="post-cred">EP. 014</span><svg width="22" height="22" style="color:var(--creme)"><use href="#sun"/></svg></div>
+          <div class="serif-it" style="font-size:24px">Sua 1:1 não pode ser uma terapia.</div>
+        </div>
+        <div class="post-frame bg-creme">
+          <div style="display:flex;justify-content:space-between"><span class="post-cred" style="color:var(--cafe-3)">FAZ ASSIM</span><svg width="22" height="22" style="color:var(--sol)"><use href="#sun"/></svg></div>
+          <div>
+            <span style="font-family:var(--serif);font-style:italic;font-size:28px;color:var(--brasa);line-height:0.6">"</span>
+            <div class="serif-it" style="font-size:22px;margin-top:-6px">O combinado salva o líder.</div>
+          </div>
+        </div>
+        <div class="post-frame bg-cafe">
+          <div style="display:flex;justify-content:space-between"><span class="post-cred" style="color:var(--amanhecer)">PROVOCAÇÃO</span><span style="font-family:var(--serif);font-style:italic;color:var(--amanhecer);font-size:18px">a.</span></div>
+          <div class="serif-it" style="font-size:22px">Ninguém te ensinou isso, né?</div>
+        </div>
+        <!-- row 2 -->
+        <div class="post-frame bg-amber">
+          <div style="display:flex;justify-content:space-between"><span class="post-cred">CARROSSEL · 8</span><svg width="22" height="22" style="color:var(--cafe)"><use href="#sun"/></svg></div>
+          <div class="serif-it" style="font-size:22px">12 perguntas pra fazer na sua 1ª 1:1.</div>
+        </div>
+        <div class="post-frame bg-brasa">
+          <div style="display:flex;justify-content:space-between"><span class="post-cred" style="color:var(--amanhecer)">REELS · 0:48</span><svg width="20" height="20" style="color:var(--amanhecer)"><use href="#play"/></svg></div>
+          <div class="serif-it" style="font-size:22px">Cobrar sem virar chefe ruim.</div>
+        </div>
+        <div class="post-frame bg-pessego">
+          <div style="display:flex;justify-content:space-between"><span class="post-cred" style="color:var(--brasa)">BORDÃO</span><svg width="22" height="22" style="color:var(--brasa)"><use href="#sun"/></svg></div>
+          <div>
+            <span style="font-family:var(--serif);font-style:italic;font-size:28px;color:var(--sol);line-height:0.6">"</span>
+            <div class="serif-it" style="font-size:20px;color:var(--cafe)">Você não precisa improvisar liderança.</div>
+          </div>
+        </div>
+        <!-- row 3 -->
+        <div class="post-frame bg-sol">
+          <div style="display:flex;justify-content:space-between"><span class="post-cred">EP. 015</span><svg width="22" height="22" style="color:var(--creme)"><use href="#sun"/></svg></div>
+          <div class="serif-it" style="font-size:24px">Feedback sem virar terapia.</div>
+        </div>
+        <div class="post-frame bg-creme">
+          <div style="display:flex;justify-content:space-between"><span class="post-cred" style="color:var(--cafe-3)">CARROSSEL · 6</span><svg width="22" height="22" style="color:var(--sol)"><use href="#sun"/></svg></div>
+          <div class="serif-it" style="font-size:22px">Pra quando o time te questiona.</div>
+        </div>
+        <div class="post-frame bg-cafe">
+          <div style="display:flex;justify-content:space-between"><span class="post-cred" style="color:var(--amanhecer)">BORDÃO</span><span style="font-family:var(--serif);font-style:italic;color:var(--amanhecer);font-size:18px">✱</span></div>
+          <div>
+            <span style="font-family:var(--serif);font-style:italic;font-size:28px;color:var(--sol);line-height:0.6">"</span>
+            <div class="serif-it" style="font-size:20px">Conversa difícil bem feita.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile mockup phone -->
+      <div class="phone">
+        <div class="phone__screen" style="background:#fff">
+          <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #efefef">
+            <div style="display:flex;align-items:center;gap:6px">
+              <span style="font-size:14px;font-weight:600">acordeivireilider</span>
+              <span style="color:var(--cafe-3);font-size:14px">▾</span>
+            </div>
+            <div style="display:flex;gap:18px;color:var(--cafe)"><svg width="22" height="22"><use href="#plus"/></svg><svg width="22" height="22"><use href="#send"/></svg></div>
+          </div>
+          <div style="padding:16px;display:flex;gap:18px;align-items:center">
+            <div style="width:78px;height:78px;border-radius:999px;background:var(--sol);display:flex;align-items:center;justify-content:center;color:var(--creme);flex-shrink:0">
+              <svg width="40" height="40"><use href="#sun"/></svg>
+            </div>
+            <div style="display:flex;flex:1;justify-content:space-around;text-align:center">
+              <div><div style="font-weight:700;font-size:15px">412</div><div style="font-size:11px;color:var(--cafe-2)">posts</div></div>
+              <div><div style="font-weight:700;font-size:15px">187k</div><div style="font-size:11px;color:var(--cafe-2)">seguidores</div></div>
+              <div><div style="font-weight:700;font-size:15px">12</div><div style="font-size:11px;color:var(--cafe-2)">seguindo</div></div>
+            </div>
+          </div>
+          <div style="padding:0 16px 12px">
+            <div style="font-size:13px;font-weight:600">acordei, virei líder.</div>
+            <div style="font-size:13px;color:var(--cafe-2);margin-top:4px;line-height:1.4">
+              liderança na prática pra quem virou líder ontem.<br/>
+              <span style="color:var(--brasa)">↳ roteiro novo toda quinta</span>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:10px">
+              <span class="kbd" style="background:#efefef;color:var(--cafe);font-size:11px;padding:6px 12px">Seguir</span>
+              <span class="kbd" style="background:#efefef;color:var(--cafe);font-size:11px;padding:6px 12px">Mensagem</span>
+              <span class="kbd" style="background:#efefef;color:var(--cafe);font-size:11px;padding:6px 12px;flex:0">▾</span>
+            </div>
+          </div>
+          <!-- Story highlights -->
+          <div style="display:flex;gap:14px;padding:8px 16px 14px;border-bottom:1px solid #efefef">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:54px;height:54px;border-radius:999px;background:var(--linho);display:flex;align-items:center;justify-content:center;border:1px solid var(--linha)"><svg width="22" height="22" style="color:var(--sol)"><use href="#sun"/></svg></div><span style="font-size:10px">1:1</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:54px;height:54px;border-radius:999px;background:var(--pessego);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:20px;color:var(--brasa)">a.</div><span style="font-size:10px">feedback</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:54px;height:54px;border-radius:999px;background:var(--cafe);display:flex;align-items:center;justify-content:center;color:var(--amanhecer);font-family:var(--serif);font-style:italic;font-size:24px">✱</div><span style="font-size:10px">cobrança</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:54px;height:54px;border-radius:999px;background:var(--amanhecer);display:flex;align-items:center;justify-content:center;color:var(--cafe);font-family:var(--serif);font-style:italic;font-size:22px">14</div><span style="font-size:10px">roteiros</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:54px;height:54px;border-radius:999px;background:var(--linho);display:flex;align-items:center;justify-content:center;color:var(--cafe-2);font-size:18px">+</div><span style="font-size:10px;color:var(--cafe-2)">novo</span></div>
+          </div>
+          <!-- mini-grid -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;flex:1">
+            <div class="post-frame bg-sol" style="padding:14px;aspect-ratio:1;border-radius:0"><div class="serif-it" style="font-size:13px;align-self:flex-end">Sua 1:1 não pode ser uma terapia.</div></div>
+            <div class="post-frame bg-creme" style="padding:14px;aspect-ratio:1;border-radius:0"><div class="serif-it" style="font-size:12px;color:var(--cafe);align-self:flex-end">O combinado salva o líder.</div></div>
+            <div class="post-frame bg-cafe" style="padding:14px;aspect-ratio:1;border-radius:0"><div class="serif-it" style="font-size:12px;color:var(--creme);align-self:flex-end">Ninguém te ensinou isso.</div></div>
+            <div class="post-frame bg-amber" style="padding:14px;aspect-ratio:1;border-radius:0"><div class="serif-it" style="font-size:12px;align-self:flex-end">12 perguntas pra 1ª 1:1.</div></div>
+            <div class="post-frame bg-brasa" style="padding:14px;aspect-ratio:1;border-radius:0"><div class="serif-it" style="font-size:12px;color:var(--creme);align-self:flex-end">Cobrar sem virar chefe ruim.</div></div>
+            <div class="post-frame bg-pessego" style="padding:14px;aspect-ratio:1;border-radius:0"><div class="serif-it" style="font-size:12px;color:var(--cafe);align-self:flex-end">Você não precisa improvisar.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ── INSTAGRAM STORIES ──────────────────────────────────── -->
+<section class="section" style="background:var(--linho)">
+  <div class="wrap">
+    <div class="chapter"><span class="chapter__no">02 — Instagram · Stories</span></div>
+    <h2 class="h2" style="max-width:900px">Stories como <em style="color:var(--sol)">manchete</em>. CTA sempre na base.</h2>
+    <div class="grid g4" style="margin-top:48px">
+      <div class="story bg-sol">
+        <div style="display:flex;gap:4px"><span style="flex:1;height:3px;background:var(--creme);border-radius:2px"></span><span style="flex:1;height:3px;background:rgba(255,255,255,0.3);border-radius:2px"></span><span style="flex:1;height:3px;background:rgba(255,255,255,0.3);border-radius:2px"></span></div>
+        <div>
+          <span class="post-cred" style="color:rgba(255,244,232,0.85)">QUINTA · NOVO EPISÓDIO</span>
+          <div class="serif-it" style="font-size:48px;margin-top:14px;color:var(--creme)">Sua 1:1 não pode ser uma terapia.</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span class="btn-cta" style="background:var(--cafe);color:var(--creme)">DESLIZE PRA CIMA <svg width="14" height="14"><use href="#arrow"/></svg></span>
+          <svg width="36" height="36" style="color:var(--creme)"><use href="#sun"/></svg>
+        </div>
+      </div>
+
+      <div class="story bg-creme">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:30px;height:30px;border-radius:999px;background:var(--sol);display:flex;align-items:center;justify-content:center"><svg width="18" height="18" style="color:var(--creme)"><use href="#sun"/></svg></div>
+          <span class="post-cred" style="color:var(--cafe-3)">@acordeivireilider · 2h</span>
+        </div>
+        <div>
+          <span class="post-cred" style="color:var(--brasa)">CAIXINHA DE PERGUNTA</span>
+          <div class="serif-it" style="font-size:34px;margin-top:14px;color:var(--cafe)">Qual conversa você tá adiando essa semana?</div>
+          <div style="background:#fff;border:1px solid var(--linha);border-radius:14px;padding:14px;margin-top:18px;font-family:var(--mono);font-size:11px;color:var(--cafe-3);letter-spacing:0.06em">Escreva uma resposta…</div>
+        </div>
+        <div style="display:flex;justify-content:flex-end"><span style="font-family:var(--serif);font-style:italic;color:var(--sol);font-size:48px;line-height:0.8">✱</span></div>
+      </div>
+
+      <div class="story bg-cafe">
+        <div style="display:flex;gap:4px"><span style="flex:1;height:3px;background:var(--amanhecer);border-radius:2px"></span><span style="flex:1;height:3px;background:var(--amanhecer);border-radius:2px"></span><span style="flex:1;height:3px;background:rgba(255,255,255,0.3);border-radius:2px"></span></div>
+        <div>
+          <span class="post-cred" style="color:var(--amanhecer)">BASTIDOR</span>
+          <div class="serif-it" style="font-size:38px;margin-top:14px;color:var(--creme)">Acabei de fazer<br/>a conversa que <span style="color:var(--amanhecer)">tava adiando</span> há 3 semanas.</div>
+        </div>
+        <div style="background:rgba(255,244,232,0.1);border-radius:14px;padding:14px;display:flex;gap:10px;align-items:center;color:var(--creme)">
+          <span style="font-size:24px">😅</span>
+          <span style="font-size:13px">Deslizou pra cima? Roteiro completo no link da bio.</span>
+        </div>
+      </div>
+
+      <div class="story bg-amber">
+        <div></div>
+        <div style="text-align:center">
+          <span class="post-cred" style="color:var(--brasa)">ENQUETE</span>
+          <div class="serif-it" style="font-size:36px;margin-top:14px;color:var(--cafe)">Sua reunião 1:1<br/>tá funcionando?</div>
+          <div style="display:flex;gap:8px;margin-top:24px">
+            <div style="flex:1;background:var(--cafe);color:var(--creme);padding:14px;border-radius:999px;font-family:var(--serif);font-style:italic;font-size:20px">Sim</div>
+            <div style="flex:1;background:var(--creme);color:var(--cafe);padding:14px;border-radius:999px;font-family:var(--serif);font-style:italic;font-size:20px">Acho que não</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center"><svg width="36" height="36" style="color:var(--brasa)"><use href="#sun"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ── COURSE / PROGRAM ───────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <div class="chapter"><span class="chapter__no">03 — Programa · Primeiros 90 dias de líder</span></div>
+    <h2 class="h2" style="max-width:1000px">A capa do produto principal — <em style="color:var(--sol)">o sol cobre a metade da página.</em></h2>
+
+    <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:24px;margin-top:56px">
+      <!-- Cover -->
+      <div class="tile bg-cafe" style="aspect-ratio:1.55;padding:64px">
+        <div class="cover-stripes"></div>
+        <div style="position:absolute;right:-120px;top:-120px;width:520px;height:520px;color:var(--sol)">
+          <svg width="100%" height="100%" style="display:block"><use href="#sun"/></svg>
+        </div>
+        <div style="position:relative;display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <span class="post-cred" style="color:var(--amanhecer)">PROGRAMA · 6 SEMANAS · TURMA 03</span>
+            <div style="margin-top:8px;font-family:var(--mono);font-size:11px;color:rgba(255,244,232,0.6);letter-spacing:0.16em">12 ROTEIROS · 6 LIVES · COMUNIDADE</div>
+          </div>
+          <span style="font-family:var(--serif);font-style:italic;font-size:32px;color:var(--amanhecer)">a.</span>
+        </div>
+        <div style="position:relative">
+          <div class="serif-it" style="font-size:108px;color:var(--creme);max-width:760px">Primeiros<br/>90 dias<br/><em style="color:var(--amanhecer)">de líder.</em></div>
+          <p style="font-size:16px;line-height:1.55;color:rgba(255,244,232,0.75);max-width:480px;margin:32px 0">
+            Roteiros prontos pras 12 conversas que você vai precisar fazer nos primeiros 90 dias — e ninguém te ensinou. Pra gerente que assumiu o cargo na sexta passada.
+          </p>
+          <div style="display:flex;gap:12px;align-items:center;margin-top:16px">
+            <span class="btn-cta" style="background:var(--sol);color:var(--creme)">QUERO ENTRAR <svg width="14" height="14"><use href="#arrow"/></svg></span>
+            <span style="font-family:var(--mono);font-size:11px;color:var(--amanhecer);letter-spacing:0.16em">12X DE R$ 297</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar bits -->
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div class="tile bg-amber" style="padding:28px;aspect-ratio:1.3">
+          <span class="post-cred" style="color:var(--brasa)">MÓDULO 01</span>
+          <div>
+            <div class="serif-it" style="font-size:34px">A 1ª reunião que você não pode improvisar.</div>
+            <p style="font-size:13px;color:var(--cafe-2);margin-top:14px;line-height:1.55">Como abrir, o que perguntar, o que não fazer.</p>
+          </div>
+        </div>
+        <div class="tile bg-creme" style="padding:28px;aspect-ratio:1.3;border:1px solid var(--linha-soft)">
+          <span class="post-cred" style="color:var(--cafe-3)">MÓDULO 04</span>
+          <div>
+            <div class="serif-it" style="font-size:34px;color:var(--cafe)">Feedback que muda o jogo.</div>
+            <p style="font-size:13px;color:var(--cafe-2);margin-top:14px;line-height:1.55">Estrutura de 5 frases. Funciona 80% das vezes.</p>
+          </div>
+        </div>
+        <div class="tile bg-sol" style="padding:28px;aspect-ratio:1.3">
+          <span class="post-cred" style="color:rgba(255,244,232,0.85)">MÓDULO 06</span>
+          <div>
+            <div class="serif-it" style="font-size:34px;color:var(--creme)">Cobrar sem virar chefe ruim.</div>
+            <p style="font-size:13px;color:rgba(255,244,232,0.85);margin-top:14px;line-height:1.55">A diferença entre cobrança e pressão.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ── DECK / SLIDES ──────────────────────────────────────── -->
+<section class="section" style="background:var(--cafe);color:var(--creme)">
+  <div class="wrap">
+    <div class="chapter"><span class="chapter__no" style="color:var(--amanhecer)">04 — Deck de aula</span></div>
+    <h2 class="h2" style="color:var(--creme);max-width:1000px">Slides 16:9 — <em style="color:var(--amanhecer)">três layouts</em> que cobrem 90% das aulas.</h2>
+
+    <div class="grid g2" style="margin-top:56px;gap:24px">
+      <!-- Slide capa -->
+      <div class="slide bg-creme">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <span class="post-cred" style="color:var(--brasa)">MÓDULO 04 · AULA 02</span>
+          <svg width="48" height="48" style="color:var(--sol)"><use href="#sun"/></svg>
+        </div>
+        <div>
+          <div class="serif-it" style="font-size:88px;color:var(--cafe);max-width:680px">Feedback<br/>sem virar<br/><em style="color:var(--sol)">terapia.</em></div>
+          <div style="display:flex;gap:18px;align-items:center;margin-top:30px;color:var(--cafe-2);font-family:var(--mono);font-size:11px;letter-spacing:0.16em">
+            <span>12 MIN</span><span>•</span><span>5 ROTEIROS</span><span>•</span><span>1 EXERCÍCIO</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide "Faz assim:" -->
+      <div class="slide bg-sol">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;color:rgba(255,244,232,0.85)">
+          <span class="post-cred">FAZ ASSIM</span>
+          <span class="post-cred">03/12</span>
+        </div>
+        <div>
+          <div class="serif-it" style="font-size:60px;color:var(--creme);max-width:680px">A estrutura<br/>das <em style="color:var(--cafe)">5 frases</em>.</div>
+          <ol style="margin:32px 0 0;padding:0;list-style:none;display:grid;gap:14px;color:var(--creme)">
+            <li style="display:flex;gap:14px;align-items:flex-start"><span style="font-family:var(--mono);font-size:11px;color:var(--cafe);background:var(--creme);padding:4px 10px;border-radius:999px;letter-spacing:0.1em">01</span><span style="font-size:17px;line-height:1.45">Aqui é o que aconteceu (fato).</span></li>
+            <li style="display:flex;gap:14px;align-items:flex-start"><span style="font-family:var(--mono);font-size:11px;color:var(--cafe);background:var(--creme);padding:4px 10px;border-radius:999px;letter-spacing:0.1em">02</span><span style="font-size:17px;line-height:1.45">Aqui é o impacto que isso teve (consequência).</span></li>
+            <li style="display:flex;gap:14px;align-items:flex-start"><span style="font-family:var(--mono);font-size:11px;color:var(--cafe);background:var(--creme);padding:4px 10px;border-radius:999px;letter-spacing:0.1em">03</span><span style="font-size:17px;line-height:1.45">Aqui é o que eu observei (interpretação).</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Slide bordão -->
+      <div class="slide bg-amber">
+        <div style="display:flex;justify-content:space-between;color:var(--brasa)">
+          <span class="post-cred">BORDÃO</span>
+          <span class="post-cred">07/12</span>
+        </div>
+        <div>
+          <span class="serif-it" style="font-size:72px;color:var(--brasa);line-height:0.6">"</span>
+          <div class="serif-it" style="font-size:72px;color:var(--cafe);max-width:760px;margin-top:-12px">O combinado<br/>salva o líder.</div>
+        </div>
+        <div style="display:flex;justify-content:flex-end"><svg width="60" height="60" style="color:var(--brasa)"><use href="#sun"/></svg></div>
+      </div>
+
+      <!-- Slide comparison -->
+      <div class="slide bg-linho">
+        <div style="display:flex;justify-content:space-between;color:var(--cafe-3)">
+          <span class="post-cred">COMPARAÇÃO</span>
+          <span class="post-cred">09/12</span>
+        </div>
+        <div class="serif-it" style="font-size:44px;color:var(--cafe)">Cobrança <em style="color:var(--sol)">vs.</em> pressão.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div style="background:#fff;border-radius:14px;padding:22px">
+            <span class="post-cred" style="color:var(--brasa)">✓ COBRANÇA</span>
+            <div style="font-family:var(--serif);font-style:italic;font-size:22px;color:var(--cafe);margin-top:10px;line-height:1.1">"Te peguei na palavra. Combinamos quinta. Posso ver?"</div>
+          </div>
+          <div style="background:#fff;border-radius:14px;padding:22px">
+            <span class="post-cred" style="color:var(--cafe-3)">✕ PRESSÃO</span>
+            <div style="font-family:var(--serif);font-style:italic;font-size:22px;color:var(--cafe-3);margin-top:10px;line-height:1.1">"Cadê? Você não fez? Eu confiei em você."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ── EMAIL + AD ─────────────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <div class="chapter"><span class="chapter__no">05 — Newsletter &amp; Anúncio</span></div>
+    <h2 class="h2" style="max-width:900px">Domingo na caixa de entrada. <em style="color:var(--sol)">Roteiro pra segunda.</em></h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px">
+      <!-- Email -->
+      <div style="background:#fff;border-radius:20px;overflow:hidden;border:1px solid var(--linha-soft);box-shadow:0 18px 40px rgba(42,26,20,0.06)">
+        <div style="background:#f4f4f4;padding:10px 16px;display:flex;align-items:center;gap:6px">
+          <span style="width:12px;height:12px;border-radius:999px;background:#ff5f57"></span>
+          <span style="width:12px;height:12px;border-radius:999px;background:#febc2e"></span>
+          <span style="width:12px;height:12px;border-radius:999px;background:#28c840"></span>
+          <span style="margin-left:14px;font-family:var(--mono);font-size:11px;color:var(--cafe-3)">caixa de entrada</span>
+        </div>
+        <div style="padding:24px 28px;border-bottom:1px solid var(--linha-soft);display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:13px;color:var(--cafe-3)">De: <strong style="color:var(--cafe)">a. de acordei, virei líder</strong> &lt;oi@acordeivireilider.com&gt;</div>
+            <div style="font-size:13px;color:var(--cafe-3);margin-top:4px">Para: você</div>
+            <div style="font-family:var(--serif);font-style:italic;font-size:26px;color:var(--cafe);margin-top:10px">A conversa que você tá adiando há 3 semanas.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <span class="post-cred" style="color:var(--cafe-3)">DOM · 09:00</span>
+            <svg width="36" height="36" style="color:var(--sol)"><use href="#sun"/></svg>
+          </div>
+        </div>
+        <div style="padding:32px 28px;display:flex;flex-direction:column;gap:18px">
+          <p style="margin:0;font-size:15px;line-height:1.65;color:var(--cafe)">
+            Oi — domingo de novo. Hoje a gente vai resolver aquela conversa difícil que você tá empurrando pra próxima semana <em style="font-family:var(--serif);color:var(--brasa)">há um mês</em>.
+          </p>
+          <p style="margin:0;font-size:15px;line-height:1.65;color:var(--cafe)">
+            <strong>Faz assim:</strong> abre o calendário agora. Marca pra amanhã, 9h. Título da reunião: "alinhar combinado." Convida a pessoa. Pronto, metade do trabalho tá feito.
+          </p>
+          <div style="background:var(--linho);border-left:3px solid var(--sol);padding:18px 22px;border-radius:0 14px 14px 0">
+            <span class="post-cred" style="color:var(--brasa)">O ROTEIRO COMPLETO</span>
+            <div style="font-family:var(--serif);font-style:italic;font-size:22px;color:var(--cafe);margin-top:8px;line-height:1.15">As 5 frases pra abrir, conduzir e fechar.</div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;margin-top:6px">
+            <span class="btn-cta" style="background:var(--cafe);color:var(--creme)">LEIA NO BLOG <svg width="14" height="14"><use href="#arrow"/></svg></span>
+            <span style="font-size:13px;color:var(--cafe-3)">7 min de leitura</span>
+          </div>
+          <div style="margin-top:10px;padding-top:18px;border-top:1px solid var(--linha-soft);font-family:var(--serif);font-style:italic;color:var(--cafe-2);font-size:16px">
+            até quinta,<br/>a.
+          </div>
+        </div>
+      </div>
+
+      <!-- Ad column -->
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <!-- Ad 1 -->
+        <div class="tile bg-sol" style="padding:36px;aspect-ratio:2">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;color:rgba(255,244,232,0.85)">
+            <span class="post-cred">ANÚNCIO · META · 1080×1350</span>
+            <svg width="34" height="34" style="color:var(--creme)"><use href="#sun"/></svg>
+          </div>
+          <div>
+            <div class="serif-it" style="font-size:56px;color:var(--creme);max-width:520px">Virei gerente. <em style="color:var(--cafe)">E agora?</em></div>
+            <p style="font-size:14px;color:rgba(255,244,232,0.85);margin-top:14px;max-width:440px">12 roteiros prontos pras conversas dos seus primeiros 90 dias. Toque pra começar.</p>
+          </div>
+          <div><span class="btn-cta" style="background:var(--cafe);color:var(--creme)">VER O PROGRAMA <svg width="14" height="14"><use href="#arrow"/></svg></span></div>
+        </div>
+        <!-- Ad 2 LinkedIn -->
+        <div class="tile bg-creme" style="padding:36px;aspect-ratio:2;border:1px solid var(--linha-soft)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <span class="post-cred" style="color:var(--cafe-3)">ANÚNCIO · LINKEDIN</span>
+            <span style="font-family:var(--serif);font-style:italic;font-size:28px;color:var(--sol)">a.</span>
+          </div>
+          <div>
+            <div class="serif-it" style="font-size:44px;color:var(--cafe);max-width:520px">"Tem coisa que ninguém te ensina antes de promover."</div>
+            <p style="font-size:14px;color:var(--cafe-2);margin-top:12px">— Programa Primeiros 90 dias de líder</p>
+          </div>
+          <div><span class="btn-cta" style="background:var(--cafe);color:var(--creme)">SAIBA MAIS <svg width="14" height="14"><use href="#arrow"/></svg></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ── MERCH ──────────────────────────────────────────────── -->
+<section class="section" style="background:var(--linho)">
+  <div class="wrap">
+    <div class="chapter"><span class="chapter__no">06 — Merch &amp; brindes</span></div>
+    <h2 class="h2" style="max-width:900px"><em style="color:var(--sol)">Objetos</em> que entregam o bordão.</h2>
+    <p class="lede" style="margin-top:18px;margin-bottom:56px">Caneca pra mesa, agenda pra semana, adesivo pro notebook, t-shirt pra encontro. Tudo carrega um único bordão de cada vez — não vira poluição.</p>
+
+    <div class="grid g3">
+      <!-- Mug -->
+      <div class="tile bg-creme" style="aspect-ratio:1;border:1px solid var(--linha-soft);padding:0;display:flex;align-items:center;justify-content:center;position:relative">
+        <span class="post-cred" style="position:absolute;top:24px;left:24px;color:var(--cafe-3)">CANECA · CERÂMICA 350ML</span>
+        <!-- mug shape -->
+        <div style="position:relative;width:260px;height:240px">
+          <div style="position:absolute;left:0;top:30px;right:60px;bottom:30px;background:var(--cafe);border-radius:6px 6px 14px 14px;display:flex;align-items:center;justify-content:center;padding:24px">
+            <div style="text-align:center">
+              <span style="font-family:var(--serif);font-style:italic;font-size:28px;color:var(--amanhecer);line-height:0.7">"</span>
+              <div class="serif-it" style="font-size:22px;color:var(--creme);line-height:1;margin-top:-2px">faz<br/>assim:</div>
+              <svg width="32" height="32" style="color:var(--amanhecer);margin-top:14px"><use href="#sun"/></svg>
+            </div>
+          </div>
+          <!-- handle -->
+          <div style="position:absolute;right:0;top:70px;width:70px;height:90px;border:14px solid var(--cafe);border-left:0;border-radius:0 999px 999px 0"></div>
+        </div>
+      </div>
+
+      <!-- T-shirt -->
+      <div class="tile bg-sol" style="aspect-ratio:1;padding:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+        <span class="post-cred" style="position:absolute;top:24px;left:24px;color:rgba(255,244,232,0.85)">T-SHIRT · ALGODÃO PESADO</span>
+        <!-- t-shirt silhouette -->
+        <svg viewBox="0 0 220 240" width="74%" style="filter:drop-shadow(0 16px 30px rgba(42,26,20,0.18))">
+          <path d="M40 35 L80 15 L100 30 L120 30 L140 15 L180 35 L210 70 L175 85 L175 230 L45 230 L45 85 L10 70 Z" fill="#FFF4E8" stroke="#2A1A14" stroke-width="1.5"/>
+          <g transform="translate(85, 100)" style="font-family:var(--serif);font-style:italic;text-anchor:middle">
+            <text x="25" y="20" font-size="22" fill="#E8552D">acordei,</text>
+            <text x="25" y="44" font-size="22" fill="#2A1A14">virei líder.</text>
+            <circle cx="25" cy="68" r="3" fill="#E8552D"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Sticker -->
+      <div class="tile bg-cafe" style="aspect-ratio:1;padding:0;display:flex;align-items:center;justify-content:center;color:var(--creme);position:relative">
+        <span class="post-cred" style="position:absolute;top:24px;left:24px;color:var(--amanhecer)">ADESIVO · KISS-CUT 7CM</span>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+          <div style="background:var(--sol);width:130px;height:130px;border-radius:999px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center">
+            <svg width="30" height="30" style="color:var(--creme)"><use href="#sun"/></svg>
+            <div class="serif-it" style="font-size:14px;color:var(--creme);margin-top:6px">faz assim:</div>
+          </div>
+          <div style="background:var(--amanhecer);width:130px;height:130px;border-radius:22px;display:flex;align-items:center;justify-content:center;color:var(--cafe);font-family:var(--serif);font-style:italic;font-size:48px;line-height:0.7">a.</div>
+          <div style="background:var(--creme);width:130px;height:130px;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--cafe);text-align:center;padding:14px">
+            <div class="serif-it" style="font-size:14px;line-height:1">O combinado<br/>salva o líder.</div>
+          </div>
+          <div style="background:var(--brasa);width:130px;height:130px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:var(--amanhecer);font-family:var(--serif);font-style:italic;font-size:68px;line-height:0.7">✱</div>
+        </div>
+      </div>
+
+      <!-- Notebook / agenda -->
+      <div class="tile bg-amber" style="aspect-ratio:1;padding:36px;color:var(--cafe);position:relative;display:flex;flex-direction:column;justify-content:space-between">
+        <span class="post-cred" style="color:var(--brasa)">AGENDA 2026</span>
+        <div>
+          <div class="serif-it" style="font-size:54px;line-height:0.95">A semana<br/>do líder.</div>
+        </div>
+        <div style="background:var(--cafe);color:var(--creme);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:6px">
+          <span class="post-cred" style="color:var(--amanhecer);font-size:9px">SEGUNDA · 26 MAIO</span>
+          <span style="font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.1">1:1 com a Marina — alinhar combinado.</span>
+        </div>
+      </div>
+
+      <!-- Tote -->
+      <div class="tile bg-creme" style="aspect-ratio:1;padding:0;border:1px solid var(--linha-soft);display:flex;align-items:center;justify-content:center;position:relative">
+        <span class="post-cred" style="position:absolute;top:24px;left:24px;color:var(--cafe-3)">TOTE BAG · LONA NATURAL</span>
+        <svg viewBox="0 0 200 220" width="68%">
+          <!-- handles -->
+          <path d="M60 20 Q60 -10 100 -10 Q140 -10 140 20" fill="none" stroke="#5A4439" stroke-width="6"/>
+          <!-- bag -->
+          <rect x="30" y="20" width="140" height="180" fill="#F8E8D4" stroke="#5A4439" stroke-width="1.5" rx="2"/>
+          <g transform="translate(56, 80)">
+            <text font-family="Instrument Serif" font-style="italic" font-size="22" fill="#2A1A14" text-anchor="start">acordei,</text>
+            <text y="24" font-family="Instrument Serif" font-style="italic" font-size="22" fill="#2A1A14" text-anchor="start">virei líder.</text>
+            <g transform="translate(0, 50)">
+              <line x1="0" y1="20" x2="84" y2="20" stroke="#E8552D" stroke-width="2"/>
+              <path d="M22 20 a20 20 0 0 1 40 0" fill="#E8552D"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Welcome kit -->
+      <div class="tile bg-brasa" style="aspect-ratio:1;padding:36px;color:var(--creme);position:relative;display:flex;flex-direction:column;justify-content:space-between">
+        <span class="post-cred" style="color:var(--amanhecer)">KIT BOAS-VINDAS · ALUNO TURMA 03</span>
+        <div>
+          <div class="serif-it" style="font-size:46px;line-height:0.95;color:var(--creme)">Bom dia.<br/><em style="color:var(--amanhecer)">Líder.</em></div>
+          <p style="font-size:13px;color:rgba(255,244,232,0.75);margin-top:14px;line-height:1.55">Caderno + caneta + adesivos + carta de boas-vindas escrita à mão.</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="kbd" style="background:rgba(255,244,232,0.12);color:var(--amanhecer)">CADERNO</span>
+          <span class="kbd" style="background:rgba(255,244,232,0.12);color:var(--amanhecer)">CANETA</span>
+          <span class="kbd" style="background:rgba(255,244,232,0.12);color:var(--amanhecer)">ADESIVOS</span>
+          <span class="kbd" style="background:rgba(255,244,232,0.12);color:var(--amanhecer)">CARTA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<footer style="background:var(--cafe);color:var(--creme);padding:80px 0 40px">
+  <div class="wrap">
+    <div style="font-family:var(--serif);font-style:italic;font-size:clamp(64px,9vw,140px);line-height:0.9;letter-spacing:-0.03em">
+      Bom <span style="color:var(--sol)">dia.</span><br/>Líder.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:50px 0 0;margin-top:60px;border-top:1px solid rgba(255,244,232,0.18)">
+      <div>
+        <h5 style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--amanhecer);margin:0 0 14px;font-weight:500;text-transform:uppercase">Aplicações</h5>
+        <p style="font-size:13px;color:rgba(255,244,232,0.7);margin:0;line-height:1.65">v1.0 · Maio 2026</p>
+        <p style="font-size:13px;color:rgba(255,244,232,0.7);margin:0;line-height:1.65">6 superfícies · 24 templates</p>
+      </div>
+      <div>
+        <h5 style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--amanhecer);margin:0 0 14px;font-weight:500;text-transform:uppercase">Tipografia</h5>
+        <p style="font-size:13px;color:rgba(255,244,232,0.7);margin:0;line-height:1.65">Instrument Serif</p>
+        <p style="font-size:13px;color:rgba(255,244,232,0.7);margin:0;line-height:1.65">Geist · JetBrains Mono</p>
+      </div>
+      <div>
+        <h5 style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--amanhecer);margin:0 0 14px;font-weight:500;text-transform:uppercase">Bordões em uso</h5>
+        <p style="font-size:13px;color:rgba(255,244,232,0.7);margin:0;line-height:1.65">"O combinado salva o líder."</p>
+        <p style="font-size:13px;color:rgba(255,244,232,0.7);margin:0;line-height:1.65">"Faz assim:"</p>
+      </div>
+      <div>
+        <h5 style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--amanhecer);margin:0 0 14px;font-weight:500;text-transform:uppercase">Contato</h5>
+        <p style="font-size:13px;color:rgba(255,244,232,0.7);margin:0;line-height:1.65">oi@acordeivireilider.com</p>
+        <p style="font-size:13px;color:rgba(255,244,232,0.7);margin:0;line-height:1.65">@acordeivireilider</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

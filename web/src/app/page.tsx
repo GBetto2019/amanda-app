@@ -53,7 +53,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-10">
               <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <Link
-                  href="/entrar"
+                  href="/planos"
                   className="inline-flex items-center justify-center bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.18em] px-6 py-4 rounded-full hover:bg-sol-soft transition-colors min-h-[48px]"
                 >
                   Fale com o mentor →
@@ -165,7 +165,7 @@ export default function Home() {
               </div>
               <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-creme/10">
                 <Link
-                  href="/entrar"
+                  href="/planos"
                   className="inline-flex items-center bg-sol text-creme font-mono text-[10px] md:text-[11px] uppercase tracking-[0.18em] px-5 md:px-7 py-3.5 md:py-4 rounded-full hover:bg-sol-soft transition-colors min-h-[44px]"
                 >
                   Quero um roteiro pro meu problema →
@@ -211,7 +211,7 @@ export default function Home() {
                     Roteiros prontos pras conversas que você vai precisar fazer — e ninguém te ensinou.
                   </p>
                   <Link
-                    href="/entrar"
+                    href="/planos"
                     className="inline-flex items-center bg-sol text-creme font-mono text-[10px] md:text-[11px] uppercase tracking-[0.16em] px-5 md:px-6 py-3.5 rounded-full hover:bg-sol-soft transition-colors min-h-[44px]"
                   >
                     Quero entrar →
@@ -251,7 +251,7 @@ export default function Home() {
               Descreve o seu problema. O mentor responde com o roteiro pronto — é agora, não semana que vem.
             </p>
             <Link
-              href="/entrar"
+              href="/planos"
               className="inline-flex items-center bg-sol text-creme font-mono text-[11px] md:text-[13px] uppercase tracking-[0.2em] px-7 py-4 md:px-10 md:py-5 rounded-full hover:bg-sol-soft transition-colors min-h-[48px]"
             >
               Começar agora →

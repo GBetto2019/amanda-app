@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<style data-omelette-print-defaults>
+@media print {
+  @page { margin: 0.5in; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid; }
+  figure, table, pre, blockquote, img, svg, tr, [class~="card" i] { break-inside: avoid; }
+  img, svg { max-width: 100%; }
+  p { orphans: 3; widows: 3; }
+}
+</style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Acordei, virei líder · Papelaria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --sol:#E8552D; --amanhecer:#F4A03A; --pessego:#FFD8B5;
+  --creme:#FFF4E8; --linho:#F8E8D4; --brasa:#8E2E18;
+  --cafe:#2A1A14; --cafe-2:#5A4439; --cafe-3:#8A7468;
+  --linha:rgba(42,26,20,0.12); --linha-soft:rgba(42,26,20,0.06);
+  --serif:"Instrument Serif",serif; --sans:"Geist",system-ui,sans-serif; --mono:"JetBrains Mono",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--creme);color:var(--cafe);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 48px}
+.section{padding:100px 0}
+
+/* Topbar */
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,244,232,0.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--linha-soft)}
+.topbar__inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand-mark{display:inline-flex;align-items:center;gap:11px;font-family:var(--serif);font-style:italic;font-size:20px;text-decoration:none;color:var(--cafe)}
+.topbar-nav{display:flex;gap:28px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--cafe-2)}
+.topbar-nav a{text-decoration:none;color:inherit;transition:color 180ms}
+.topbar-nav a:hover{color:var(--sol)}
+
+/* Chapter */
+.chapter{display:flex;align-items:baseline;gap:20px;margin-bottom:48px}
+.chapter__no{font-family:var(--mono);font-size:11px;letter-spacing:0.22em;color:var(--brasa);text-transform:uppercase}
+.chapter__h{font-family:var(--serif);font-style:italic;font-size:clamp(38px,4vw,60px);line-height:1;letter-spacing:-0.02em;color:var(--cafe);margin:0}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--brasa);font-weight:500;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor}
+
+/* Spec tag */
+.spec{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:var(--cafe-3);background:var(--linho);padding:6px 12px;border-radius:6px;display:inline-block}
+
+/* Mockup stage */
+.stage{background:var(--cafe-3);border-radius:28px;padding:64px 48px;display:flex;gap:48px;align-items:center;justify-content:center;flex-wrap:wrap}
+.stage--light{background:var(--linho)}
+.stage--dark{background:var(--cafe)}
+.stage--mid{background:#8A7468}
+
+/* Sun mark inline SVG helper */
+.sun-mark{display:block}
+
+/* ─── CARTÃO DE VISITA ─────────────────────────────────────── */
+.card-biz{width:340px;height:216px;border-radius:14px;position:relative;overflow:hidden;flex-shrink:0;box-shadow:0 20px 48px rgba(0,0,0,0.22)}
+.card-biz--front{background:var(--creme);padding:28px 32px;display:flex;flex-direction:column;justify-content:space-between}
+.card-biz--back{background:var(--cafe);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.card-name{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--cafe);letter-spacing:-0.02em;line-height:1.1}
+.card-role{font-family:var(--sans);font-weight:400;font-size:11px;color:var(--cafe-2);text-transform:uppercase;letter-spacing:0.12em;margin-top:4px}
+.card-contact{font-family:var(--mono);font-size:9px;color:var(--cafe-3);letter-spacing:0.08em;line-height:1.7}
+.card-brand{font-family:var(--serif);font-style:italic;font-size:11px;color:rgba(255,244,232,0.6);letter-spacing:0.02em;text-align:center}
+.card-tagline{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,244,232,0.4);text-align:center}
+
+/* ─── PAPEL TIMBRADO ──────────────────────────────────────── */
+.paper-a4{width:400px;background:#fff;border-radius:4px;box-shadow:0 24px 64px rgba(0,0,0,0.24);overflow:hidden;flex-shrink:0}
+.paper-header{background:var(--creme);padding:28px 36px 24px;border-bottom:2px solid var(--sol)}
+.paper-header-row{display:flex;align-items:center;justify-content:space-between}
+.paper-mark-name{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--cafe);letter-spacing:-0.01em}
+.paper-body{padding:36px;display:flex;flex-direction:column;gap:10px}
+.paper-line{height:8px;background:rgba(42,26,20,0.08);border-radius:4px}
+.paper-line--short{width:60%}
+.paper-line--med{width:80%}
+.paper-line--tiny{height:6px;background:rgba(42,26,20,0.05);border-radius:3px}
+.paper-footer{padding:16px 36px;border-top:1px solid var(--linha);display:flex;justify-content:space-between;align-items:center}
+.paper-footer-text{font-family:var(--mono);font-size:8px;color:var(--cafe-3);letter-spacing:0.1em;text-transform:uppercase}
+
+/* ─── ENVELOPE ─────────────────────────────────────────────── */
+.envelope{width:520px;height:260px;background:#fdf6ec;border-radius:6px;box-shadow:0 20px 56px rgba(0,0,0,0.22);position:relative;overflow:hidden;flex-shrink:0}
+.envelope-flap{position:absolute;top:0;left:0;right:0;height:0;border-left:260px solid transparent;border-right:260px solid transparent;border-top:110px solid var(--linho)}
+.envelope-bottom{position:absolute;bottom:0;left:0;right:0;height:0;border-left:260px solid transparent;border-right:260px solid transparent;border-bottom:90px solid var(--pessego);opacity:0.5}
+.envelope-left{position:absolute;top:0;bottom:0;left:0;width:0;border-top:130px solid transparent;border-bottom:130px solid transparent;border-left:120px solid var(--linho);opacity:0.6}
+.envelope-right{position:absolute;top:0;bottom:0;right:0;width:0;border-top:130px solid transparent;border-bottom:130px solid transparent;border-right:120px solid var(--linho);opacity:0.6}
+.envelope-content{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:32px 40px;z-index:2}
+.envelope-from{display:flex;flex-direction:column;gap:3px}
+.envelope-from-name{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--cafe);letter-spacing:-0.01em}
+.envelope-from-info{font-family:var(--mono);font-size:8px;color:var(--cafe-3);letter-spacing:0.1em;line-height:1.7}
+.envelope-to{text-align:right;display:flex;flex-direction:column;gap:3px}
+.envelope-to-name{font-family:var(--sans);font-weight:500;font-size:11px;color:var(--cafe)}
+.envelope-to-addr{font-family:var(--mono);font-size:8px;color:var(--cafe-2);letter-spacing:0.08em;line-height:1.7;text-align:right}
+.envelope-stamp{width:44px;height:54px;background:var(--linho);border:1px solid var(--linha);border-radius:2px;position:absolute;top:24px;right:40px;display:flex;align-items:center;justify-content:center}
+
+/* ─── ASSINATURA DE EMAIL ─────────────────────────────────── */
+.email-client{background:#f5f5f5;border-radius:16px;overflow:hidden;box-shadow:0 20px 56px rgba(0,0,0,0.18);width:620px;flex-shrink:0}
+.email-chrome{background:#e8e8e8;padding:12px 16px;display:flex;align-items:center;gap:8px}
+.email-dot{width:12px;height:12px;border-radius:50%}
+.email-bar{flex:1;background:#fff;border-radius:4px;height:20px;margin:0 12px}
+.email-body{background:#fff;padding:32px}
+.email-sig{border-top:1px solid #e8e8e8;padding-top:20px;margin-top:20px}
+.email-text-line{height:8px;background:#f0f0f0;border-radius:4px;margin-bottom:8px}
+.sig-name{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--cafe);letter-spacing:-0.01em;margin:0 0 2px}
+.sig-role{font-family:var(--sans);font-size:12px;color:var(--cafe-2);margin:0 0 10px;font-weight:400}
+.sig-divider{width:32px;height:2px;background:var(--sol);margin:10px 0}
+.sig-contact{font-family:var(--mono);font-size:10px;color:var(--cafe-3);letter-spacing:0.08em;line-height:2}
+.sig-brand{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--sol);margin-top:10px}
+
+/* ─── CERTIFICADO ────────────────────────────────────────── */
+.cert{width:720px;height:509px;background:var(--creme);border-radius:8px;box-shadow:0 24px 72px rgba(0,0,0,0.24);position:relative;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 64px}
+.cert-border{position:absolute;inset:16px;border:1.5px solid var(--linha);border-radius:2px;pointer-events:none}
+.cert-corner{position:absolute;width:28px;height:28px}
+.cert-corner--tl{top:10px;left:10px;border-top:3px solid var(--sol);border-left:3px solid var(--sol)}
+.cert-corner--tr{top:10px;right:10px;border-top:3px solid var(--sol);border-right:3px solid var(--sol)}
+.cert-corner--bl{bottom:10px;left:10px;border-bottom:3px solid var(--sol);border-left:3px solid var(--sol)}
+.cert-corner--br{bottom:10px;right:10px;border-bottom:3px solid var(--sol);border-right:3px solid var(--sol)}
+.cert-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:var(--cafe-3);margin:0 0 8px;text-align:center}
+.cert-title{font-family:var(--serif);font-style:italic;font-size:46px;color:var(--cafe);letter-spacing:-0.03em;line-height:1;margin:0 0 8px;text-align:center}
+.cert-subtitle{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cafe-3);margin:0 0 32px;text-align:center}
+.cert-recipient-label{font-family:var(--mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--cafe-3);margin:0 0 6px;text-align:center}
+.cert-recipient{font-family:var(--serif);font-style:italic;font-size:34px;color:var(--sol);letter-spacing:-0.02em;margin:0 0 6px;text-align:center;border-bottom:1px solid var(--linha);padding-bottom:12px;width:100%;max-width:440px}
+.cert-course{font-family:var(--sans);font-size:13px;color:var(--cafe-2);margin:12px 0 28px;text-align:center;line-height:1.5}
+.cert-sigs{display:flex;gap:80px;align-items:flex-end;margin-top:8px}
+.cert-sig-line{width:140px;text-align:center}
+.cert-sig-rule{height:1px;background:var(--linha);margin-bottom:8px}
+.cert-sig-name{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--cafe);letter-spacing:-0.01em;margin:0 0 2px}
+.cert-sig-role{font-family:var(--mono);font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--cafe-3);margin:0}
+.cert-mark{position:absolute;bottom:36px;right:52px;opacity:0.07}
+.cert-date{font-family:var(--mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--cafe-3);margin-top:16px;text-align:center}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="brand-mark" href="guideline.html">
+      <svg width="24" height="24" viewBox="0 0 100 90" fill="none" style="color:var(--sol)">
+        <line x1="6" y1="65" x2="94" y2="65" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="65" r="22" fill="currentColor"/>
+        <line x1="50" y1="20" x2="50" y2="30" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="18" y1="33" x2="25" y2="40" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="82" y1="33" x2="75" y2="40" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="8"  y1="55" x2="18" y2="55" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="82" y1="55" x2="92" y2="55" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      acordei, virei líder.
+    </a>
+    <nav class="topbar-nav">
+      <a href="guideline.html">Guideline</a>
+      <a href="logo-kit.html">Kit de Logo</a>
+    </nav>
+    <span style="font-family:var(--mono);font-size:11px;color:var(--cafe-3);text-transform:uppercase;letter-spacing:0.16em">Papelaria · v1.0</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section style="padding:80px 0 72px;border-bottom:1px solid var(--linha)">
+  <div class="wrap">
+    <span class="eyebrow">Identidade Visual Aplicada</span>
+    <h1 style="font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(64px,9vw,130px);line-height:0.88;letter-spacing:-0.035em;margin:16px 0 28px;color:var(--cafe)">Papelaria</h1>
+    <p style="font-size:18px;color:var(--cafe-2);max-width:56ch;line-height:1.6;margin:0;font-weight:300;text-wrap:pretty">Cartão de visita, papel timbrado, envelope, assinatura de e-mail e certificado — todos seguindo a identidade visual da marca.</p>
+  </div>
+</section>
+
+<!-- ─── 01 CARTÃO DE VISITA ─────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter__no">01</span>
+      <h2 class="chapter__h">Cartão de Visita</h2>
+    </div>
+    <div style="display:flex;gap:20px;align-items:center;margin-bottom:32px;flex-wrap:wrap">
+      <span class="spec">85 × 54 mm</span>
+      <span class="spec">Couchê 300g</span>
+      <span class="spec">Impressão 4×0</span>
+      <span class="spec">Verniz localizado frente</span>
+      <span class="spec">Sangra 3mm</span>
+    </div>
+    <div class="stage stage--mid">
+      <!-- Frente -->
+      <div class="card-biz card-biz--front">
+        <!-- Marca topo esquerda -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <svg width="28" height="28" viewBox="0 0 100 90" fill="none" style="color:var(--sol)">
+            <line x1="6" y1="65" x2="94" y2="65" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="50" cy="65" r="22" fill="currentColor"/>
+            <line x1="50" y1="20" x2="50" y2="30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="18" y1="33" x2="25" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="82" y1="33" x2="75" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="8"  y1="55" x2="18" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="82" y1="55" x2="92" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span style="font-family:var(--serif);font-style:italic;font-size:13px;color:var(--cafe);letter-spacing:-0.01em">acordei, virei líder.</span>
+        </div>
+        <!-- Nome e contato -->
+        <div>
+          <p class="card-name">Nome Sobrenome</p>
+          <p class="card-role">Mentora de Liderança</p>
+          <div style="margin-top:12px;width:24px;height:2px;background:var(--sol)"></div>
+          <div class="card-contact" style="margin-top:8px">
+            nome@acordeivireilider.com.br<br/>
+            acordeivireilider.com.br<br/>
+            @acordeivireilider
+          </div>
+        </div>
+      </div>
+
+      <!-- Verso -->
+      <div class="card-biz card-biz--back">
+        <svg width="56" height="56" viewBox="0 0 100 90" fill="none" style="color:var(--sol)">
+          <line x1="6" y1="65" x2="94" y2="65" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="50" cy="65" r="22" fill="currentColor"/>
+          <line x1="50" y1="20" x2="50" y2="30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <line x1="18" y1="33" x2="25" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <line x1="82" y1="33" x2="75" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <line x1="8"  y1="55" x2="18" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <line x1="82" y1="55" x2="92" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <p class="card-brand">acordei, virei líder.</p>
+        <p class="card-tagline">Liderança na prática</p>
+      </div>
+    </div>
+
+    <div style="margin-top:28px;display:flex;gap:20px;align-items:center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="color:var(--brasa);flex-shrink:0"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <p style="font-size:13px;color:var(--cafe-2);margin:0;line-height:1.55">O campo <strong style="color:var(--cafe)">Nome Sobrenome</strong> e os dados de contato devem ser ajustados na arte final antes do envio para gráfica. Pedir arquivo em PDF/X-1a ou AI com fontes convertidas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 02 PAPEL TIMBRADO ────────────────────────────────────── -->
+<section class="section" style="background:var(--linho)">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter__no">02</span>
+      <h2 class="chapter__h">Papel Timbrado</h2>
+    </div>
+    <div style="display:flex;gap:20px;align-items:center;margin-bottom:32px;flex-wrap:wrap">
+      <span class="spec">A4 — 210 × 297 mm</span>
+      <span class="spec">Offset ou Laser 90g</span>
+      <span class="spec">Impressão 4×0</span>
+      <span class="spec">Sangra superior 5mm</span>
+    </div>
+    <div class="stage stage--light" style="align-items:flex-start;gap:80px">
+      <div class="paper-a4">
+        <div class="paper-header">
+          <div class="paper-header-row">
+            <div style="display:flex;align-items:center;gap:8px">
+              <svg width="22" height="22" viewBox="0 0 100 90" fill="none" style="color:var(--sol)">
+                <line x1="6" y1="65" x2="94" y2="65" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="50" cy="65" r="22" fill="currentColor"/>
+                <line x1="50" y1="20" x2="50" y2="30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <line x1="18" y1="33" x2="25" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <line x1="82" y1="33" x2="75" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <line x1="8"  y1="55" x2="18" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <line x1="82" y1="55" x2="92" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+              <span class="paper-mark-name">acordei, virei líder.</span>
+            </div>
+            <span style="font-family:var(--mono);font-size:8px;color:var(--cafe-3);letter-spacing:0.1em;text-align:right;line-height:1.7">acordeivireilider.com.br<br/>@acordeivireilider</span>
+          </div>
+        </div>
+        <div class="paper-body">
+          <div style="margin-bottom:16px">
+            <div style="height:6px;width:35%;background:rgba(42,26,20,0.06);border-radius:3px;margin-bottom:6px"></div>
+            <div style="height:6px;width:22%;background:rgba(42,26,20,0.06);border-radius:3px"></div>
+          </div>
+          <div class="paper-line paper-line--med"></div>
+          <div class="paper-line"></div>
+          <div class="paper-line paper-line--short"></div>
+          <div style="height:14px"></div>
+          <div class="paper-line paper-line--tiny"></div>
+          <div class="paper-line paper-line--tiny"></div>
+          <div class="paper-line paper-line--tiny" style="width:72%"></div>
+          <div class="paper-line paper-line--tiny"></div>
+          <div class="paper-line paper-line--tiny" style="width:88%"></div>
+          <div class="paper-line paper-line--tiny" style="width:55%"></div>
+          <div style="height:14px"></div>
+          <div class="paper-line paper-line--tiny"></div>
+          <div class="paper-line paper-line--tiny" style="width:90%"></div>
+          <div class="paper-line paper-line--tiny" style="width:78%"></div>
+          <div class="paper-line paper-line--tiny"></div>
+          <div class="paper-line paper-line--tiny" style="width:65%"></div>
+          <div style="height:24px"></div>
+          <div style="height:7px;width:28%;background:rgba(42,26,20,0.1);border-radius:3px;margin-bottom:4px"></div>
+          <div style="height:6px;width:20%;background:rgba(42,26,20,0.06);border-radius:3px"></div>
+        </div>
+        <div class="paper-footer">
+          <span class="paper-footer-text" style="color:var(--sol)">acordeivireilider.com.br</span>
+          <span class="paper-footer-text">Confidencial · Junho 2026</span>
+        </div>
+      </div>
+
+      <div style="max-width:340px;padding-top:8px">
+        <p style="font-family:var(--serif);font-style:italic;font-size:22px;color:var(--cafe);margin:0 0 24px;line-height:1.25">Estrutura do papel timbrado</p>
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="display:flex;gap:14px">
+            <div style="width:3px;background:var(--sol);border-radius:2px;flex-shrink:0;margin:2px 0"></div>
+            <div>
+              <p style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--brasa);margin:0 0 4px">Cabeçalho</p>
+              <p style="font-size:13px;color:var(--cafe-2);margin:0;line-height:1.55">Logo + dados de contato. Fundo creme com linha de separação em Terra.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px">
+            <div style="width:3px;background:var(--amanhecer);border-radius:2px;flex-shrink:0;margin:2px 0"></div>
+            <div>
+              <p style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--brasa);margin:0 0 4px">Corpo</p>
+              <p style="font-size:13px;color:var(--cafe-2);margin:0;line-height:1.55">Margens de 25mm. Fonte Geist 11pt, espaçamento 1.5. Campo editável no Word ou Google Docs.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px">
+            <div style="width:3px;background:var(--cafe-3);border-radius:2px;flex-shrink:0;margin:2px 0"></div>
+            <div>
+              <p style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--brasa);margin:0 0 4px">Rodapé</p>
+              <p style="font-size:13px;color:var(--cafe-2);margin:0;line-height:1.55">Site e data em JetBrains Mono 8pt. Cor Terra para destaque.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 03 ENVELOPE ──────────────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter__no">03</span>
+      <h2 class="chapter__h">Envelope</h2>
+    </div>
+    <div style="display:flex;gap:20px;align-items:center;margin-bottom:32px;flex-wrap:wrap">
+      <span class="spec">DL — 220 × 110 mm</span>
+      <span class="spec">Offset 90g natural</span>
+      <span class="spec">Impressão 1×0 (Café)</span>
+    </div>
+    <div class="stage stage--mid">
+      <div class="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-bottom"></div>
+        <div class="envelope-left"></div>
+        <div class="envelope-right"></div>
+        <!-- Stamp area -->
+        <div class="envelope-stamp">
+          <svg width="20" height="20" viewBox="0 0 100 90" fill="none" style="color:var(--cafe-3)">
+            <line x1="6" y1="65" x2="94" y2="65" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="50" cy="65" r="22" fill="currentColor"/>
+            <line x1="50" y1="20" x2="50" y2="30" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <line x1="18" y1="33" x2="25" y2="40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <line x1="82" y1="33" x2="75" y2="40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <line x1="8"  y1="55" x2="18" y2="55" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <line x1="82" y1="55" x2="92" y2="55" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="envelope-content">
+          <div class="envelope-from">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+              <svg width="14" height="14" viewBox="0 0 100 90" fill="none" style="color:var(--cafe)">
+                <line x1="6" y1="65" x2="94" y2="65" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="50" cy="65" r="22" fill="currentColor"/>
+                <line x1="50" y1="20" x2="50" y2="30" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <line x1="18" y1="33" x2="25" y2="40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <line x1="82" y1="33" x2="75" y2="40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <line x1="8"  y1="55" x2="18" y2="55" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <line x1="82" y1="55" x2="92" y2="55" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+              <span class="envelope-from-name">acordei, virei líder.</span>
+            </div>
+            <div class="envelope-from-info">
+              acordeivireilider.com.br<br/>
+              São Paulo · SP · Brasil
+            </div>
+          </div>
+          <div class="envelope-to" style="margin-right:56px">
+            <span class="envelope-to-name">Nome Destinatário</span>
+            <div class="envelope-to-addr">
+              Rua Exemplo, 123 · Sala 45<br/>
+              São Paulo · SP<br/>
+              CEP 01310-100
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 04 ASSINATURA DE E-MAIL ──────────────────────────────── -->
+<section class="section" style="background:var(--linho)">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter__no">04</span>
+      <h2 class="chapter__h">Assinatura de E-mail</h2>
+    </div>
+    <div style="display:flex;gap:20px;align-items:center;margin-bottom:32px;flex-wrap:wrap">
+      <span class="spec">600px de largura</span>
+      <span class="spec">HTML compatível com Gmail · Outlook</span>
+    </div>
+    <div class="stage stage--light" style="gap:40px;align-items:flex-start">
+      <div class="email-client">
+        <div class="email-chrome">
+          <div class="email-dot" style="background:#FF6058"></div>
+          <div class="email-dot" style="background:#FFBD2E"></div>
+          <div class="email-dot" style="background:#28CA41"></div>
+          <div class="email-bar"></div>
+        </div>
+        <div class="email-body">
+          <div class="email-text-line" style="width:55%"></div>
+          <div class="email-text-line" style="width:80%"></div>
+          <div class="email-text-line" style="width:68%"></div>
+          <div class="email-text-line" style="width:40%"></div>
+          <div class="email-sig">
+            <div style="display:flex;align-items:flex-start;gap:18px">
+              <svg width="38" height="38" viewBox="0 0 100 90" fill="none" style="color:var(--sol);flex-shrink:0;margin-top:4px">
+                <line x1="6" y1="65" x2="94" y2="65" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="50" cy="65" r="22" fill="currentColor"/>
+                <line x1="50" y1="20" x2="50" y2="30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <line x1="18" y1="33" x2="25" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <line x1="82" y1="33" x2="75" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <line x1="8"  y1="55" x2="18" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <line x1="82" y1="55" x2="92" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+              <div>
+                <p class="sig-name">Nome Sobrenome</p>
+                <p class="sig-role">Mentora de Liderança · Acordei, virei líder.</p>
+                <div class="sig-divider"></div>
+                <div class="sig-contact">
+                  nome@acordeivireilider.com.br<br/>
+                  acordeivireilider.com.br<br/>
+                  @acordeivireilider
+                </div>
+                <p class="sig-brand">acordei, virei líder.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="max-width:300px;padding-top:8px">
+        <p style="font-family:var(--serif);font-style:italic;font-size:20px;color:var(--cafe);margin:0 0 20px;line-height:1.3">Como adicionar</p>
+        <ol style="font-size:13px;color:var(--cafe-2);margin:0;padding:0 0 0 18px;display:flex;flex-direction:column;gap:12px;line-height:1.6">
+          <li>No Gmail: Configurações → Assinatura → Nova</li>
+          <li>Cole o código HTML fornecido pela equipe de design</li>
+          <li>Ou use a versão visual copiando o bloco diretamente</li>
+          <li>Ajuste <strong style="color:var(--cafe)">Nome</strong> e <strong style="color:var(--cafe)">contatos</strong> antes de salvar</li>
+        </ol>
+        <div style="margin-top:24px;padding:18px;background:rgba(232,85,45,0.08);border-radius:12px">
+          <p style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--brasa);margin:0 0 6px">Dica</p>
+          <p style="font-size:12px;color:var(--cafe-2);margin:0;line-height:1.55">Não altere fontes ou cores na assinatura. Mantenha a hierarquia: nome em Instrument Serif, cargo em Geist, contatos em JetBrains Mono.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 05 CERTIFICADO ────────────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <div class="chapter">
+      <span class="chapter__no">05</span>
+      <h2 class="chapter__h">Certificado</h2>
+    </div>
+    <div style="display:flex;gap:20px;align-items:center;margin-bottom:32px;flex-wrap:wrap">
+      <span class="spec">A4 Paisagem — 297 × 210 mm</span>
+      <span class="spec">Couchê Brilho 170g</span>
+      <span class="spec">Impressão 4×0</span>
+    </div>
+    <div class="stage stage--light">
+      <div class="cert">
+        <!-- Corner decorations -->
+        <div class="cert-corner cert-corner--tl"></div>
+        <div class="cert-corner cert-corner--tr"></div>
+        <div class="cert-corner cert-corner--bl"></div>
+        <div class="cert-corner cert-corner--br"></div>
+        <!-- Border -->
+        <div class="cert-border"></div>
+        <!-- Watermark mark -->
+        <div class="cert-mark">
+          <svg width="200" height="200" viewBox="0 0 100 90" fill="none" style="color:var(--cafe)">
+            <line x1="6" y1="65" x2="94" y2="65" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="50" cy="65" r="22" fill="currentColor"/>
+            <line x1="50" y1="20" x2="50" y2="30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="18" y1="33" x2="25" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="82" y1="33" x2="75" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="8"  y1="55" x2="18" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="82" y1="55" x2="92" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <!-- Content -->
+        <p class="cert-eyebrow">Certificado de Conclusão</p>
+        <p class="cert-title">acordei,<br/>virei líder.</p>
+        <p class="cert-subtitle">Programa de Liderança na Prática</p>
+        <p class="cert-recipient-label">Certificamos que</p>
+        <p class="cert-recipient">Nome Completo do Participante</p>
+        <p class="cert-course">concluiu com êxito o programa <strong>Acordei, virei líder.</strong><br/>com carga horária de 20 horas · Turma Junho 2026</p>
+        <div class="cert-sigs">
+          <div class="cert-sig-line">
+            <div class="cert-sig-rule"></div>
+            <p class="cert-sig-name">Nome Sobrenome</p>
+            <p class="cert-sig-role">Mentora de Liderança</p>
+          </div>
+          <div class="cert-sig-line">
+            <div class="cert-sig-rule"></div>
+            <p class="cert-sig-name">Nome Sobrenome</p>
+            <p class="cert-sig-role">Coordenação do Programa</p>
+          </div>
+        </div>
+        <p class="cert-date">São Paulo · Junho de 2026 · acordeivireilider.com.br</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:var(--cafe);color:var(--creme);padding:60px 0">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap">
+    <div>
+      <p style="font-family:var(--serif);font-style:italic;font-size:34px;margin:0 0 6px;letter-spacing:-0.02em">acordei, virei líder.</p>
+      <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,244,232,0.45);margin:0">Papelaria · v1.0 · 2026 · Todos os direitos reservados</p>
+    </div>
+    <nav style="display:flex;gap:28px;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,244,232,0.45)">
+      <a href="guideline.html" style="color:inherit;text-decoration:none">Guideline</a>
+      <a href="logo-kit.html" style="color:inherit;text-decoration:none">Kit de Logo</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(async () => {
+  if (!document.title || !document.title.trim()) document.title = "papelaria";
+  // Prepend so page-supplied @page / break rules (deck-stage's margin:0,
+  // author CSS) keep source-order precedence over the baseline.
+  const baseCss = document.createElement('style');
+  baseCss.textContent = "@media print {\n  figure, table { break-inside: avoid; }\n  *, *::before, *::after {\n    print-color-adjust: exact; -webkit-print-color-adjust: exact;\n    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;\n    animation-delay: -99s !important; animation-duration: .001s !important;\n    animation-iteration-count: 1 !important; animation-fill-mode: both !important;\n    animation-play-state: running !important; transition-duration: 0s !important;\n  }\n}";
+  document.head.prepend(baseCss);
+  if (document.readyState === 'loading') {
+    await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
+  }
+  let ds = document.querySelector('deck-stage');
+  // whenDefined never resolves when nothing registers the element, so only
+  // await it when a <deck-stage> tag exists (and race a timeout regardless).
+  if (ds && !customElements.get('deck-stage')) {
+    try {
+      await Promise.race([
+        customElements.whenDefined('deck-stage'),
+        new Promise((r) => setTimeout(r, 3000)),
+      ]);
+    } catch (e) {}
+    ds = document.querySelector('deck-stage');
+  }
+  // dc-runtime assigns window.DCLogic at init and mounts into #dc-root on
+  // DOMContentLoaded; settle on that subtree so React has rendered before
+  // print(). Non-DC pages fall through to weighing body.
+  const isDc = !ds && 'DCLogic' in window;
+  const settleRoot = ds || (isDc ? document.getElementById('dc-root') : null) || document.body;
+  if (settleRoot) {
+    // Weigh only content children — skip script/style/template so inline
+    // Babel/CSS doesn't register as stable "content" before the framework
+    // has mounted anything.
+    const MEDIA = 'img,svg,canvas,video,picture,iframe,embed,object';
+    const weigh = () => {
+      let text = 0, media = 0;
+      for (const c of settleRoot.children) {
+        const t = c.tagName;
+        if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+        text += (c.textContent || '').trim().length;
+        media += c.querySelectorAll(MEDIA).length + (c.matches(MEDIA) ? 1 : 0);
+      }
+      return text + media * 100;
+    };
+    // "Non-zero and stable" alone is not sufficient to mean rendered: generic
+    // body can carry a static shell while async main content is pending, and
+    // #dc-root can carry the root DC's static text while child refs are still
+    // .sc-placeholder boxes. Gate generic on readyState 'complete', and never
+    // accept stability while a dc-runtime placeholder is present.
+    const isGeneric = settleRoot === document.body;
+    const deadline = Date.now() + 15000;
+    let last = -1, stable = 0;
+    while (Date.now() < deadline) {
+      const n = weigh();
+      const ready =
+        (!isGeneric || document.readyState === 'complete') &&
+        !settleRoot.querySelector('.sc-placeholder');
+      if (n > 0 && n === last && ready) { if (++stable >= 2) break; } else { stable = 0; }
+      last = n;
+      await new Promise((r) => setTimeout(r, 250));
+    }
+  }
+  // Reveal content gated on scroll or visibility before printing. Lazy <img>,
+  // IntersectionObserver fade-ins, and collapsed <details> don't render while
+  // off-screen, so a long page would print with them blank or closed. Open
+  // every <details>, force native-lazy images eager, and scroll the document
+  // through its full height to trip lazy-load + IO; then wait (bounded) for the
+  // newly-triggered images. Inert for deck-stage (slides aren't scroll-gated).
+  try {
+    for (const d of document.querySelectorAll('details')) d.open = true;
+    for (const img of document.querySelectorAll('img[loading="lazy"]'))
+      img.loading = 'eager';
+    const scroller = document.scrollingElement || document.documentElement;
+    const full = Math.max(scroller.scrollHeight, document.body.scrollHeight);
+    const step = window.innerHeight || 800;
+    for (let y = 0; y <= full; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((r) => requestAnimationFrame(r));
+    }
+    window.scrollTo(0, 0);
+    await Promise.race([
+      Promise.all(
+        [...document.images].map((img) =>
+          img.complete
+            ? null
+            : new Promise((res) => {
+                img.addEventListener('load', res, { once: true });
+                img.addEventListener('error', res, { once: true });
+              })
+        )
+      ),
+      new Promise((r) => setTimeout(r, 4000)),
+    ]);
+  } catch (e) {}
+  try { await document.fonts.ready; } catch (e) {}
+  // Jump every animation to its end state so print() never captures a slide
+  // mid-entrance. Ordering matters: the 0s-transition style must be live
+  // BEFORE data-deck-active is set so attribute-keyed transitions don't
+  // start a (now-0s) run from the pre-active base.
+  const st = document.createElement('style');
+  st.textContent = '*,*::before,*::after{animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;animation-play-state:running !important;transition-duration:0s !important}';
+  document.head.appendChild(st);
+  for (const d of document.querySelectorAll('deck-stage')) {
+    for (const c of d.children) {
+      const t = c.tagName;
+      if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+      c.setAttribute('data-deck-active', '');
+    }
+  }
+  // Re-append deck-stage's @page last so no author @page can add a margin and
+  // spill each full-bleed slide onto two sheets. Backstop for old copies.
+  if (ds) {
+    let pg = document.getElementById('deck-stage-print-page');
+    if (!pg) {
+      pg = document.createElement('style');
+      pg.textContent = '@page{size:' + (+ds.getAttribute('width') || 1920) +
+        'px ' + (+ds.getAttribute('height') || 1080) + 'px;margin:0}';
+    }
+    document.body.appendChild(pg);
+  }
+  try {
+    const sweep = () => {
+      for (const a of document.getAnimations()) {
+        try { a.finish(); } catch (e) {
+          try { a.currentTime = (a.effect && a.effect.getComputedTiming().duration) || 0; a.pause(); } catch (e2) {}
+        }
+      }
+    };
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+  } catch (e) {}
+  // Relax break-inside on oversized elements. An element taller than a
+  // printable page can't honor break-inside: avoid — browsers either overflow
+  // it or push it whole to the next page, leaving a blank gap, then break it
+  // anyway at an arbitrary point. After the final layout (content revealed,
+  // animations jumped), find elements taller than a page that still compute
+  // break-inside: avoid and reset them to auto, so the browser breaks them at
+  // their children's boundaries instead (children keep their own avoid). PAGE_PX
+  // is a conservative portrait estimate at 96 CSS px/in — Letter/A4 usable
+  // height minus our 0.5in margins — so only clearly-oversized elements are
+  // touched and under-page elements still stay whole. Skipped for decks, whose
+  // slides are sized to the page.
+  try {
+    if (!document.querySelector('deck-stage')) {
+      const PAGE_PX = 1024;
+      // Our print defaults add a real @page margin only when the source has
+      // no @page of its own; computed style can't tell us (it reports screen
+      // media), so read the injected rule directly.
+      const defaults = document.querySelector('style[data-omelette-print-defaults]');
+      const pageInset = /@page\s*\{[^}]*margin/.test(defaults ? defaults.textContent || '' : '');
+      const SEL = 'section,article,figure,table,pre,blockquote,[class~="card" i],[class~="page" i],[class~="sheet" i]';
+      for (const el of document.body.querySelectorAll(SEL)) {
+        if (el instanceof HTMLElement && el.offsetHeight > PAGE_PX) {
+          el.setAttribute('data-om-oversized', '');
+          // Fake-paged docs simulate sheets with over-tall break-after:page
+          // boxes; honoring the break spills half-blank pages and ends a
+          // colored box mid-sheet. Flow them, and (only when we own the page
+          // inset) drop the redundant padding/background via the rule below.
+          const cs = getComputedStyle(el);
+          if (cs.breakAfter === 'page' || cs.pageBreakAfter === 'always') {
+            el.setAttribute('data-om-fakepage', '');
+          }
+        }
+      }
+      const ost = document.createElement('style');
+      ost.textContent = '@media print{' +
+        '[data-om-oversized]{break-inside:auto !important;page-break-inside:auto !important}' +
+        '[data-om-fakepage]{break-after:auto !important;page-break-after:auto !important}' +
+        (pageInset ? '[data-om-fakepage]{padding:0 !important;background:none !important}' : '') +
+        '}';
+      document.head.appendChild(ost);
+    }
+  } catch (e) {}
+  // macOS Preview renders Skia-PDF Luminosity soft-masks as opaque grey boxes;
+  // swap the CSS that triggers them for Preview-safe forms.
+  try {
+    for (const el of document.body.querySelectorAll('*')) {
+      const cs = getComputedStyle(el);
+
+      if (cs.boxShadow !== 'none' && cs.filter === 'none') {
+        const outs = [], kept = [];
+        for (const s of cs.boxShadow.split(/,(?![^(]*[)])/)) {
+          const t = s.trim();
+          const m = t.match(/^(rgba?[(][^)]+[)]) (-?[0-9.]+px) (-?[0-9.]+px) ([0-9.]+px) -?[0-9.]+px$/);
+          if (m && parseFloat(m[4]) > 0) outs.push('drop-shadow(' + m[2] + ' ' + m[3] + ' ' + m[4] + ' ' + m[1] + ')');
+          else kept.push(t);
+        }
+        if (outs.length) {
+          el.style.setProperty('filter', outs.join(' '), 'important');
+          el.style.setProperty('box-shadow', kept.join(', ') || 'none', 'important');
+        }
+      }
+
+      const mask = cs.maskImage && cs.maskImage !== 'none' ? cs.maskImage : cs.webkitMaskImage;
+      if (mask && mask !== 'none' && cs.filter === 'none') el.style.setProperty('filter', 'opacity(1)', 'important');
+    }
+  } catch (e) {}
+  setTimeout(() => { try { window.print(); } catch (e) {} }, 200);
+})();
+</script>
+</body>
+</html>

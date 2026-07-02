@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { acessoAtivo } from "@/lib/acesso";
 
 const client = new Anthropic();
 
@@ -12,18 +13,15 @@ async function validateAccess(): Promise<{ ok: boolean; status: number }> {
 
   if (!user) return { ok: false, status: 401 };
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("status, acesso_expira_em")
-    .eq("id", user.id)
-    .single();
+  const { data: assinante } = await supabase
+    .from("assinantes")
+    .select("acesso_status, data_fim")
+    .eq("user_id", user.id)
+    .maybeSingle();
 
-  const isActive =
-    profile?.status === "active" &&
-    (!profile.acesso_expira_em ||
-      new Date(profile.acesso_expira_em) > new Date());
-
-  return isActive ? { ok: true, status: 200 } : { ok: false, status: 403 };
+  return acessoAtivo(assinante)
+    ? { ok: true, status: 200 }
+    : { ok: false, status: 403 };
 }
 
 const SYSTEM_PROMPT = `Você é o Mentor do Novo Líder — um assistente especializado em liderança para gestores que estão assumindo ou consolidando seu primeiro papel de liderança.

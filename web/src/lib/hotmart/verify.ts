@@ -1,7 +1,13 @@
+import { timingSafeEqual } from "crypto";
+
 export function verifyHottok(hottok: string | null): boolean {
   const expected = process.env.HOTMART_HOTTOK;
   if (!expected || !hottok) return false;
-  return hottok === expected;
+  // Comparação de tempo constante: evita vazar o token por timing.
+  const a = Buffer.from(hottok);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
 }
 
 export type HotmartEventType =

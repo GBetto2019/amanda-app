@@ -1,29 +1,13 @@
 import { NextRequest } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import {
-  verifyHottok,
-  HotmartWebhookPayload,
-} from "@/lib/hotmart/verify";
+import { verifyHottok, HotmartWebhookPayload } from "@/lib/hotmart/verify";
 
-function addMonths(date: Date, months: number): Date {
-  const d = new Date(date);
-  d.setMonth(d.getMonth() + months);
-  return d;
-}
-
-// Mapeia product.id da Hotmart para nome do plano.
-// Preencher com os IDs reais após criação dos produtos.
-function resolvePlano(payload: HotmartWebhookPayload): string {
-  if (payload.data.subscription?.subscriber?.code) {
-    // TODO: distinguir 'clube' de 'premium' por payload.data.product?.id
-    return "clube";
-  }
-  return "basico";
-}
-
+// No modelo manual, o webhook NÃO ativa acesso. Ele apenas sinaliza ao admin
+// que o pagamento foi detectado (pagamento_status) para agilizar a liberação.
 export async function POST(req: NextRequest) {
-  // Responde 200 rápido para evitar que a Hotmart desative o webhook
-  const hottok = req.nextUrl.searchParams.get("hottok");
+  const hottok =
+    req.headers.get("x-hotmart-hottok") ??
+    req.nextUrl.searchParams.get("hottok");
   if (!verifyHottok(hottok)) {
     return new Response("Unauthorized", { status: 401 });
   }
@@ -41,47 +25,37 @@ export async function POST(req: NextRequest) {
 
   const supabase = createAdminClient();
 
-  // Idempotência: ignora transação já processada
+  // As operações abaixo são idempotentes (reprocessar o mesmo evento não causa
+  // dano) e o e-mail é único, então não é preciso tabela de deduplicação.
   const { data: existing } = await supabase
-    .from("profiles")
-    .select("id, hotmart_transaction")
+    .from("assinantes")
+    .select("id")
     .eq("email", email)
     .maybeSingle();
 
-  if (existing?.hotmart_transaction === transaction) {
-    return new Response("OK", { status: 200 });
-  }
-
   if (event === "PURCHASE_APPROVED" || event === "PURCHASE_COMPLETE") {
-    const plano = resolvePlano(payload);
-    const acessoExpiraEm =
-      plano === "basico" ? addMonths(new Date(), 6).toISOString() : null;
-
     if (existing) {
       await supabase
-        .from("profiles")
+        .from("assinantes")
         .update({
-          status: "active",
-          plano,
-          acesso_expira_em: acessoExpiraEm,
-          hotmart_subscriber_code:
-            payload.data.subscription?.subscriber?.code ?? null,
+          pagamento_status: "recebido",
           hotmart_transaction: transaction,
           updated_at: new Date().toISOString(),
         })
-        .eq("email", email);
+        .eq("id", existing.id);
     } else {
-      // Compra feita antes do login: cria perfil já ativo
-      await supabase.from("profiles").insert({
+      // Comprou sem passar pelo cadastro: cria um lead para o admin ver.
+      // Ignora colisão de e-mail (retry concorrente).
+      const { error } = await supabase.from("assinantes").insert({
         email,
         nome: payload.data.buyer.name ?? null,
-        status: "active",
-        plano,
-        acesso_expira_em: acessoExpiraEm,
-        hotmart_subscriber_code:
-          payload.data.subscription?.subscriber?.code ?? null,
+        pagamento_status: "recebido",
+        acesso_status: "pendente",
         hotmart_transaction: transaction,
       });
+      if (error && error.code !== "23505") {
+        return new Response("Erro ao registrar", { status: 500 });
+      }
     }
   } else if (
     event === "PURCHASE_REFUNDED" ||
@@ -90,16 +64,16 @@ export async function POST(req: NextRequest) {
   ) {
     if (existing) {
       await supabase
-        .from("profiles")
+        .from("assinantes")
         .update({
-          status: "inactive",
+          pagamento_status: "estornado",
           hotmart_transaction: transaction,
           updated_at: new Date().toISOString(),
         })
-        .eq("email", email);
+        .eq("id", existing.id);
     }
   }
-  // PURCHASE_DELAYED: mantém pending, não faz nada
+  // PURCHASE_DELAYED: nada a fazer
 
   return new Response("OK", { status: 200 });
 }
