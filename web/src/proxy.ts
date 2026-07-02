@@ -82,11 +82,9 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // --- Login do assinante: se já logado, roteia conforme acesso ---
+  // --- Login do assinante: se já logado, vai ao mentor (nunca ao admin).
+  // O painel admin tem entrada própria em /admin/login.
   if (pathname === "/login" && user) {
-    if (await isAdmin()) {
-      return NextResponse.redirect(new URL("/admin", request.url));
-    }
     if (acessoAtivo(await getAssinante())) {
       return NextResponse.redirect(new URL("/chat", request.url));
     }

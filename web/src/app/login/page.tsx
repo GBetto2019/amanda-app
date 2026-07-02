@@ -9,11 +9,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState<string | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [recuperando, setRecuperando] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setErro(null);
+    setMsg(null);
     setLoading(true);
 
     const supabase = createClient();
@@ -30,6 +33,26 @@ export default function LoginPage() {
 
     // O proxy decide o destino conforme o status do acesso.
     window.location.href = "/chat";
+  }
+
+  async function handleRecuperar() {
+    setErro(null);
+    setMsg(null);
+    const mail = email.trim().toLowerCase();
+    if (!mail) {
+      setErro("Digite seu e-mail acima para receber o link de redefinição.");
+      return;
+    }
+    setRecuperando(true);
+    const supabase = createClient();
+    await supabase.auth.resetPasswordForEmail(mail, {
+      redirectTo: `${window.location.origin}/definir-senha`,
+    });
+    setRecuperando(false);
+    // Mensagem genérica (não revela se o e-mail existe).
+    setMsg(
+      "Se houver uma conta com esse e-mail, enviamos um link para redefinir a senha. Verifique sua caixa de entrada e o spam."
+    );
   }
 
   return (
@@ -89,8 +112,24 @@ export default function LoginPage() {
               />
             </div>
 
+            <div className="text-right -mt-1">
+              <button
+                type="button"
+                onClick={handleRecuperar}
+                disabled={recuperando}
+                className="font-mono text-[10px] uppercase tracking-[0.12em] text-cafe-3 hover:text-sol transition-colors disabled:opacity-50"
+              >
+                {recuperando ? "Enviando…" : "Esqueci minha senha"}
+              </button>
+            </div>
+
             {erro && (
               <p className="text-[13px] text-brasa leading-snug">{erro}</p>
+            )}
+            {msg && (
+              <p className="text-[13px] text-cafe-2 leading-snug bg-sol/5 border border-sol/20 rounded-lg px-3 py-2">
+                {msg}
+              </p>
             )}
 
             <button
