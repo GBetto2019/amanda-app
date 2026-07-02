@@ -5,16 +5,12 @@ export type AcessoInfo = {
   data_fim?: string | null;
 } | null;
 
-// Data de hoje em America/Sao_Paulo no formato YYYY-MM-DD, para comparar com o
-// campo `date` do Postgres (que vem como string 'YYYY-MM-DD').
+// Data de hoje em America/Sao_Paulo (UTC−3, sem horário de verão) no formato
+// YYYY-MM-DD, para comparar com o campo `date` do Postgres.
+// Não usa Intl/timeZone porque o Edge runtime (middleware) não o suporta bem.
 export function hojeLocal(): string {
-  const agora = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
-  );
-  const y = agora.getFullYear();
-  const m = String(agora.getMonth() + 1).padStart(2, "0");
-  const d = String(agora.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
+  const saoPaulo = new Date(Date.now() - 3 * 60 * 60 * 1000);
+  return saoPaulo.toISOString().slice(0, 10);
 }
 
 // Acesso vigente = status 'ativo' E (sem data_fim OU data_fim >= hoje).
