@@ -22,11 +22,14 @@ export async function POST(req: NextRequest) {
   const telefone = (body.telefone ?? "").trim();
   const plano = (body.plano ?? "").trim() as Plano;
 
-  if (!nome) {
-    return NextResponse.json({ erro: "Informe seu nome." }, { status: 400 });
+  if (!nome || nome.length > 120) {
+    return NextResponse.json({ erro: "Informe um nome válido." }, { status: 400 });
   }
-  if (!EMAIL_RE.test(email)) {
+  if (!EMAIL_RE.test(email) || email.length > 200) {
     return NextResponse.json({ erro: "E-mail inválido." }, { status: 400 });
+  }
+  if (telefone.length > 40) {
+    return NextResponse.json({ erro: "Telefone inválido." }, { status: 400 });
   }
   if (!PLANOS_COM_MENTOR.includes(plano)) {
     return NextResponse.json({ erro: "Plano inválido." }, { status: 400 });
@@ -34,8 +37,6 @@ export async function POST(req: NextRequest) {
 
   const supabase = createAdminClient();
 
-  // E-mail é único: se já houver lead, atualiza (sem sobrescrever um acesso já
-  // ativo). Caso contrário, cria um novo lead pendente.
   const { data: existente } = await supabase
     .from("assinantes")
     .select("id, acesso_status")
@@ -43,15 +44,20 @@ export async function POST(req: NextRequest) {
     .maybeSingle();
 
   if (existente) {
-    await supabase
-      .from("assinantes")
-      .update({
-        nome,
-        telefone: telefone || null,
-        plano_escolhido: plano,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", existente.id);
+    // Só atualiza um lead ainda pendente. Se já estiver ativo/inativo, não deixa
+    // um novo cadastro (possível abuso com e-mail de terceiro) sobrescrever os
+    // dados — apenas segue para o checkout (ex.: renovação).
+    if (existente.acesso_status === "pendente") {
+      await supabase
+        .from("assinantes")
+        .update({
+          nome,
+          telefone: telefone || null,
+          plano_escolhido: plano,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", existente.id);
+    }
   } else {
     const { error } = await supabase.from("assinantes").insert({
       nome,

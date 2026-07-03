@@ -3,6 +3,12 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { SunIcon } from "@/components/ui/SunIcon";
+import { createClient } from "@/lib/supabase/client";
+
+function fmtData(d: string): string {
+  const [y, m, day] = d.split("-");
+  return `${day}/${m}/${y}`;
+}
 
 interface Message {
   id: string;
@@ -23,10 +29,33 @@ export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [dataFim, setDataFim] = useState<string | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    (async () => {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase
+        .from("assinantes")
+        .select("data_fim")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      setDataFim(data?.data_fim ?? null);
+    })();
+  }, []);
+
+  async function handleSair() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    window.location.href = "/login";
+  }
 
   function handleSuggestedTopic(topic: string) {
     setInput(topic);
@@ -50,7 +79,21 @@ export default function ChatPage() {
         body: JSON.stringify({ messages: [...messages, userMsg] }),
       });
 
-      if (!res.ok) throw new Error("Erro na resposta");
+      if (!res.ok) {
+        const aviso = await res.text().catch(() => "");
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            role: "assistant",
+            content:
+              aviso ||
+              "Tive um problema técnico aqui. Tenta de novo em instantes.",
+          },
+        ]);
+        setIsLoading(false);
+        return;
+      }
 
       const reader = res.body?.getReader();
       const decoder = new TextDecoder();
@@ -98,7 +141,7 @@ export default function ChatPage() {
           <SunIcon size={20} className="text-sol md:w-[22px] md:h-[22px]" />
           acordei, virei líder.
         </Link>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 md:gap-4">
           <a
             href="https://hotmart.com/club"
             target="_blank"
@@ -110,7 +153,17 @@ export default function ChatPage() {
               <path d="M7 17L17 7M17 7H7M17 7v10" />
             </svg>
           </a>
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-cafe-3">Mentor · Beta</span>
+          {dataFim && (
+            <span className="hidden md:inline font-mono text-[10px] uppercase tracking-[0.14em] text-cafe-3">
+              Acesso até {fmtData(dataFim)}
+            </span>
+          )}
+          <button
+            onClick={handleSair}
+            className="font-mono text-[10px] uppercase tracking-[0.16em] text-cafe-2 hover:text-sol transition-colors"
+          >
+            Sair
+          </button>
         </div>
       </header>
 

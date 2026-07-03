@@ -19,10 +19,10 @@ test.describe("Landing Page", () => {
     ).toBeVisible();
   });
 
-  test("CTA principal aponta para /entrar", async ({ page }) => {
-    // Busca pelo texto do hero CTA (visível em desktop e mobile)
+  test("CTA principal aponta para /planos", async ({ page }) => {
     const cta = page.getByRole("link", { name: /Fale com o mentor/i });
     await expect(cta).toBeVisible();
+    await expect(cta).toHaveAttribute("href", "/planos");
   });
 
   test("exibe a seção Manifesto", async ({ page }) => {
@@ -46,9 +46,16 @@ test.describe("Landing Page", () => {
     await expect(page.getByText("05 — Programa")).toBeVisible();
   });
 
-  test("CTA final aponta para /entrar", async ({ page }) => {
-    await page.locator('a[href="/entrar"]').last().scrollIntoViewIfNeeded();
-    await expect(page.locator('a[href="/entrar"]').last()).toBeVisible();
+  test("CTAs 'Começar' apontam para /planos", async ({ page }) => {
+    const cta = page.locator('a[href="/planos"]').first();
+    await cta.scrollIntoViewIfNeeded();
+    await expect(cta).toBeVisible();
+  });
+
+  test("rodapé exibe suporte pelo WhatsApp", async ({ page }) => {
+    const suporte = page.getByRole("link", { name: /WhatsApp/i });
+    await suporte.scrollIntoViewIfNeeded();
+    await expect(suporte).toBeVisible();
   });
 
   test("header está visível com logo", async ({ page }) => {
