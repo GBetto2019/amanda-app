@@ -4,12 +4,12 @@ import { SunIcon } from "@/components/ui/SunIcon";
 import { Card } from "@/components/ui/Card";
 
 const personalityCards = [
-  { num: "01", title: "Direto.", text: "Vai no ponto. Frase curta. Quem lê precisa entender de primeira — porque tem reunião em 10 minutos.", variant: "default" as const },
-  { num: "02", title: "Leve.", text: "Liderança já pesa. A gente não pesa em cima. Conversa de café, não palestra de domingo.", variant: "default" as const },
-  { num: "03", title: "Prático.", text: 'Termina cada orientação com "faz assim". Roteiro, exemplo, frase pronta. Aplicável na próxima 1:1.', variant: "default" as const },
-  { num: "04", title: "Humano.", text: "A gente também travou na primeira 1:1. Ninguém aqui é coach perfeito. Erra junto e arruma junto.", variant: "cafe" as const },
-  { num: "05", title: "Vida real corporativa.", text: "Open space barulhento. Slack travando. Chefe pedindo na sexta às 18h. Esse é o mundo. E aqui a gente fala dele.", variant: "sol" as const },
-  { num: "06", title: "Sem papo de consultor.", text: "Sinergia, mindset, empoderar — fora. Combinado, feedback, clareza — dentro.", variant: "amber" as const },
+  { num: "01", title: "Direcionamento", text: "Vai no ponto. Frase curta. Quem lê precisa entender de primeira — porque tem reunião em 10 minutos.", variant: "default" as const },
+  { num: "02", title: "Leveza", text: "Liderança já pesa. A gente não pesa em cima. Conversa de café, não palestra de domingo.", variant: "default" as const },
+  { num: "03", title: "Praticidade", text: 'O mentor IA termina cada orientação com "faz assim". Roteiro, exemplo, frase pronta. Aplicável na próxima 1:1.', variant: "default" as const },
+  { num: "04", title: "Empatia", text: "A gente também travou na primeira 1:1. Ninguém aqui é coach perfeito. Erra junto e arruma junto.", variant: "cafe" as const },
+  { num: "05", title: "Vida real corporativa", text: "Open space barulhento. Slack travando. Chefe pedindo na sexta às 18h. Esse é o mundo. E aqui a gente fala dele.", variant: "sol" as const },
+  { num: "06", title: "Zero papo de consultor", text: "Sinergia, mindset, empoderar — fora. Combinado, feedback, clareza — dentro.", variant: "amber" as const },
 ];
 
 const howItWorksSteps = [
@@ -34,10 +34,7 @@ export default function Home() {
         {/* ── HERO ── */}
         <section className="bg-creme pt-12 pb-16 md:pt-20 md:pb-28 lg:pt-24 lg:pb-32 px-5 md:px-12 overflow-hidden">
           <div className="max-w-[1320px] mx-auto">
-            <div className="flex items-start justify-between mb-8 md:mb-14">
-              <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.22em] text-brasa flex items-center gap-2.5 before:content-[''] before:w-4 md:before:w-6 before:h-px before:bg-current">
-                Mentor do Novo Líder
-              </span>
+            <div className="flex items-start justify-end mb-8 md:mb-14">
               <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.16em] text-cafe-3">v1.0 · 2026</span>
             </div>
 
@@ -46,24 +43,24 @@ export default function Home() {
               virei <span className="text-sol">líder</span>.
             </h1>
 
-            <p className="font-serif italic text-[clamp(18px,3.5vw,40px)] text-cafe-2 leading-[1.2] max-w-2xl mb-10 md:mb-20">
-              Seu mentor de bolso que te ajuda a passar pelos primeiros 6 meses na cadeira de Líder.
+            <p className="font-serif italic text-[clamp(17px,1.9vw,26px)] text-cafe-2 leading-[1.35] max-w-3xl mb-8 md:mb-12">
+              Tudo que você precisa para liderar bem nos primeiros 6 meses: feedback, comunicação e performance — com videoaulas, mentor IA com scripts prontos e a possibilidade de participar de uma mentoria em grupo.
             </p>
 
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-10">
               <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                <Link
-                  href="/planos"
-                  className="inline-flex items-center justify-center bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.18em] px-6 py-4 rounded-full hover:bg-sol-soft transition-colors min-h-[48px]"
-                >
-                  Fale com o mentor →
-                </Link>
                 <a
                   href="#programa"
                   className="inline-flex items-center justify-center border border-cafe/20 text-cafe font-mono text-[11px] uppercase tracking-[0.18em] px-6 py-4 rounded-full hover:bg-cafe/5 transition-colors min-h-[48px]"
                 >
                   Ver programa
                 </a>
+                <Link
+                  href="/planos"
+                  className="inline-flex items-center justify-center bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.18em] px-6 py-4 rounded-full hover:bg-sol-soft transition-colors min-h-[48px]"
+                >
+                  Fale com o mentor →
+                </Link>
               </div>
             </div>
           </div>
@@ -117,7 +114,7 @@ export default function Home() {
           <div className="max-w-[1320px] mx-auto">
             <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.22em] text-brasa mb-8 md:mb-14">02 — Personalidade</p>
             <h2 className="font-serif italic text-[clamp(32px,5.5vw,80px)] leading-[1] tracking-[-0.02em] text-cafe mb-10 md:mb-16">
-              Como o mentor <span className="text-sol">é</span>.
+              O que o <span className="text-sol">Acordei, virei Líder</span> te entrega
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {personalityCards.map((card) => (
@@ -134,7 +131,7 @@ export default function Home() {
         {/* ── COMO FUNCIONA ── */}
         <section id="como-funciona" className="py-16 md:py-28 lg:py-40 px-5 md:px-12">
           <div className="max-w-[1320px] mx-auto">
-            <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.22em] text-brasa mb-8 md:mb-14">03 — Como funciona</p>
+            <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.22em] text-brasa mb-8 md:mb-14">03 — Como funciona o Mentor IA</p>
             <h2 className="font-serif italic text-[clamp(32px,5.5vw,80px)] leading-[1] tracking-[-0.02em] text-cafe mb-10 md:mb-16">
               Três passos.<br />
               <span className="text-sol">Resultado agora.</span>

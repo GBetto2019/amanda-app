@@ -10,12 +10,14 @@ test.describe("Landing Page", () => {
   });
 
   test("exibe o headline do hero", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: /Acordei/ })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 1, name: /Acordei/ })
+    ).toBeVisible();
   });
 
   test("exibe o subtítulo do hero", async ({ page }) => {
     await expect(
-      page.getByText("Seu mentor de bolso que te ajuda")
+      page.getByText("Tudo que você precisa para liderar bem")
     ).toBeVisible();
   });
 
@@ -31,13 +33,13 @@ test.describe("Landing Page", () => {
 
   test("exibe a seção Personalidade com cards", async ({ page }) => {
     await expect(page.getByText("02 — Personalidade")).toBeVisible();
-    await expect(page.getByText("Direto.")).toBeVisible();
-    await expect(page.getByText("Prático.")).toBeVisible();
-    await expect(page.getByText("Humano.")).toBeVisible();
+    await expect(page.getByText("Direcionamento")).toBeVisible();
+    await expect(page.getByText("Praticidade")).toBeVisible();
+    await expect(page.getByText("Empatia")).toBeVisible();
   });
 
   test("exibe a seção Como funciona", async ({ page }) => {
-    await expect(page.getByText("03 — Como funciona")).toBeVisible();
+    await expect(page.getByText("03 — Como funciona o Mentor IA")).toBeVisible();
     await expect(page.getByText("Três passos.")).toBeVisible();
   });
 
@@ -47,7 +49,9 @@ test.describe("Landing Page", () => {
   });
 
   test("CTAs 'Começar' apontam para /planos", async ({ page }) => {
-    const cta = page.locator('a[href="/planos"]').first();
+    // :visible é necessário porque o header tem CTAs duplicados (desktop/mobile),
+    // e o primeiro do DOM fica oculto no viewport mobile.
+    const cta = page.locator('a[href="/planos"]:visible').first();
     await cta.scrollIntoViewIfNeeded();
     await expect(cta).toBeVisible();
   });
