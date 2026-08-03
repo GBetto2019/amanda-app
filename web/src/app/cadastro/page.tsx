@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { SunIcon } from "@/components/ui/SunIcon";
-import { PLANOS_COM_MENTOR, type Plano } from "@/lib/hotmart/checkout";
+import { PLANOS, PLANOS_COM_MENTOR, type Plano } from "@/lib/hotmart/checkout";
 import { CadastroForm } from "./CadastroForm";
 
 const LABELS: Record<Plano, string> = {
@@ -18,10 +18,12 @@ export default async function CadastroPage({
   const { plano } = await searchParams;
   const planoValido = (plano ?? "") as Plano;
 
-  // Cadastro só existe para os planos com Mentor IA. Básico vai direto ao Hotmart.
-  if (!PLANOS_COM_MENTOR.includes(planoValido)) {
+  // Todo plano passa por aqui — sem plano válido na URL, volta para a escolha.
+  if (!PLANOS.includes(planoValido)) {
     redirect("/planos");
   }
+
+  const temMentor = PLANOS_COM_MENTOR.includes(planoValido);
 
   return (
     <div className="min-h-[100dvh] bg-creme flex flex-col">
@@ -45,8 +47,9 @@ export default async function CadastroPage({
             <span className="text-sol">Líder.</span>
           </h1>
           <p className="text-[14px] md:text-[15px] text-cafe-2 leading-relaxed mb-8">
-            Deixe seus dados para vincularmos seu acesso ao Mentor IA. Em
-            seguida você finaliza o pagamento na Hotmart.
+            {temMentor
+              ? "Deixe seus dados para vincularmos seu acesso ao Mentor IA. Em seguida você finaliza o pagamento na Hotmart."
+              : "Deixe seus dados para vincularmos seu acesso às aulas. Em seguida você finaliza o pagamento na Hotmart."}
           </p>
 
           <CadastroForm plano={planoValido} />

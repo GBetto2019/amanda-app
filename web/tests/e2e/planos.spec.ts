@@ -17,16 +17,15 @@ test.describe("Página /planos", () => {
     await expect(page.getByText("Evolua com acompanhamento")).toBeVisible();
   });
 
-  test("plano com Mentor IA leva ao /cadastro", async ({ page }) => {
+  test("todos os planos levam ao /cadastro", async ({ page }) => {
+    await expect(
+      page.locator('a[href="/cadastro?plano=basico"]')
+    ).toBeVisible();
     await expect(
       page.locator('a[href="/cadastro?plano=complementar"]')
     ).toBeVisible();
     await expect(
       page.locator('a[href="/cadastro?plano=premium"]')
     ).toBeVisible();
-  });
-
-  test("plano Básico leva ao checkout da Hotmart", async ({ page }) => {
-    await expect(page.locator('a[href*="pay.hotmart.com"]')).toBeVisible();
   });
 });

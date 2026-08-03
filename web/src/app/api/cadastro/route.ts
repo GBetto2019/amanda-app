@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { PLANOS_COM_MENTOR, type Plano } from "@/lib/hotmart/checkout";
+import { PLANOS, type Plano } from "@/lib/hotmart/checkout";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
   if (telefone.length > 40) {
     return NextResponse.json({ erro: "Telefone inválido." }, { status: 400 });
   }
-  if (!PLANOS_COM_MENTOR.includes(plano)) {
+  if (!PLANOS.includes(plano)) {
     return NextResponse.json({ erro: "Plano inválido." }, { status: 400 });
   }
 

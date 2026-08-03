@@ -1,14 +1,19 @@
-// Link de checkout da Hotmart. Por ora todos os planos usam o mesmo produto.
-// Quando o Premium tiver produto próprio, mapear por plano aqui.
-export const HOTMART_CHECKOUT = "https://pay.hotmart.com/F106532691P";
+// Cada plano tem seu próprio produto/oferta na Hotmart.
+export const HOTMART_CHECKOUT = {
+  basico: "https://go.hotmart.com/F106532691P?dp=1",
+  complementar: "https://go.hotmart.com/L106442832I?dp=1",
+  premium: "https://pay.hotmart.com/W106968683F",
+} as const;
 
 export type Plano = "basico" | "complementar" | "premium";
 
-// Planos que dão acesso ao Mentor IA (exigem cadastro + liberação do admin).
+// Todos os planos passam pelo /cadastro antes do checkout (captura o lead).
+export const PLANOS: Plano[] = ["basico", "complementar", "premium"];
+
+// Planos que dão acesso ao Mentor IA (exigem liberação do admin).
 export const PLANOS_COM_MENTOR: Plano[] = ["complementar", "premium"];
 
-export function checkoutUrl(plano?: Plano): string {
-  // plano reservado para quando cada oferta tiver produto/URL própria na Hotmart.
-  void plano;
-  return HOTMART_CHECKOUT;
+export function checkoutUrl(plano: Plano = "complementar"): string {
+  // Sem plano: é a renovação do Mentor IA (/aguardando), ou seja, o complementar.
+  return HOTMART_CHECKOUT[plano];
 }

@@ -1,11 +1,7 @@
 import Link from "next/link";
 import { SunIcon } from "@/components/ui/SunIcon";
-import { checkoutUrl } from "@/lib/hotmart/checkout";
 
-// Básico (Aprenda) vai direto ao checkout — não dá acesso ao Mentor IA.
-// Complementar e Premium passam pelo /cadastro (captura o lead) antes do Hotmart.
-const HOTMART_BASICO = checkoutUrl("basico");
-
+// Todos os planos passam pelo /cadastro (captura o lead) antes do Hotmart.
 const WHATSAPP = "https://wa.me/5511974668867";
 
 export default function PlanosPage() {
@@ -52,7 +48,7 @@ export default function PlanosPage() {
               </p>
               <div className="mb-4">
                 <span className="font-serif italic text-[clamp(36px,5vw,52px)] leading-none text-cafe">
-                  R$39,90
+                  R$49,90
                 </span>
               </div>
               <p className="text-[13px] text-cafe-2 leading-snug mb-5">
@@ -71,14 +67,12 @@ export default function PlanosPage() {
                   </li>
                 ))}
               </ul>
-              <a
-                href={HOTMART_BASICO}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/cadastro?plano=basico"
                 className="block text-center bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.18em] py-3.5 rounded-full hover:bg-sol-soft transition-colors"
               >
                 Saiba Mais
-              </a>
+              </Link>
             </div>
 
             {/* Oferta Complementar */}
@@ -137,7 +131,7 @@ export default function PlanosPage() {
               </p>
               <div className="mb-4 relative">
                 <span className="font-serif italic text-[clamp(36px,5vw,52px)] leading-none text-creme">
-                  3x de R$99,00
+                  3x de R$99,90
                 </span>
               </div>
               <p className="text-[13px] text-creme/70 leading-snug mb-5 relative">
@@ -145,7 +139,7 @@ export default function PlanosPage() {
               </p>
               <ul className="space-y-3 flex-1 mb-7 relative">
                 {[
-                  "6 sessões de mentoria em grupo, quinzenais (1h cada)",
+                  "Sessão de Mentoria em Grupo (1h)",
                   "Troque vivências com quem vive o mesmo momento",
                   "Tire dúvidas direto com a idealizadora do projeto",
                 ].map((item) => (

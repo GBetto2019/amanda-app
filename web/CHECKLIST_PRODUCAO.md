@@ -37,7 +37,7 @@ Marque cada item antes de publicar. Legenda: 🔴 bloqueia o go-live · 🟡 rec
 - [ ] 🟡 Rodar uma revisão de segurança final (`/security-review`).
 
 ## E. Conteúdo & UX
-- [ ] 🟡 Confirmar **preços/textos** da `/planos` (Aprenda R$39,90 · Mentor IA R$29,90/mês · Evolua 3x R$99,00).
+- [ ] 🟡 Confirmar **preços/textos** da `/planos` (Aprenda R$49,90 · Mentor IA R$29,90/mês · Evolua 3x R$99,90).
 - [ ] 🟡 Confirmar o **WhatsApp de suporte** (hoje `(11) 97466-8867`).
 - [ ] 🟢 Página de **Termos de uso** (o `/login` menciona "concorda com os termos").
 
