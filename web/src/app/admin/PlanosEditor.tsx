@@ -189,7 +189,7 @@ export function PlanosEditor({
                       label="Preço"
                       valor={card.preco}
                       onChange={(v) => setCard(i, { preco: v })}
-                      dica="Ex.: R$49,90 ou 3x de R$99,90"
+                      dica="Ex.: R$99,90"
                     />
                     <Campo
                       label="Abaixo do preço"

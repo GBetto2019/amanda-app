@@ -71,7 +71,7 @@ export const PLANOS_CONTEUDO_PADRAO: PlanosConteudo = {
       chave: "premium",
       etiqueta: "Premium",
       nome: "Evolua com acompanhamento",
-      preco: "3x de R$99,90",
+      preco: "R$99,90",
       precoDetalhe: "",
       descricao:
         "Para quem quer um acompanhamento guiado, de perto, com quem idealizou o projeto.",
