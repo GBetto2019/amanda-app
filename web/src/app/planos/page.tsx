@@ -1,10 +1,53 @@
 import Link from "next/link";
 import { SunIcon } from "@/components/ui/SunIcon";
+import { getPlanosConteudo } from "@/lib/config";
+import type { CardPlano } from "@/lib/planos-conteudo";
 
 // Todos os planos passam pelo /cadastro (captura o lead) antes do Hotmart.
-const WHATSAPP = "https://wa.me/5511974668867";
+// O texto vem do painel admin (app_config), então a página é renderizada a cada
+// visita — uma edição no /admin aparece aqui na hora.
+export const dynamic = "force-dynamic";
 
-export default function PlanosPage() {
+// O visual de cada card é fixo (só o texto é editável no admin).
+const ESTILOS = [
+  {
+    card: "relative rounded-[1.75rem] border border-[var(--linha)] bg-white p-7 md:p-8 flex flex-col",
+    etiqueta: "bg-sol/15 text-brasa",
+    nome: "text-cafe-3",
+    preco: "text-cafe",
+    precoDetalhe: "text-cafe-3",
+    descricao: "text-cafe-2",
+    item: "text-cafe-2",
+    cta: "bg-sol text-creme hover:bg-sol-soft",
+    sol: false,
+  },
+  {
+    card: "relative rounded-[1.75rem] border border-[var(--linha)] bg-white p-7 md:p-8 flex flex-col",
+    etiqueta: "bg-amanhecer/20 text-amanhecer",
+    nome: "text-cafe-3",
+    preco: "text-cafe",
+    precoDetalhe: "text-cafe-3",
+    descricao: "text-cafe-2",
+    item: "text-cafe-2",
+    cta: "border border-cafe/20 text-cafe hover:bg-cafe/5",
+    sol: false,
+  },
+  {
+    card: "relative rounded-[1.75rem] bg-cafe text-creme p-7 md:p-8 flex flex-col overflow-hidden",
+    etiqueta: "bg-sol/20 text-amanhecer",
+    nome: "text-amanhecer",
+    preco: "text-creme",
+    precoDetalhe: "text-creme/60",
+    descricao: "text-creme/70",
+    item: "text-creme/80",
+    cta: "bg-sol text-creme hover:bg-sol-soft",
+    sol: true,
+  },
+] as const;
+
+export default async function PlanosPage() {
+  const conteudo = await getPlanosConteudo();
+
   return (
     <div className="min-h-[100dvh] bg-creme flex flex-col">
       <header className="px-5 md:px-12 h-14 flex items-center border-b border-[var(--linha-soft)]">
@@ -22,140 +65,23 @@ export default function PlanosPage() {
           {/* Header */}
           <div className="mb-10 md:mb-14">
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-brasa mb-4">
-              Escolha seu plano
+              {conteudo.chapeu}
             </p>
             <h1 className="font-serif italic text-[clamp(36px,6vw,72px)] leading-[1] text-cafe mb-3">
-              Quanto você quer<br />
-              <span className="text-sol">evoluir como líder?</span>
+              {conteudo.tituloLinha1}
+              <br />
+              <span className="text-sol">{conteudo.tituloLinha2}</span>
             </h1>
             <p className="text-[15px] md:text-[17px] text-cafe-2 leading-relaxed max-w-xl">
-              Escolha o plano, finalize o pagamento na Hotmart e o acesso é liberado automaticamente.
+              {conteudo.subtitulo}
             </p>
           </div>
 
           {/* Plans grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-6">
-
-            {/* Plano Básico */}
-            <div className="relative rounded-[1.75rem] border border-[var(--linha)] bg-white p-7 md:p-8 flex flex-col">
-              <div className="absolute top-5 right-5">
-                <span className="font-mono text-[9px] uppercase tracking-[0.14em] bg-sol/15 text-brasa px-2.5 py-1 rounded-full">
-                  Comece por aqui
-                </span>
-              </div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cafe-3 mb-4">
-                Aprenda
-              </p>
-              <div className="mb-4">
-                <span className="font-serif italic text-[clamp(36px,5vw,52px)] leading-none text-cafe">
-                  R$49,90
-                </span>
-              </div>
-              <p className="text-[13px] text-cafe-2 leading-snug mb-5">
-                4 videoaulas sobre os temas fundamentais da primeira liderança — prática, direta e sem enrolação.
-              </p>
-              <ul className="space-y-3 flex-1 mb-7">
-                {[
-                  "Virei líder e agora? — a transição sem sofrer",
-                  "Como fazer feedback",
-                  "Como construir um time de alta performance",
-                  "Como conduzir conversas difíceis",
-                ].map((item) => (
-                  <li key={item} className="flex gap-2.5 text-[13px] md:text-[14px] text-cafe-2 leading-snug">
-                    <span className="text-sol shrink-0 mt-0.5">✱</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/cadastro?plano=basico"
-                className="block text-center bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.18em] py-3.5 rounded-full hover:bg-sol-soft transition-colors"
-              >
-                Saiba Mais
-              </Link>
-            </div>
-
-            {/* Oferta Complementar */}
-            <div className="relative rounded-[1.75rem] border border-[var(--linha)] bg-white p-7 md:p-8 flex flex-col">
-              <div className="absolute top-5 right-5">
-                <span className="font-mono text-[9px] uppercase tracking-[0.14em] bg-amanhecer/20 text-amanhecer px-2.5 py-1 rounded-full">
-                  Complementar
-                </span>
-              </div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cafe-3 mb-4">
-                Mentor IA
-              </p>
-              <div className="mb-4">
-                <span className="font-serif italic text-[clamp(36px,5vw,52px)] leading-none text-cafe">
-                  R$29,90
-                </span>
-                <span className="block text-[13px] text-cafe-3 mt-1">
-                  por mês · cancele quando quiser
-                </span>
-              </div>
-              <p className="text-[13px] text-cafe-2 leading-snug mb-5">
-                Um mentor de bolso treinado pela nossa metodologia, pronto para suas perguntas a qualquer hora.
-              </p>
-              <ul className="space-y-3 flex-1 mb-7">
-                {[
-                  "Perguntas 24h por dia, 7 dias por semana",
-                  "Treinado pela metodologia Acordei, virei líder",
-                  "Cancele sem custo, quando quiser",
-                ].map((item) => (
-                  <li key={item} className="flex gap-2.5 text-[13px] md:text-[14px] text-cafe-2 leading-snug">
-                    <span className="text-sol shrink-0 mt-0.5">✱</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/cadastro?plano=complementar"
-                className="block text-center border border-cafe/20 text-cafe font-mono text-[11px] uppercase tracking-[0.18em] py-3.5 rounded-full hover:bg-cafe/5 transition-colors"
-              >
-                Saiba Mais
-              </Link>
-            </div>
-
-            {/* Premium */}
-            <div className="relative rounded-[1.75rem] bg-cafe text-creme p-7 md:p-8 flex flex-col overflow-hidden">
-              <div className="absolute right-[-50px] top-[-50px] opacity-15">
-                <SunIcon size={220} className="text-sol" />
-              </div>
-              <div className="absolute top-5 right-5">
-                <span className="font-mono text-[9px] uppercase tracking-[0.14em] bg-sol/20 text-amanhecer px-2.5 py-1 rounded-full">
-                  Premium
-                </span>
-              </div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amanhecer mb-4 relative">
-                Evolua com acompanhamento
-              </p>
-              <div className="mb-4 relative">
-                <span className="font-serif italic text-[clamp(36px,5vw,52px)] leading-none text-creme">
-                  3x de R$99,90
-                </span>
-              </div>
-              <p className="text-[13px] text-creme/70 leading-snug mb-5 relative">
-                Para quem quer um acompanhamento guiado, de perto, com quem idealizou o projeto.
-              </p>
-              <ul className="space-y-3 flex-1 mb-7 relative">
-                {[
-                  "Sessão de Mentoria em Grupo (1h)",
-                  "Troque vivências com quem vive o mesmo momento",
-                  "Tire dúvidas direto com a idealizadora do projeto",
-                ].map((item) => (
-                  <li key={item} className="flex gap-2.5 text-[13px] md:text-[14px] text-creme/80 leading-snug">
-                    <span className="text-sol shrink-0 mt-0.5">✱</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/cadastro?plano=premium"
-                className="relative block text-center bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.18em] py-3.5 rounded-full hover:bg-sol-soft transition-colors"
-              >
-                Saiba Mais
-              </Link>
-            </div>
+            {conteudo.cards.map((card, i) => (
+              <Card key={card.chave} card={card} estilo={ESTILOS[i]} />
+            ))}
           </div>
 
           {/* E-mail instruction */}
@@ -168,25 +94,89 @@ export default function PlanosPage() {
               </svg>
             </div>
             <p className="text-[14px] text-cafe leading-relaxed">
-              <strong className="font-medium">Use o mesmo e-mail da sua conta Google no checkout da Hotmart.</strong>{" "}
-              É ele que vincula o pagamento ao seu acesso — o mentor é liberado automaticamente após a confirmação.
+              <strong className="font-medium">{conteudo.avisoDestaque}</strong>{" "}
+              {conteudo.avisoTexto}
             </p>
           </div>
 
           {/* Support link */}
           <p className="text-center text-[12px] text-cafe-3 mt-6">
-            E-mails diferentes ou dúvidas no pagamento?{" "}
+            {conteudo.rodapePergunta}{" "}
             <a
-              href={WHATSAPP}
+              href={conteudo.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sol hover:underline"
             >
-              Fale pelo WhatsApp
+              {conteudo.rodapeLink}
             </a>
           </p>
         </div>
       </main>
+    </div>
+  );
+}
+
+function Card({
+  card,
+  estilo,
+}: {
+  card: CardPlano;
+  estilo: (typeof ESTILOS)[number];
+}) {
+  return (
+    <div className={estilo.card}>
+      {estilo.sol && (
+        <div className="absolute right-[-50px] top-[-50px] opacity-15">
+          <SunIcon size={220} className="text-sol" />
+        </div>
+      )}
+      {card.etiqueta && (
+        <div className="absolute top-5 right-5">
+          <span
+            className={`font-mono text-[9px] uppercase tracking-[0.14em] px-2.5 py-1 rounded-full ${estilo.etiqueta}`}
+          >
+            {card.etiqueta}
+          </span>
+        </div>
+      )}
+      <p
+        className={`font-mono text-[10px] uppercase tracking-[0.18em] mb-4 relative ${estilo.nome}`}
+      >
+        {card.nome}
+      </p>
+      <div className="mb-4 relative">
+        <span
+          className={`font-serif italic text-[clamp(36px,5vw,52px)] leading-none ${estilo.preco}`}
+        >
+          {card.preco}
+        </span>
+        {card.precoDetalhe && (
+          <span className={`block text-[13px] mt-1 ${estilo.precoDetalhe}`}>
+            {card.precoDetalhe}
+          </span>
+        )}
+      </div>
+      <p className={`text-[13px] leading-snug mb-5 relative ${estilo.descricao}`}>
+        {card.descricao}
+      </p>
+      <ul className="space-y-3 flex-1 mb-7 relative">
+        {card.itens.map((item) => (
+          <li
+            key={item}
+            className={`flex gap-2.5 text-[13px] md:text-[14px] leading-snug ${estilo.item}`}
+          >
+            <span className="text-sol shrink-0 mt-0.5">✱</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <Link
+        href={`/cadastro?plano=${card.chave}`}
+        className={`relative block text-center font-mono text-[11px] uppercase tracking-[0.18em] py-3.5 rounded-full transition-colors ${estilo.cta}`}
+      >
+        {card.cta}
+      </Link>
     </div>
   );
 }

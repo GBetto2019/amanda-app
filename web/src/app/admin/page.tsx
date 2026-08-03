@@ -3,8 +3,14 @@ import { getAdminUser } from "@/lib/auth/admin-guard";
 import { createClient } from "@/lib/supabase/server";
 import { acessoAtivo } from "@/lib/acesso";
 import { DEFAULT_SYSTEM_PROMPT } from "@/lib/mentor-prompt";
+import { PROMPT_KEY } from "@/lib/config";
+import {
+  PLANOS_CONTEUDO_KEY,
+  mesclaPlanosConteudo,
+} from "@/lib/planos-conteudo";
 import { AssinanteForm, type Assinante } from "./AssinanteForm";
 import { PromptEditor } from "./PromptEditor";
+import { PlanosEditor } from "./PlanosEditor";
 import { sairAdmin } from "./actions";
 
 export default async function AdminPage() {
@@ -26,13 +32,21 @@ export default async function AdminPage() {
     (a) => a.acesso_status === "pendente"
   ).length;
 
-  const { data: cfg } = await supabase
+  const { data: cfgs } = await supabase
     .from("app_config")
-    .select("value")
-    .eq("key", "system_prompt")
-    .maybeSingle();
-  const promptPersonalizado = !!cfg?.value?.trim();
-  const promptAtual = promptPersonalizado ? cfg!.value! : DEFAULT_SYSTEM_PROMPT;
+    .select("key, value")
+    .in("key", [PROMPT_KEY, PLANOS_CONTEUDO_KEY]);
+
+  const valorDe = (k: string) =>
+    (cfgs ?? []).find((c) => c.key === k)?.value ?? null;
+
+  const promptSalvo = valorDe(PROMPT_KEY);
+  const promptPersonalizado = !!promptSalvo?.trim();
+  const promptAtual = promptPersonalizado ? promptSalvo! : DEFAULT_SYSTEM_PROMPT;
+
+  const planosSalvo = valorDe(PLANOS_CONTEUDO_KEY);
+  const planosPersonalizado = !!planosSalvo?.trim();
+  const planosAtual = mesclaPlanosConteudo(planosSalvo);
 
   return (
     <div className="min-h-[100dvh] bg-creme">
@@ -65,6 +79,12 @@ export default async function AdminPage() {
             valorAtual={promptAtual}
             padrao={DEFAULT_SYSTEM_PROMPT}
             personalizado={promptPersonalizado}
+          />
+
+          {/* Textos da página de Planos */}
+          <PlanosEditor
+            valorAtual={planosAtual}
+            personalizado={planosPersonalizado}
           />
 
           {/* Lista */}

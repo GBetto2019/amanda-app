@@ -7,6 +7,10 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { getAdminUser } from "@/lib/auth/admin-guard";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  PLANOS_CONTEUDO_KEY,
+  mesclaPlanosConteudo,
+} from "@/lib/planos-conteudo";
 
 async function siteOrigin(): Promise<string> {
   // Preferir o domínio canônico (evita mandar o link do convite para uma URL de
@@ -211,6 +215,38 @@ export async function restaurarPrompt(_formData: FormData) {
   const sb = createAdminClient();
   await sb.from("app_config").delete().eq("key", "system_prompt");
   revalidatePath("/admin");
+}
+
+// Salva o conteúdo da página /planos editado pelo admin. O formulário manda um
+// JSON só (campo "conteudo"); aqui ele é normalizado antes de gravar.
+export async function salvarPlanos(formData: FormData) {
+  const admin = await getAdminUser();
+  if (!admin) throw new Error("Não autorizado.");
+
+  const conteudo = mesclaPlanosConteudo(str(formData.get("conteudo")));
+  const sb = createAdminClient();
+  await sb.from("app_config").upsert(
+    {
+      key: PLANOS_CONTEUDO_KEY,
+      value: JSON.stringify(conteudo),
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: "key" }
+  );
+  revalidatePath("/admin");
+  revalidatePath("/planos");
+}
+
+// Restaura o conteúdo padrão da /planos (remove a personalização).
+export async function restaurarPlanos(_formData: FormData) {
+  void _formData;
+  const admin = await getAdminUser();
+  if (!admin) throw new Error("Não autorizado.");
+
+  const sb = createAdminClient();
+  await sb.from("app_config").delete().eq("key", PLANOS_CONTEUDO_KEY);
+  revalidatePath("/admin");
+  revalidatePath("/planos");
 }
 
 // Exclui o cadastro do assinante (e a conta de auth associada, exceto admins).

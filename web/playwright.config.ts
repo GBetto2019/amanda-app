@@ -1,5 +1,10 @@
 import { defineConfig, devices } from "@playwright/test";
 
+// Porta configurável (E2E_PORT): a 3000 costuma estar ocupada por outro projeto,
+// e o `reuseExistingServer` rodaria os testes contra o app errado.
+const PORT = Number(process.env.E2E_PORT ?? 3000);
+const baseURL = `http://localhost:${PORT}`;
+
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: true,
@@ -7,7 +12,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: "list",
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL,
     trace: "on-first-retry",
   },
   projects: [
@@ -21,9 +26,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run dev",
-    url: "http://localhost:3000",
+    command: `npm run dev -- -p ${PORT}`,
+    url: baseURL,
     reuseExistingServer: true,
-    timeout: 30000,
+    timeout: 60000,
   },
 });
