@@ -21,13 +21,24 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+// Domínio canônico. Sem isso as URLs de OG ficam relativas e quebram quando o
+// link é compartilhado. Mesma env var que o admin usa para montar o link de
+// acesso do aluno (src/app/admin/actions.ts).
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://amanda-app-self.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Acordei, virei líder.",
   description: "Seu mentor de liderança, no bolso, 24/7. Liderança na prática pra quem virou líder ontem.",
   openGraph: {
     title: "Acordei, virei líder.",
     description: "Seu mentor de liderança, no bolso, 24/7.",
     siteName: "Acordei, virei líder.",
+    url: siteUrl,
+    locale: "pt_BR",
+    type: "website",
   },
 };
 
