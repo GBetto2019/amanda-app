@@ -2,7 +2,8 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { SunIcon } from "@/components/ui/SunIcon";
 import { createClient } from "@/lib/supabase/server";
-import { checkoutUrl } from "@/lib/hotmart/checkout";
+import { getPlanosConteudo } from "@/lib/config";
+import { checkoutDoPlano } from "@/lib/planos-conteudo";
 import { acessoAtivo, hojeLocal } from "@/lib/acesso";
 
 const WHATSAPP = "https://wa.me/5511974668867";
@@ -26,6 +27,9 @@ export default async function AguardandoPage() {
   const expirou =
     a?.acesso_status === "ativo" && !!a?.data_fim && a.data_fim < hojeLocal();
   const precisaRenovar = a?.acesso_status === "inativo" || expirou;
+
+  // Renovação = plano do Mentor IA (complementar), com o link salvo no /admin.
+  const checkout = checkoutDoPlano(await getPlanosConteudo(), "complementar");
 
   return (
     <div className="min-h-[100dvh] bg-creme flex flex-col">
@@ -55,7 +59,7 @@ export default async function AguardandoPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a
-                  href={checkoutUrl()}
+                  href={checkout}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center bg-sol text-creme font-mono text-[11px] uppercase tracking-[0.18em] px-6 py-3.5 rounded-full hover:bg-sol-soft transition-colors"

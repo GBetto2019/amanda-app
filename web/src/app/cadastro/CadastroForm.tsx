@@ -1,9 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { checkoutUrl, type Plano } from "@/lib/hotmart/checkout";
+import { type Plano } from "@/lib/hotmart/checkout";
 
-export function CadastroForm({ plano }: { plano: Plano }) {
+// `checkout` vem do servidor (link editável no /admin), não do bundle.
+export function CadastroForm({
+  plano,
+  checkout,
+}: {
+  plano: Plano;
+  checkout: string;
+}) {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
@@ -30,7 +37,7 @@ export function CadastroForm({ plano }: { plano: Plano }) {
       }
 
       // Cadastro salvo → segue para o checkout da Hotmart.
-      window.location.href = checkoutUrl(plano);
+      window.location.href = checkout;
     } catch {
       setErro("Falha de conexão. Tente novamente.");
       setLoading(false);

@@ -1,8 +1,10 @@
 import { describe, it, expect } from "vitest";
 import {
   PLANOS_CONTEUDO_PADRAO,
+  checkoutDoPlano,
   mesclaPlanosConteudo,
 } from "@/lib/planos-conteudo";
+import { HOTMART_CHECKOUT } from "@/lib/hotmart/checkout";
 
 describe("mesclaPlanosConteudo", () => {
   it("sem config salva, usa o padrão", () => {
@@ -61,6 +63,41 @@ describe("mesclaPlanosConteudo", () => {
       JSON.stringify({ cards: [{ itens: ["Um", "", "  ", "Dois"] }, {}, {}] })
     );
     expect(c.cards[0].itens).toEqual(["Um", "Dois"]);
+  });
+
+  it("link de checkout salvo pelo admin substitui o do código", () => {
+    const c = mesclaPlanosConteudo(
+      JSON.stringify({
+        cards: [{}, {}, { checkout: "https://pay.hotmart.com/NOVO123" }],
+      })
+    );
+    expect(c.cards[2].checkout).toBe("https://pay.hotmart.com/NOVO123");
+    expect(checkoutDoPlano(c, "premium")).toBe(
+      "https://pay.hotmart.com/NOVO123"
+    );
+    expect(checkoutDoPlano(c, "basico")).toBe(HOTMART_CHECKOUT.basico);
+  });
+
+  it("link inválido ou vazio volta ao padrão (nunca deixa o botão morto)", () => {
+    const invalidos = ["", "   ", "pay.hotmart.com/X", "javascript:alert(1)", 7];
+    for (const v of invalidos) {
+      const c = mesclaPlanosConteudo(
+        JSON.stringify({ cards: [{ checkout: v }, {}, {}] })
+      );
+      expect(c.cards[0].checkout).toBe(HOTMART_CHECKOUT.basico);
+    }
+  });
+
+  it("whatsapp inválido também volta ao padrão", () => {
+    const c = mesclaPlanosConteudo(
+      JSON.stringify({ whatsapp: "javascript:alert(1)" })
+    );
+    expect(c.whatsapp).toBe(PLANOS_CONTEUDO_PADRAO.whatsapp);
+
+    const ok = mesclaPlanosConteudo(
+      JSON.stringify({ whatsapp: "https://wa.me/5511999999999" })
+    );
+    expect(ok.whatsapp).toBe("https://wa.me/5511999999999");
   });
 
   it("tipos errados caem no padrão do campo", () => {

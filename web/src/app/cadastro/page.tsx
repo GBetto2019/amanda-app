@@ -2,6 +2,8 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { SunIcon } from "@/components/ui/SunIcon";
 import { PLANOS, PLANOS_COM_MENTOR, type Plano } from "@/lib/hotmart/checkout";
+import { getPlanosConteudo } from "@/lib/config";
+import { checkoutDoPlano } from "@/lib/planos-conteudo";
 import { CadastroForm } from "./CadastroForm";
 
 const LABELS: Record<Plano, string> = {
@@ -24,6 +26,7 @@ export default async function CadastroPage({
   }
 
   const temMentor = PLANOS_COM_MENTOR.includes(planoValido);
+  const checkout = checkoutDoPlano(await getPlanosConteudo(), planoValido);
 
   return (
     <div className="min-h-[100dvh] bg-creme flex flex-col">
@@ -52,7 +55,7 @@ export default async function CadastroPage({
               : "Deixe seus dados para vincularmos seu acesso às aulas. Em seguida você finaliza o pagamento na Hotmart."}
           </p>
 
-          <CadastroForm plano={planoValido} />
+          <CadastroForm plano={planoValido} checkout={checkout} />
 
           <p className="text-center text-[12px] text-cafe-3 mt-6 leading-relaxed">
             Use o mesmo e-mail no checkout da Hotmart.

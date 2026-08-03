@@ -1,4 +1,4 @@
-import type { Plano } from "@/lib/hotmart/checkout";
+import { HOTMART_CHECKOUT, type Plano } from "@/lib/hotmart/checkout";
 
 // Conteúdo da página /planos, editável pelo admin (app_config.planos_conteudo).
 // Só TEXTO é editável — o visual e o destino de cada botão (a chave do plano)
@@ -14,6 +14,7 @@ export type CardPlano = {
   descricao: string;
   itens: string[];
   cta: string; // texto do botão
+  checkout: string; // URL do produto/oferta na Hotmart
 };
 
 export type PlanosConteudo = {
@@ -51,6 +52,7 @@ export const PLANOS_CONTEUDO_PADRAO: PlanosConteudo = {
         "Como conduzir conversas difíceis",
       ],
       cta: "Saiba Mais",
+      checkout: HOTMART_CHECKOUT.basico,
     },
     {
       chave: "complementar",
@@ -66,6 +68,7 @@ export const PLANOS_CONTEUDO_PADRAO: PlanosConteudo = {
         "Cancele sem custo, quando quiser",
       ],
       cta: "Saiba Mais",
+      checkout: HOTMART_CHECKOUT.complementar,
     },
     {
       chave: "premium",
@@ -81,6 +84,7 @@ export const PLANOS_CONTEUDO_PADRAO: PlanosConteudo = {
         "Tire dúvidas direto com a idealizadora do projeto",
       ],
       cta: "Saiba Mais",
+      checkout: HOTMART_CHECKOUT.premium,
     },
   ],
   avisoDestaque:
@@ -92,10 +96,27 @@ export const PLANOS_CONTEUDO_PADRAO: PlanosConteudo = {
   whatsapp: "https://wa.me/5511974668867",
 };
 
+// Link de checkout de um plano: o que o admin salvou ou, na falta, o do código.
+export function checkoutDoPlano(
+  conteudo: PlanosConteudo,
+  plano: Plano
+): string {
+  const card = conteudo.cards.find((c) => c.chave === plano);
+  return card?.checkout || HOTMART_CHECKOUT[plano];
+}
+
 function texto(valor: unknown, padrao: string): string {
   // String vazia é intencional (o admin apagou o campo); só cai no padrão
   // quando o campo não existe ou veio com outro tipo.
   return typeof valor === "string" ? valor.trim() : padrao;
+}
+
+// Campos que viram href/redirect: só aceita http(s). Vazio, endereço quebrado ou
+// esquema perigoso (javascript:) volta ao padrão — nunca deixa um link morto no ar.
+function url(valor: unknown, padrao: string): string {
+  if (typeof valor !== "string") return padrao;
+  const v = valor.trim();
+  return /^https?:\/\/\S+$/i.test(v) ? v : padrao;
 }
 
 function lista(valor: unknown, padrao: string[]): string[] {
@@ -117,6 +138,7 @@ function mesclaCard(valor: unknown, padrao: CardPlano): CardPlano {
     descricao: texto(c.descricao, padrao.descricao),
     itens: lista(c.itens, padrao.itens),
     cta: texto(c.cta, padrao.cta),
+    checkout: url(c.checkout, padrao.checkout),
   };
 }
 
@@ -152,6 +174,6 @@ export function mesclaPlanosConteudo(
     avisoTexto: texto(dados.avisoTexto, padrao.avisoTexto),
     rodapePergunta: texto(dados.rodapePergunta, padrao.rodapePergunta),
     rodapeLink: texto(dados.rodapeLink, padrao.rodapeLink),
-    whatsapp: texto(dados.whatsapp, padrao.whatsapp),
+    whatsapp: url(dados.whatsapp, padrao.whatsapp),
   };
 }

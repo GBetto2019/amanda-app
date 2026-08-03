@@ -1,4 +1,6 @@
-// Cada plano tem seu próprio produto/oferta na Hotmart.
+// Cada plano tem seu próprio produto/oferta na Hotmart. Estes são os links
+// PADRÃO: o admin pode trocá-los em /admin (app_config.planos_conteudo) sem
+// deploy — ver `checkoutDoPlano` em src/lib/planos-conteudo.ts.
 export const HOTMART_CHECKOUT = {
   basico: "https://go.hotmart.com/F106532691P?dp=1",
   complementar: "https://go.hotmart.com/L106442832I?dp=1",

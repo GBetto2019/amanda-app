@@ -122,8 +122,8 @@ export function PlanosEditor({
             >
               /planos
             </a>
-            : título, os três cards, preços e o rodapé. O visual e o botão de cada
-            plano continuam iguais — só o texto muda. Salvou, já está no ar.
+            : título, os três cards (texto, preço e o link de checkout da
+            Hotmart) e o rodapé. O visual continua igual. Salvou, já está no ar.
           </p>
 
           <form action={salvarPlanos}>
@@ -215,6 +215,12 @@ export function PlanosEditor({
                       valor={card.cta}
                       onChange={(v) => setCard(i, { cta: v })}
                     />
+                    <Campo
+                      label="Link do checkout (Hotmart)"
+                      valor={card.checkout}
+                      onChange={(v) => setCard(i, { checkout: v })}
+                      dica="Para onde o cliente vai depois do cadastro. Precisa começar com https:// — se estiver inválido, volta para o link atual."
+                    />
                   </div>
                 </fieldset>
               ))}
@@ -283,7 +289,8 @@ export function PlanosEditor({
             <p className="text-[11px] text-cafe-3 mt-2 leading-snug">
               &ldquo;Carregar padrão&rdquo; só preenche os campos (você ainda
               precisa salvar). &ldquo;Restaurar padrão&rdquo; apaga a
-              personalização e volta aos textos originais.
+              personalização e volta aos textos <strong>e links</strong>{" "}
+              originais — inclusive os de checkout.
             </p>
           </form>
         </div>
