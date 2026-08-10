@@ -102,15 +102,26 @@ export default function ChatPage() {
 
       setMessages((prev) => [...prev, { id: assistantId, role: "assistant", content: "" }]);
 
-      if (reader) {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          assistantText += decoder.decode(value, { stream: true });
-          setMessages((prev) =>
-            prev.map((m) => (m.id === assistantId ? { ...m, content: assistantText } : m))
-          );
+      try {
+        if (reader) {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            assistantText += decoder.decode(value, { stream: true });
+            setMessages((prev) =>
+              prev.map((m) => (m.id === assistantId ? { ...m, content: assistantText } : m))
+            );
+          }
         }
+      } catch {
+        // Conexão caiu no meio da leitura. Sem isto o balão já criado ficaria
+        // vazio, exibindo "Digitando..." para sempre.
+        assistantText += assistantText
+          ? "\n\n*A conexão caiu no meio da resposta. Pode pedir de novo.*"
+          : "Tive um problema técnico aqui. Tenta de novo em instantes.";
+        setMessages((prev) =>
+          prev.map((m) => (m.id === assistantId ? { ...m, content: assistantText } : m))
+        );
       }
     } catch {
       setMessages((prev) => [

@@ -107,16 +107,41 @@ export async function POST(req: NextRequest) {
   const encoder = new TextEncoder();
   const readable = new ReadableStream({
     async start(controller) {
+      // O Response (200) já foi devolvido antes do stream começar, então uma
+      // falha aqui não vira status de erro. Sem este catch, o stream fecharia
+      // vazio e o chat ficaria "Digitando..." para sempre.
+      let enviouTexto = false;
+      let falhou = false;
       try {
         for await (const event of stream) {
           if (
             event.type === "content_block_delta" &&
             event.delta.type === "text_delta"
           ) {
+            enviouTexto = true;
             controller.enqueue(encoder.encode(event.delta.text));
           }
         }
+      } catch (err) {
+        falhou = true;
+        console.error("[api/chat] falha no stream da Anthropic:", err);
       } finally {
+        if (!enviouTexto) {
+          // Cobre erro antes do primeiro delta e também o caso sem erro em que
+          // o modelo não emitiu texto algum. Nunca devolver stream vazio: o
+          // balão do chat ficaria em "Digitando..." para sempre.
+          controller.enqueue(
+            encoder.encode(
+              "Tive um problema técnico aqui e não consegui responder agora. Tenta de novo em instantes."
+            )
+          );
+        } else if (falhou) {
+          controller.enqueue(
+            encoder.encode(
+              "\n\n*A resposta foi interrompida por um problema técnico. Pode pedir de novo.*"
+            )
+          );
+        }
         controller.close();
       }
     },
