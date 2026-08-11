@@ -13,22 +13,47 @@ export default function DefinirSenhaPage() {
   const [confirma, setConfirma] = useState("");
   const [erro, setErro] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [tokenHash, setTokenHash] = useState<string | null>(null);
 
   useEffect(() => {
     const supabase = createClient();
     let resolvido = false;
 
-    // O link de recovery entrega a sessão pela URL (hash ou ?code=). O
-    // onAuthStateChange dispara quando o Supabase termina de processá-la.
+    // Só libera o formulário; nunca desfaz um estado posterior ("salvo").
+    const liberar = () =>
+      setEstado((e) => (e === "verificando" ? "pronto" : e));
+
+    // Compatibilidade com links antigos, que entregam a sessão pela própria URL
+    // (hash ou ?code=): o onAuthStateChange dispara quando o Supabase a processa.
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
         resolvido = true;
-        setEstado("pronto");
+        liberar();
       }
     });
 
     (async () => {
-      const code = new URLSearchParams(window.location.search).get("code");
+      const url = new URL(window.location.href);
+
+      // Link gerado pelo painel: guardamos o token e mostramos o formulário sem
+      // gastá-lo. A troca por sessão acontece só quando o aluno envia a senha,
+      // para que uma pré-visualização de link (WhatsApp) não queime o token.
+      const th = url.searchParams.get("token_hash");
+      if (th) {
+        resolvido = true;
+        setTokenHash(th);
+        liberar();
+        return;
+      }
+
+      // Link antigo já consumido ou expirado volta com #error=… do Supabase.
+      const hashParams = new URLSearchParams(url.hash.replace(/^#/, ""));
+      if (hashParams.get("error") || hashParams.get("error_code")) {
+        setEstado("invalido");
+        return;
+      }
+
+      const code = url.searchParams.get("code");
       if (code) {
         await supabase.auth.exchangeCodeForSession(code).catch(() => {});
       }
@@ -37,7 +62,7 @@ export default function DefinirSenhaPage() {
       } = await supabase.auth.getUser();
       if (user) {
         resolvido = true;
-        setEstado("pronto");
+        liberar();
       } else {
         // Dá tempo do processamento da URL concluir antes de invalidar.
         setTimeout(() => {
@@ -62,9 +87,27 @@ export default function DefinirSenhaPage() {
     }
     setLoading(true);
     const supabase = createClient();
+
+    // Só agora o token de uso único vira sessão.
+    if (tokenHash) {
+      const { error } = await supabase.auth.verifyOtp({
+        type: "recovery",
+        token_hash: tokenHash,
+      });
+      if (error) {
+        setLoading(false);
+        setEstado("invalido");
+        return;
+      }
+      // Token já gasto: uma nova tentativa não pode reusá-lo. E tira o token da
+      // barra de endereços agora que ele virou sessão.
+      setTokenHash(null);
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+
     const { error } = await supabase.auth.updateUser({ password: senha });
     if (error) {
-      setErro("Não foi possível salvar a senha. Tente novamente pelo link do e-mail.");
+      setErro("Não foi possível salvar a senha. Tente novamente pelo link recebido.");
       setLoading(false);
       return;
     }

@@ -273,8 +273,9 @@ export function AssinanteForm({ a }: { a: Assinante }) {
                     </button>
                   </div>
                   <p className="text-[11px] text-cafe-3 mt-2 leading-snug">
-                    O aluno abre o link, define a senha e acessa o Mentor IA. O
-                    link expira em algumas horas — gere um novo se necessário.
+                    O aluno abre o link, define a senha e acessa o Mentor IA.
+                    Vale uma vez só e expira em algumas horas — se ele já usou ou
+                    demorou, gere um novo.
                   </p>
                 </>
               )}

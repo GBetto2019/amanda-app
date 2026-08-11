@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getAdminUser } from "@/lib/auth/admin-guard";
 import { createClient } from "@/lib/supabase/server";
@@ -12,15 +11,15 @@ import {
   mesclaPlanosConteudo,
 } from "@/lib/planos-conteudo";
 
-async function siteOrigin(): Promise<string> {
-  // Preferir o domínio canônico (evita mandar o link do convite para uma URL de
-  // preview que não esteja na allowlist do Supabase Auth).
-  const env = process.env.NEXT_PUBLIC_SITE_URL;
-  if (env) return env.replace(/\/$/, "");
-  const h = await headers();
-  const host = h.get("x-forwarded-host") ?? h.get("host");
-  const proto = h.get("x-forwarded-proto") ?? "https";
-  return `${proto}://${host}`;
+// Domínio canônico de produção. Mesmo valor do fallback em src/app/layout.tsx.
+const SITE_URL_PADRAO = "https://amanda-app-self.vercel.app";
+
+// O destino do link do aluno nunca pode depender do host que o admin usou para
+// abrir o painel: por uma URL de deployment da Vercel (…-projects.vercel.app) o
+// aluno cairia no Deployment Protection e veria a tela de login da Vercel.
+function siteOrigin(): string {
+  const env = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  return env || SITE_URL_PADRAO;
 }
 
 function str(v: FormDataEntryValue | null): string {
@@ -179,16 +178,26 @@ export async function gerarLinkAcesso(
     }
   }
 
-  const origin = await siteOrigin();
+  const origin = siteOrigin();
   const { data: linkData, error } = await sb.auth.admin.generateLink({
     type: "recovery",
     email: a.email,
     options: { redirectTo: `${origin}/definir-senha` },
   });
-  if (error || !linkData) {
+  const tokenHash = linkData?.properties?.hashed_token;
+  if (error || !tokenHash) {
     return { erro: "Não foi possível gerar o link." };
   }
-  return { link: linkData.properties.action_link };
+
+  // Entregamos a nossa própria URL, e não o action_link do Supabase. O
+  // action_link aponta para /auth/v1/verify, que gasta o token de uso único no
+  // primeiro GET — e quem faz esse GET é o robô de pré-visualização do WhatsApp,
+  // não o aluno. Com o token_hash na nossa página, o token só é trocado por
+  // sessão quando o aluno envia a senha.
+  const link = `${origin}/definir-senha?token_hash=${encodeURIComponent(
+    tokenHash
+  )}&type=recovery`;
+  return { link };
 }
 
 // Salva o prompt do Mentor IA definido pelo admin.
