@@ -37,9 +37,25 @@ async function validateAccess(): Promise<{
 
 // Teto diário. Fail-open: se a tabela não existir/der erro, não bloqueia o chat.
 async function dentroDoLimiteDiario(userId: string): Promise<boolean> {
+  const admin = createAdminClient();
+  const dia = hojeLocal();
+
   try {
-    const admin = createAdminClient();
-    const dia = hojeLocal();
+    // Caminho normal: incremento atômico (migration 0007). Ler e depois gravar
+    // deixava duas abas simultâneas contarem como uma mensagem só.
+    const { data, error } = await admin.rpc("incrementa_chat_usage", {
+      p_user_id: userId,
+      p_dia: dia,
+      p_limite: LIMITE_DIARIO,
+    });
+    if (!error && typeof data === "number") return data !== -1;
+  } catch {
+    // cai no caminho abaixo
+  }
+
+  // Caminho legado, para o intervalo entre este deploy e a 0007 rodar no banco.
+  // Sem ele o teto ficaria desligado nesse meio-tempo. Pode sair depois.
+  try {
     const { data } = await admin
       .from("chat_usage")
       .select("contador")

@@ -96,7 +96,19 @@ export default function DefinirSenhaPage() {
       });
       if (error) {
         setLoading(false);
-        setEstado("invalido");
+        // Só é link expirado quando o Supabase diz que o token não vale mais.
+        // Queda de rede ou instabilidade não pode mandar o aluno para o suporte
+        // com um link que ainda está bom — aqui o token continua intacto.
+        const expirado =
+          error.code === "otp_expired" ||
+          error.status === 401 ||
+          error.status === 403;
+        if (expirado) {
+          setEstado("invalido");
+        } else {
+          console.error("[definir-senha] verifyOtp falhou:", error.message);
+          setErro("Não conseguimos validar seu link agora. Confira a conexão e tente de novo.");
+        }
         return;
       }
       // Token já gasto: uma nova tentativa não pode reusá-lo. E tira o token da
@@ -107,7 +119,11 @@ export default function DefinirSenhaPage() {
 
     const { error } = await supabase.auth.updateUser({ password: senha });
     if (error) {
-      setErro("Não foi possível salvar a senha. Tente novamente pelo link recebido.");
+      // O token já virou sessão acima, então o link recebido está gasto: mandar
+      // o aluno de volta para ele seria um beco sem saída. A sessão continua
+      // válida em cookie, então a nova tentativa é aqui mesmo.
+      console.error("[definir-senha] updateUser falhou:", error.message);
+      setErro("Não foi possível salvar a senha. Tente novamente aqui mesmo.");
       setLoading(false);
       return;
     }

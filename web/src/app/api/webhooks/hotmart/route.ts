@@ -19,9 +19,19 @@ export async function POST(req: NextRequest) {
     return new Response("Bad Request", { status: 400 });
   }
 
+  // Payload fora do formato esperado é erro do remetente, não nosso: responder
+  // 400 encerra o assunto. Se estourasse aqui, o 500 faria a Hotmart reenviar
+  // o mesmo evento quebrado indefinidamente.
+  if (
+    typeof payload?.event !== "string" ||
+    typeof payload?.data?.buyer?.email !== "string"
+  ) {
+    return new Response("Bad Request", { status: 400 });
+  }
+
   const email = payload.data.buyer.email.toLowerCase().trim();
   const event = payload.event;
-  const transaction = payload.data.purchase.transaction;
+  const transaction = payload.data.purchase?.transaction ?? null;
 
   const supabase = createAdminClient();
 
