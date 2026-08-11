@@ -98,7 +98,11 @@ export async function POST(req: NextRequest) {
 
   const stream = client.messages.stream({
     model: "claude-opus-4-8",
-    max_tokens: 1024,
+    // Com thinking adaptativo, max_tokens é o teto de PENSAMENTO + RESPOSTA
+    // somados. Com folga curta o modelo gasta o orçamento pensando e a resposta
+    // sai truncada — ou nem sai, e o aluno vê o aviso de erro do finally abaixo.
+    // Teto, não meta: só é cobrado o que for realmente gerado.
+    max_tokens: 8000,
     system: systemPrompt,
     messages: anthropicMessages,
     thinking: { type: "adaptive" },
